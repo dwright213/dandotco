@@ -10,10 +10,7 @@
 					{{bolg.body}}	
 				</p>
 				<p>
-					tags: 
-					{% for tag in bolg.tags %}
-						:{{tag}}:  
-					{% endfor %}	
+				{% for tag in bolg.tags %} <a href="/tagged/{{tag}}">{{tag}}</a> {% endfor %}	
 				</p>
 			</div>
 		{% endfor %}
