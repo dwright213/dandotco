@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div id="bolg-holder">
+		{% for bolg in bolgs %}
+			<div class="bolg">
+				<h2>
+					{{bolg.title}}	
+				</h2>
+				<p>
+					{{bolg.body}}	
+				</p>
+				<p>
+					tags: 
+					{% for tag in bolg.tags %}
+						:{{tag}}:  
+					{% endfor %}	
+				</p>
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

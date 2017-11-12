@@ -1,0 +1,31 @@
+<!doctype html>
+<head>
+	<link rel="stylesheet" href="static/main.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<title>dandotco</title>
+
+<body>
+	<div id="main-container">
+		<div id="header">
+		
+			{% include 'header.html' %}
+		
+		</div>
+		<div id="content">
+			<div class="bar left-bar">
+			</div>
+
+				{% block content %}
+				{% endblock %}
+
+			<div class="bar right-bar">
+			</div>
+		</div id="content">
+		<div id="footer">
+
+			{% include 'footer.html' %}
+		
+		</div>
+	</div>
+</body>
