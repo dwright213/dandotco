@@ -22,7 +22,5 @@ def tagged(tag=None):
 			for bolg_tag in data['tags']:
 				if bolg_tag == tag:
 					tag_filtered.append(data)
-					print(bolg_tag + " == " + tag)
-				
 
 	return render_template('index.html', bolgs=tag_filtered)

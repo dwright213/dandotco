@@ -13,16 +13,17 @@
 			
 		</div>
 		<div id="nav">
-			{% include 'nav.html' %}			
+			{% include 'nav.html' %}
 		</div>
+
 		<div id="content">
-			<div class="bar left-bar">
+			<div class="bar" id="left-bar">
 			</div>
 
 				{% block content %}
 				{% endblock %}
 
-			<div class="bar right-bar">
+			<div class="bar" id="right-bar">
 			</div>
 		</div id="content">
 		<div id="footer">
