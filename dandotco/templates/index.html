@@ -4,7 +4,14 @@
 		{% for bolg in bolgs %}
 			<div class="bolg">
 				<h2>
-					{{bolg.title}}	
+					<a href="/bolg/{{bolg.id}}">
+						{{bolg.title}}
+						<br>	
+						bolg.id: {{bolg.id}}
+						<br>	
+						loop.index: {{loop.index}}
+						<br>	
+					</a>
 				</h2>
 				<p>
 					{{bolg.body}}	

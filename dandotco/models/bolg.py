@@ -1,23 +1,47 @@
 from peewee import *
 
 pg_db = PostgresqlDatabase(
-    'dandotco',
-    user='dandotco',
-    password='quux',
-    host='localhost',
+		'dandotco',
+		user='dandotco',
+		password='quux',
+		host='localhost',
 	port=5432)
 
 class BaseModel(Model):
-    """A base model that will use our Postgresql database"""
-    class Meta:
-        database = pg_db
+		"""A base model that will use our Postgresql database"""
+		class Meta:
+				database = pg_db
 
 class Bolg(BaseModel):
-    title = CharField()
-    body = CharField()
+		title = CharField()
+		body = CharField()
 
 class Tag(BaseModel):
 	name = CharField()
+
+
+
+def get_some_bolgs(num):
+	query = Bolg.select()
+	return query[:num]
+
+def get_a_bolg(bolg_id):
+	a_bolg = []
+	query = Bolg.select()
+	bolg_box = {'bolgs': [], 'errors': []}
+	
+	try: 
+		a_bolg.append(query[bolg_id])
+		bolg_box['bolgs'] = a_bolg
+	except:
+		query = query.where(Bolg.id >= 0)
+		total = query.count()
+		# from IPython import embed
+		# embed()
+		bolg_box['errors'] = 'bolg is not exists'
+		bolg_box['bolgs'] = query[:total] 
+	
+	return bolg_box 
 
 
 # # this model contains two foreign keys to user -- it essentially allows us to
@@ -36,16 +60,6 @@ class Tag(BaseModel):
 #             # Specify a unique multi-column index on from/to-user.
 #             (('from_user', 'to_user'), True),
 #         )
-
-def get_some_bolgs(num):
-	query = Bolg.select()
-	return query[:num]
-
-def get_a_bolg(bolg_id):
-	a = []
-	query = Bolg.select()
-	a.append(query[bolg_id])
-	return a
 
 # def print_stuff(times):
 # 	from IPython import embed
