@@ -26,21 +26,19 @@ def get_some_bolgs(num):
 	return query[:num]
 
 def get_a_bolg(bolg_id):
-	a_bolg = []
 	query = Bolg.select()
 	bolg_box = {'bolgs': [], 'errors': []}
+	abba = query.where(Bolg.id == bolg_id)
 	
-	try: 
-		a_bolg.append(query[bolg_id])
-		bolg_box['bolgs'] = a_bolg
-	except:
-		query = query.where(Bolg.id >= 0)
-		total = query.count()
-		# from IPython import embed
-		# embed()
+	if (query.count() < bolg_id):
 		bolg_box['errors'] = 'bolg is not exists'
-		bolg_box['bolgs'] = query[:total] 
-	
+		bolg_box['bolgs'] = query[:query.count()] 
+		
+	else:
+		print('thats a valid query..')
+		bolg_box['bolgs'].append(abba[0])	
+
+
 	return bolg_box 
 
 

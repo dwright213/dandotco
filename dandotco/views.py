@@ -11,7 +11,7 @@ from dandotco.models import bolg
 
 @app.route('/')
 def home():
-	bolgs_list = bolg.get_some_bolgs(5)
+	bolgs_list = bolg.get_some_bolgs(10)
 	return render_template('index.html', bolgs=bolgs_list)
 
 @app.route('/bolg/<int:bolg_id>')
@@ -25,6 +25,8 @@ def view_bolg(bolg_id=0):
 		return render_template('index.html', bolgs=bolg_getter['bolgs'])
 
 	single_bolg = bolg_getter['bolgs'][0]
+	print(bolg_getter['bolgs'][0])
+	print(single_bolg)
 	return render_template('single.html', bolg=single_bolg)
 
 @app.route('/compose')
