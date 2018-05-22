@@ -16,8 +16,8 @@ class BaseModel(Model):
 class Bolg(BaseModel):
 	title = CharField()
 	body = CharField()
-	
-	
+
+
 class Tag(BaseModel):
 	name = CharField()
 
@@ -32,8 +32,8 @@ def get_a_bolg(bolg_id):
 	bolg_box = {'bolgs': [], 'errors': []}
 	chosen_bolg = query.where(Bolg.id == bolg_id)
 	
-	if (query.count() < bolg_id):
-		bolg_box['errors'] = 'bolg is not exists'
+	if (not chosen_bolg):
+		bolg_box['errors'] = 'bolg is not exists?'
 		bolg_box['bolgs'] = query[:query.count()] 
 		
 	else:
