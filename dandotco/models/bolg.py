@@ -43,10 +43,14 @@ def get_a_bolg(bolg_id):
 	return bolg_box 
 
 
-def create(heading, meat):
-	print(heading)
-	print(meat)
-	bolg_one = Bolg(title=heading, body=meat)
-	bolg_one.save()
-	return 'no work'
+def create(title, body):
+	try:
+		bolg_one = Bolg(title=title, body=body)
+		bolg_one.save()
+		return bolg_one
+	except:
+		return 'problem(s) happened'
 
+def get_latest():
+	latest = Bolg.select().order_by(Bolg.id.desc()).first().id
+	return latest

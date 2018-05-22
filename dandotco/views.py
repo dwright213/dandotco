@@ -11,7 +11,7 @@ from dandotco.models import bolg
 
 @app.route('/')
 def home():
-	bolgs_list = bolg.get_some_bolgs(10)
+	bolgs_list = bolg.get_some_bolgs(100)
 	return render_template('index.html', bolgs=bolgs_list)
 
 @app.route('/bolg/<int:bolg_id>')
@@ -23,31 +23,16 @@ def view_bolg(bolg_id=0):
 	if bolg_getter['errors']:
 		print(bolg_getter['errors'])
 		return render_template('index.html', bolgs=bolg_getter['bolgs'])
-
 	single_bolg = bolg_getter['bolgs'][0]
-	print(bolg_getter['bolgs'][0])
-	print(single_bolg)
 	return render_template('single.html', bolg=single_bolg)
 
 @app.route('/compose', methods = ['POST', 'GET'])
 def compose_bolg():
 	if (request.method == 'POST'):
-		aab = request.form['title']
-		baa = request.form['body']
-		a = bolg.create(aab, baa)
-		return a
+		title = request.form['title']
+		body = request.form['body']
+		new_bolg = bolg.create(title, body)
+		return render_template('single.html', bolg=new_bolg)
 	else:
 		return render_template('compose.html')
 
-# @app.route('/tagged/<tag>')
-# def tagged(tag=None):
-# 	entries = os.path.join(app.static_folder, 'entries.json')
-# 	tag_filtered = []
-# 	with open(entries) as bolgs:
-# 		datas = json.load(bolgs)
-# 		for index, data in enumerate(datas):
-# 			for bolg_tag in data['tags']:
-# 				if bolg_tag == tag:
-# 					tag_filtered.append(data)
-
-# 	return render_template('index.html', bolgs=tag_filtered)
