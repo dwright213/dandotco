@@ -29,9 +29,15 @@ def view_bolg(bolg_id=0):
 	print(single_bolg)
 	return render_template('single.html', bolg=single_bolg)
 
-@app.route('/compose')
+@app.route('/compose', methods = ['POST', 'GET'])
 def compose_bolg():
-	return render_template('compose.html')
+	if (request.method == 'POST'):
+		aab = request.form['title']
+		baa = request.form['body']
+		a = bolg.create(aab, baa)
+		return a
+	else:
+		return render_template('compose.html')
 
 # @app.route('/tagged/<tag>')
 # def tagged(tag=None):

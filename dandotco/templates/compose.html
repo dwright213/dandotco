@@ -1,24 +1,25 @@
 {% extends "layout.html" %}
 {% block content %}
 	<div id="bolg-holder">
+		<h3>
+			<i>
+				"compost a nice bolgs"
+			</i>
+		</h3>
 
-		<label>
-			titel:
-			<br>
-			<input type="text" name="title">
-		</label>
+		<form method="post" action="/compose">
+				<br>
+				<input type="text" name="title" placeholder="title">
+				<br>
+				<input type="text" name="body" placeholder="body">
+				<br>
+				<input type="text" name="tags" placeholder="tags">
+				<br>
+				<button>
+					submit
+				</button> 
 
-		<label>
-			body:
-			<br>
-			<input type="text" name="body">
-		</label>
-
-		<label>
-			tags:
-			<br>
-			<input type="text" name="tags">
-		</label>
+		</form>
 
 	</div>
 {% endblock %}
