@@ -1,35 +1,53 @@
 <!doctype html>
-<head>
-	<link rel="stylesheet" href="/static/main.css">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<title>dandotco</title>
+<!DOCTYPE html>
+<html>
 
-<body>
-	<div id="main-container">
-		<div id="header">
-		
-			{% include 'header.html' %}
+	<head>
+		<link rel="stylesheet" href="/static/css/main.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<title>dandotco</title>
+
+	<body>
+
+
+
+		<div id="main-container">
+			<div id="header">
 			
-		</div>
-		<div id="nav">
-			{% include 'nav.html' %}
-		</div>
-
-		<div id="content">
-			<div class="bar" id="left-bar">
+				{% include 'header.html' %}
+				
+			</div>
+			<div id="nav">
+				{% include 'nav.html' %}
 			</div>
 
-				{% block content %}
-				{% endblock %}
+			<div id="content">
+				<div class="bar" id="left-bar">
+				</div>
 
-			<div class="bar" id="right-bar">
+
+ 					{% block content %}
+					{% endblock %}
+ 
+				<div class="bar" id="right-bar">
+				</div>
+			</div id="content">
+			<div id="footer">
+
+				{% include 'footer.html' %}
+			
 			</div>
-		</div id="content">
-		<div id="footer">
-
-			{% include 'footer.html' %}
-		
 		</div>
-	</div>
-</body>
+	
+	 	
+	 </body>
+<!-- external libs -->
+	<script src="static/js/libs/vue.js"></script>
+	<script src="static/js/libs/axios.js"></script>
+<!-- my stuff -->
+	<script src="static/js/templates.js"></script>
+	<script src="static/js/main.js"></script>
+</html>
+
+

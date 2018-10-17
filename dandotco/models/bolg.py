@@ -1,4 +1,5 @@
 from peewee import *
+from playhouse.shortcuts import model_to_dict, dict_to_model
 from IPython import embed
 
 pg_db = PostgresqlDatabase(
@@ -17,15 +18,18 @@ class Bolg(BaseModel):
 	title = CharField()
 	body = CharField()
 
-
 class Tag(BaseModel):
 	name = CharField()
 
-
+# crud stuff down here
 
 def get_some_bolgs(num):
-	query = Bolg.select()
-	return query[:num]
+	bolgs = Bolg.select()[:num]
+	dict_bolgs = []
+	for bolg in bolgs:
+		dict_bolgs.append(model_to_dict(bolg))
+
+	return dict_bolgs
 
 def get_a_bolg(bolg_id):
 	query = Bolg.select()
@@ -38,8 +42,8 @@ def get_a_bolg(bolg_id):
 		
 	else:
 		print('thats a valid query..')
-		bolg_box['bolgs'].append(chosen_bolg[0])	
-
+		bolg_box['bolgs'].append(model_to_dict(chosen_bolg[0]))
+		
 	return bolg_box 
 
 
