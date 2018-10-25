@@ -30,5 +30,5 @@ settings.cfg
 # compiled assets
 **/dist/*
 
-# knawmsayin
-**/node_modules/*⏎
+# node things
+**/node_modules/*

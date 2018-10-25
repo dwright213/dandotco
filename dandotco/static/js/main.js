@@ -1,8 +1,17 @@
-var bolgs = [];
+// libs
+import Vue from 'vue';
+import axios from 'axios';
+
+// my stuff
+import { bolgTile } from './templates.js';
+
+
+var 
+	bolgs = [],
 
 	bolgListing = {
 		props: ['title', 'id', 'body'],
-		template: '<div :id=tileId() ><h3>{{ title }}</h3> <p>{{ body }}</p><br></div>',
+		template: bolgTile,
 		methods: {
 			tileId: function() {
 				return 'bolg-' + this.id
@@ -23,7 +32,8 @@ new Vue({
 	},
 	mounted() {
 		axios
-			.get('http://localhost:5000/api', {crossdomain: false})
+			.get('/api', { crossdomain: false })
 			.then(response => (this.bolgs = response.data))
 	}
-})
+});
+

@@ -1,0 +1,17 @@
+{
+  "name": "dandotco",
+  "version": "0.0.01",
+  "description": "a website",
+  "main": "js/main.js",
+  "repository": "https://github.com/dwright213/dandotco",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "gulp": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "lodash": "^4.17.11",
+    "sass": "^1.14.3",
+    "vue": "^2.5.17",
+    "webpack-stream": "^5.1.1"
+  }
+}
