@@ -25,7 +25,7 @@ body {
 	margin: 0 0 10px 0;
 	text-align: center;
 	padding: 5px;
-	/*background-color: #ccf0ff;*/
+	// /*background-color: #ccf0ff;*/
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: center;
@@ -46,19 +46,18 @@ body {
 
 .bar {
 	flex-grow: 1;
-	/*width: 20%;*/
-	/*background-color: #d3ffcb;*/
+	width: 20%;
+	background-color: #d3ffcb;
 }
 
 #bolg-holder {
-	max-width: 80%;
 	display: flex;
 	flex-flow: column nowrap;
 
 }
 
 .bolg {
-	/*background-color: #ccf0ff;*/
+	background-color: #ccf0ff;
 	padding: 0 15px 15px 15px;
 	margin: 0 10px 10px 10px;
 	justify-content: space-between;
@@ -81,5 +80,4 @@ body {
 #footer {
 	padding: 15px;
 	margin: 10px 0 0 0;
-	/*background-color: #ccf0ff;*/
 }
