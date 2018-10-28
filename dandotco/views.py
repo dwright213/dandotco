@@ -12,7 +12,32 @@ from dandotco.models import bolg
 
 @app.route('/')
 def home():
-	return render_template('index.html')
+	return render_template('index.html', route_name='home')
+
+@app.route('/bolg/<int:bolg_id>')
+def view_bolg(bolg_id=0):
+	bolg_getter = bolg.get_a_bolg(bolg_id)
+
+	# good place to put our error in a flash message, in the future
+	# til then lets just give user all bolgs and hope they don't notice.
+	if bolg_getter['errors']:
+		print(bolg_getter['errors'])
+		return render_template('index.html', bolgs=bolg_getter['bolgs'])
+	single_bolg = bolg_getter['bolgs'][0]
+	return render_template('single.html', bolg=single_bolg, route_name='bolg')
+
+@app.route('/compose', methods = ['POST', 'GET'])
+def compose_bolg():
+	if (request.method == 'POST'):
+		title = request.form['title']
+		body = request.form['body']
+		new_bolg = bolg.create(title, body)
+		return render_template('single.html', bolg=new_bolg, route_name='bolg')
+	else:
+		return render_template('compose.html', route_name='compose')
+
+
+# ajax routes
 
 @app.route('/api')
 def api_all():
@@ -34,26 +59,4 @@ def api_one(bolg_id=0):
 	resp.headers.add('Access-Control-Allow-Origin', '*')
 
 	return resp
-
-@app.route('/bolg/<int:bolg_id>')
-def view_bolg(bolg_id=0):
-	bolg_getter = bolg.get_a_bolg(bolg_id)
-
-	# good place to put our error in a flash message, in the future
-	# til then lets just give user all bolgs and hope they don't notice.
-	if bolg_getter['errors']:
-		print(bolg_getter['errors'])
-		return render_template('index.html', bolgs=bolg_getter['bolgs'])
-	single_bolg = bolg_getter['bolgs'][0]
-	return render_template('single.html', bolg=single_bolg)
-
-@app.route('/compose', methods = ['POST', 'GET'])
-def compose_bolg():
-	if (request.method == 'POST'):
-		title = request.form['title']
-		body = request.form['body']
-		new_bolg = bolg.create(title, body)
-		return render_template('single.html', bolg=new_bolg)
-	else:
-		return render_template('compose.html')
 

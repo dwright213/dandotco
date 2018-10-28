@@ -38,3 +38,8 @@ bolgs_tags
 	- tag_id
 
 
+#### update: vuejs
+
+I think it would be funny to modern tech (Vuejs, Sass, flexbox, etc) to build a solidly responsive, accessible, and dynamic front end, but stick with the stock browser styles for background colors, fonts, link behavior, and all the rest.
+
+With Vue, my favored approach is to use webpack's "chunking" feature to make different js files for different pages. So we still route with flask, but vue and axios are pulling the data in, via paralell api routes. 

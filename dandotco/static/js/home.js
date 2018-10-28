@@ -15,6 +15,9 @@ var
 		methods: {
 			tileId: function() {
 				return 'bolg-' + this.id
+			},
+			bolgLink: function() {
+				return '/bolg/' + this.id
 			}
 		}
 	};

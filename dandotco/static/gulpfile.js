@@ -26,6 +26,12 @@ gulp.task('develop', function() {
 
 });
 
+gulp.task('sprites', function () {
+    return gulp.src(svgInput)
+        // .pipe(svgSprite())
+        .pipe(gulp.dest(dist));
+});
+
 gulp.task('styles', function () {
   return gulp.src(scssInput)
     .pipe(sass().on('error', sass.logError))
@@ -36,8 +42,13 @@ gulp.task('scripts', function() {
 	return gulp.src(jsGlob)
 		.pipe(webpack({
 			mode: 'development',
+			entry: {
+				home: './js/home.js',
+				bolg: './js/bolg.js',
+				compose: './js/compose.js'
+			},
 			output: {
-				filename: 'main.js'
+				filename: '[name].chunk.js'
 			},
 			resolve: {
 				alias: {
@@ -46,10 +57,4 @@ gulp.task('scripts', function() {
 			}
 		}))
 		.pipe(gulp.dest(dist));
-});
-
-gulp.task('sprites', function () {
-    return gulp.src(svgInput)
-        .pipe(svgSprite())
-        .pipe(gulp.dest(dist));
 });

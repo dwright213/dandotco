@@ -79,12 +79,8 @@ body {
 
 @media screen and (max-width: 768px) {
 	
-	#header {
-
-	}
-
 	.title-padder {
-		padding-left: 10%;
+		padding: 0 10px;
 	}
 
 	.bar {
@@ -115,6 +111,11 @@ body {
 		display: block;
 	}
 
+	.title-padder {
+		padding-left: ($nav-toggle-size+10);
+		padding-right: 5px;
+	}
+
 
 	#nav {
 		order: 0;
@@ -142,8 +143,8 @@ body {
 	}
 
 	#nav label {
-		width: 50px;
-		height: 50px;
+		width: $nav-toggle-size;
+		height: $nav-toggle-size;
 		position: absolute;
 		top: 5px;
 		left: 5px;
