@@ -1,5 +1,5 @@
 body {
-	font-size: 17px;
+	font-size: $font-size;
 	margin: 0;
 }
 
@@ -13,14 +13,13 @@ body {
 	margin: 0 0 10px 0;
 	order: 1;
 	// background-color: #e6e6fa;
-}
-
-.header-div {
 	text-align: center;
 }
 
-.header-div small {
+#header-tagline {
+	display: block;
 	margin-left: 100px;
+	color: #30303099;
 }
 
 
@@ -69,13 +68,23 @@ body {
 }
 
 #nav-toggle {
+
 	display: none;
 }
 
-@media screen and (max-width: 768px) {
+#nav-item-list {
+	display: flex;
+	flex-flow: row nowrap;
+}
 
-	#nav-toggle {
-		display: none;
+@media screen and (max-width: 768px) {
+	
+	#header {
+
+	}
+
+	.title-padder {
+		padding-left: 10%;
 	}
 
 	.bar {
@@ -92,22 +101,67 @@ body {
 }
 
 @media screen and (max-width: 480px) {
+	#header {
+		text-align: right;
+	}
+
+	#header-title {
+		margin-top: 0;
+	}
+
+	#header-tagline {
+		text-align: center;
+		margin: 0;
+		display: block;
+	}
+
+
 	#nav {
 		order: 0;
 		flex-flow: column nowrap;
 		justify-content: left;
+		padding: 0;
+		margin: 0;
+	}
+
+	#nav-item-list {
+		display: flex;
+		flex-flow: column nowrap;
+		overflow: hidden;
+		height: 0;
+		@include main-transition;
 	}
 
 	.nav-link {
 		text-align: start;
-		display: none;
+		display: block;
+		padding: 5px;
+		&:nth-of-type(1) {
+			padding: 50px 0 0;
+		}
+	}
+
+	#nav label {
+		width: 50px;
+		height: 50px;
+		position: absolute;
+		top: 5px;
+		left: 5px;
+		background: url(svg/sprite.svg);
+		display: inline-block;
+		cursor: pointer;
+		@include main-transition;	
 	}
 
 	#nav-toggle {
-		display: block;	
-		&:checked ~ .nav-link {
+		opacity: 0;
+		&:checked ~ label {
+			transform: rotate(45deg);
+		}
+		&:checked ~ #nav-item-list {
 			display: block;
-			overflow: hidden;
+			opacity: 1;
+			height: 160px;
 		}
 	}
 }

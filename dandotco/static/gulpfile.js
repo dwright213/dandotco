@@ -3,14 +3,17 @@ var
 	gulp = require('gulp'),
 	webpack = require('webpack-stream'),
 	sass = require('gulp-sass'),
+	svgSprite = require('gulp-svg-sprites'),
 
 	// watch this glob
 	jsGlob = './js/**/*.js',
-	scssGlob = './scss/**/*.scss'
+	scssGlob = './scss/**/*.scss',
+	svgGlob = './img/*.svg',
 
 	// input paths
 	jsInput = './js/main.js',
 	scssInput = './scss/main.scss',
+	svgInput = './img/*.svg',
 
 	// output paths
 	dist = './dist/';
@@ -19,6 +22,7 @@ var
 gulp.task('develop', function() {
 	gulp.watch(jsGlob, gulp.parallel('scripts'))
 	gulp.watch(scssGlob, gulp.parallel('styles'))
+	gulp.watch(svgGlob, gulp.parallel('sprites'))
 
 });
 
@@ -42,4 +46,10 @@ gulp.task('scripts', function() {
 			}
 		}))
 		.pipe(gulp.dest(dist));
+});
+
+gulp.task('sprites', function () {
+    return gulp.src(svgInput)
+        .pipe(svgSprite())
+        .pipe(gulp.dest(dist));
 });
