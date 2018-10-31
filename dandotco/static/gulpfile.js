@@ -3,7 +3,6 @@ var
 	gulp = require('gulp'),
 	webpack = require('webpack-stream'),
 	sass = require('gulp-sass'),
-	svgSprite = require('gulp-svg-sprites'),
 
 	// watch this glob
 	jsGlob = './js/**/*.js',
@@ -28,7 +27,6 @@ gulp.task('develop', function() {
 
 gulp.task('sprites', function () {
     return gulp.src(svgInput)
-        // .pipe(svgSprite())
         .pipe(gulp.dest(dist));
 });
 

@@ -9,7 +9,6 @@ from dandotco import app
 
 from dandotco.models import bolg
 
-
 @app.route('/')
 def home():
 	return render_template('index.html', route_name='home')
@@ -24,14 +23,16 @@ def view_bolg(bolg_id=0):
 		print(bolg_getter['errors'])
 		return render_template('index.html', bolgs=bolg_getter['bolgs'])
 	single_bolg = bolg_getter['bolgs'][0]
-	return render_template('single.html', bolg=single_bolg, route_name='bolg')
+	tags = bolg_getter['tags']
+	return render_template('single.html', bolg=single_bolg, tags=tags, route_name='bolg')
 
 @app.route('/compose', methods = ['POST', 'GET'])
 def compose_bolg():
 	if (request.method == 'POST'):
 		title = request.form['title']
 		body = request.form['body']
-		new_bolg = bolg.create(title, body)
+		tags = request.form['tags']
+		new_bolg = bolg.create(title, body, tags)
 		return render_template('single.html', bolg=new_bolg, route_name='bolg')
 	else:
 		return render_template('compose.html', route_name='compose')
