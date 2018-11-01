@@ -3,17 +3,17 @@ atomicwrites==1.2.1
 attrs==18.2.0
 backports.shutil-get-terminal-size==1.0.0
 click==6.6
--e git+git@github.com:dwright213/dandotco.git@bf145aee929e6f98f0fd9ce6d58be84439f49584#egg=dandotco
+-e git+git@github.com:dwright213/dandotco.git@ebf5d9af9a5f808377448ecf5eb963f225230828#egg=dandotco
 decorator==4.3.0
 enum34==1.1.6
-Flask==0.11.1
+Flask==1.0.2
 funcsigs==1.0.2
 httplib2==0.9.2
 httpretty==0.8.14
 ipython==5.6.0
 ipython-genutils==0.2.0
 itsdangerous==0.24
-Jinja2==2.8
+Jinja2==2.10
 MarkupSafe==0.23
 more-itertools==4.3.0
 oauth2==1.9.0.post1
@@ -34,4 +34,4 @@ six==1.11.0
 traitlets==4.3.2
 uWSGI==2.0.17
 wcwidth==0.1.7
-Werkzeug==0.11.11
+Werkzeug==0.14.1
