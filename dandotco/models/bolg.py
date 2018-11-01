@@ -27,6 +27,14 @@ class BaseModel(Model):
 class Tag(BaseModel):
 	name = CharField()
 
+	def bolgs(self):
+		return (Bolg
+			.select()
+			.join(Tagging, on=Tagging.bolg)
+			.where(Tagging.tag == self)
+			.order_by(Bolg.title)
+			.dicts())
+		
 
 
 
@@ -35,17 +43,12 @@ class Bolg(BaseModel):
 	body = CharField()
 
 	def tags(self):
-		print('okay good work we called a class level function')
 		return (Tag
 			.select()
 			.join(Tagging, on=Tagging.tag)
 			.where(Tagging.bolg == self)
 			.order_by(Tag.name)
 			.dicts())
-
-
-
-
 
 
 class Tagging(BaseModel):
@@ -64,7 +67,6 @@ def get_some_bolgs(num):
 	dict_bolgs = []
 	for bolg in bolgs:
 		dict_bolgs.append(model_to_dict(bolg))
-
 	return dict_bolgs
 
 def get_a_bolg(bolg_id):
@@ -90,6 +92,13 @@ def get_latest():
 	latest = Bolg.select().order_by(Bolg.id.desc()).first().id
 	return latest
 
+def get_tagged(tag_name):
+	current_tag = Tag.select().where(Tag.name == tag_name).first()
+
+	# tagged_bolgs = Tag.bolgs(current_tag)
+	tagged_bolgs = current_tag.bolgs()
+	print(tagged_bolgs)
+	return tagged_bolgs
 
 def create(title, body, tags):
 	# move all this tag stuff out to its own section/file/whatever, 
@@ -103,14 +112,13 @@ def create(title, body, tags):
 			query = Tag.select()
 			existing_tag = query.where(Tag.name == cleaned_tagname)
 
-			if (not existing_tag.first()):
-				# CREATE NEW TAG, THEN RETURN IT
+			if (existing_tag.first()):
+				existing_tag = existing_tag.first()
+				
+			else:
 				fresh_tag = tag_create(tag)
 				existing_tag = fresh_tag	
 			
-			else:
-				existing_tag = existing_tag.first()
-				
 			tag_ids.append(existing_tag.id)
 
 

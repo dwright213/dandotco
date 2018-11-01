@@ -11,7 +11,7 @@
 			</p>
 			<p>
 			{% for tag in tags %} 
-				<a href="/tagged/{{tag.id}}">{{tag.name}}</a>
+				<a href="/tagged/{{tag.name}}">{{tag.name}}</a>
 				{% if loop.index < tags|length %} | {% endif %} 
 			{% endfor %}	
 			</p>

@@ -1,7 +1,7 @@
 # from datetime import datetime
 from flask import Flask, render_template, request, g, abort, jsonify, json
 from flask import Response
-import pytumblr, os
+import os
 
 from IPython import embed
 
@@ -17,14 +17,18 @@ def home():
 def view_bolg(bolg_id=0):
 	bolg_getter = bolg.get_a_bolg(bolg_id)
 
-	# good place to put our error in a flash message, in the future
-	# til then lets just give user all bolgs and hope they don't notice.
 	if bolg_getter['errors']:
 		print(bolg_getter['errors'])
 		return render_template('index.html', bolgs=bolg_getter['bolgs'])
 	single_bolg = bolg_getter['bolgs'][0]
 	tags = bolg_getter['tags']
 	return render_template('single.html', bolg=single_bolg, tags=tags, route_name='bolg')
+
+@app.route('/tagged/<tag_name>')
+def tagged(tag_name):
+	tagged_bolgs = bolg.get_tagged(tag_name)
+	print(tagged_bolgs)
+	return render_template('index.html', route_name='home')
 
 @app.route('/compose', methods = ['POST', 'GET'])
 def compose_bolg():
