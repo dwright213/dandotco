@@ -26,9 +26,8 @@ def view_bolg(bolg_id=0):
 
 @app.route('/tagged/<tag_name>')
 def tagged(tag_name):
-	tagged_bolgs = bolg.get_tagged(tag_name)
-	print(tagged_bolgs)
-	return render_template('index.html', route_name='home')
+	# tagged_bolgs = bolg.get_tagged(tag_name)
+	return render_template('tagged.html', route_name='tagged', tag_name=tag_name)
 
 @app.route('/compose', methods = ['POST', 'GET'])
 def compose_bolg():
@@ -63,5 +62,12 @@ def api_one(bolg_id=0):
 	resp = jsonify(single_bolg)
 	resp.headers.add('Access-Control-Allow-Origin', '*')
 
+	return resp
+
+@app.route('/api/tagged/<tag_name>')
+def api_tagged(tag_name):
+	tagged_bolgs = bolg.get_tagged(tag_name)
+	resp = jsonify(tagged_bolgs)
+	resp.headers.add('Access-Control-Allow-Origin', '*')
 	return resp
 

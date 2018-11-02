@@ -1,6 +1,5 @@
 from peewee import *
 from playhouse.shortcuts import model_to_dict, dict_to_model
-# from . import tag
 from IPython import embed
 
 import logging
@@ -32,10 +31,9 @@ class Tag(BaseModel):
 			.select()
 			.join(Tagging, on=Tagging.bolg)
 			.where(Tagging.tag == self)
-			.order_by(Bolg.title)
-			.dicts())
-		
+			.order_by(Bolg.title))
 
+		
 
 
 class Bolg(BaseModel):
@@ -47,8 +45,7 @@ class Bolg(BaseModel):
 			.select()
 			.join(Tagging, on=Tagging.tag)
 			.where(Tagging.bolg == self)
-			.order_by(Tag.name)
-			.dicts())
+			.order_by(Tag.name))
 
 
 class Tagging(BaseModel):
@@ -66,7 +63,13 @@ def get_some_bolgs(num):
 	bolgs = Bolg.select()[:num]
 	dict_bolgs = []
 	for bolg in bolgs:
-		dict_bolgs.append(model_to_dict(bolg))
+
+		tag_list = []
+		map(lambda x: tag_list.append(x.name), bolg.tags())
+		dict_bolg = model_to_dict(bolg)
+		dict_bolg['tags'] = tag_list
+		dict_bolgs.append(dict_bolg)
+
 	return dict_bolgs
 
 def get_a_bolg(bolg_id):
@@ -79,12 +82,11 @@ def get_a_bolg(bolg_id):
 		bolg_box['bolgs'] = query[:query.count()] 
 		
 	else:
-		print('thats a valid query..')
 		bolg_box['bolgs'].append(model_to_dict(chosen_bolg[0]))
-	print(chosen_bolg[0].tags())
+
 	
-	for blah in chosen_bolg[0].tags():
-		bolg_box['tags'].append(blah)
+	for bolg in chosen_bolg[0].tags():
+		bolg_box['tags'].append(bolg)
 
 	return bolg_box 
 
@@ -94,10 +96,15 @@ def get_latest():
 
 def get_tagged(tag_name):
 	current_tag = Tag.select().where(Tag.name == tag_name).first()
+	tagged_bolgs = []
+	for bolg in current_tag.bolgs():
+		tag_list = []
+		map(lambda x: tag_list.append(x.name), bolg.tags())
+		dict_bolg = model_to_dict(bolg)
+		dict_bolg['tags'] = tag_list
+		tagged_bolgs.append(dict_bolg)
 
-	# tagged_bolgs = Tag.bolgs(current_tag)
-	tagged_bolgs = current_tag.bolgs()
-	print(tagged_bolgs)
+
 	return tagged_bolgs
 
 def create(title, body, tags):

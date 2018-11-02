@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-
-	<div id="vuecont">
+	<div id="vuecont" data-tag="{{ tag_name }}">
 		<div id="bolg-holder">
 			<bolg-listing   
 				v-for="bolg in bolgs"

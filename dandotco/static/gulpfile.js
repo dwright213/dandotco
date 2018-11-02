@@ -43,7 +43,8 @@ gulp.task('scripts', function() {
 			entry: {
 				home: './js/home.js',
 				bolg: './js/bolg.js',
-				compose: './js/compose.js'
+				compose: './js/compose.js',
+				tagged: './js/tagged.js'
 			},
 			output: {
 				filename: '[name].chunk.js'

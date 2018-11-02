@@ -36,9 +36,18 @@ new Vue({
 	components: {
 		'bolg-listing': bolgListing
 	},
+	methods: {
+		getTag: function() {
+			return this.$el.dataset.tag
+		}
+	},
 	mounted() {
+		
+		// this.myAttribute = this.$el.getAttribute('data-tag');
+		console.log(this.getTag());
+
 		axios
-			.get('/api', { crossdomain: false })
+			.get(`/api/tagged/${this.getTag()}`, { crossdomain: false })
 			.then(response => (this.bolgs = response.data))
 	}
 });

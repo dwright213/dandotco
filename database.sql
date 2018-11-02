@@ -1,12 +1,14 @@
--- let's set up our database
+-- clean and set up database
 
-CREATE TABLE bolgs(
+DROP TABLE IF EXISTS bolg, tag, bolgs_tags;
+
+CREATE TABLE bolg(
   id serial primary key,
   title text not null,
   body text not null
 );
 
-CREATE TABLE tags(
+CREATE TABLE tag(
   id serial primary key,
   name text not null
 );
@@ -21,7 +23,7 @@ CREATE TABLE bolgs_tags(
 -- some fixtures to keep yall dancin
 
 INSERT INTO 
-  bolgs(title, body)
+  bolg(title, body)
 VALUES 
   ('How to eat an entire can of horses in less than 10 seconds', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'),
   ('I have decided to boycott amphibians', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'),
@@ -30,4 +32,46 @@ VALUES
   ('re:Backmasked messages in sports', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'),
   ('Try this one weird trick to eliminate unwanted teeth', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry'),
   ('Top Ten Disappointing Video Game Novelizations', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry');
+
+INSERT INTO
+  tag(name) 
+VALUES
+  ('tupac'),
+  ('nas'),
+  ('rockness monster'),
+  ('booyaa tribe'),
+  ('myka 9'),
+  ('jeru the damaja'),
+  ('kmd');
+
+  INSERT INTO
+    bolgs_tags(bolg_id, tag_id)
+  VALUES 
+    (1,1),
+    (1,2),
+    (1,3),
+    
+    (2,3),
+    (2,6),
+    (2,5),
+
+    (3,1),
+    (3,2),
+    (3,3),
+
+    (4,1),
+    (4,2),
+    (4,3),
+
+    (5,4),
+    (5,5),
+    (5,6),
+
+    (6,2),
+    (6,3),
+    (6,4),
+
+    (7,3),
+    (7,4),
+    (7,5);
 
