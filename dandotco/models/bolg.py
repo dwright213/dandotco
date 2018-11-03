@@ -2,10 +2,10 @@ from peewee import *
 from playhouse.shortcuts import model_to_dict, dict_to_model
 from IPython import embed
 
-import logging
-logger = logging.getLogger('peewee')
-logger.addHandler(logging.StreamHandler())
-logger.setLevel(logging.DEBUG)
+# import logging
+# logger = logging.getLogger('peewee')
+# logger.addHandler(logging.StreamHandler())
+# logger.setLevel(logging.DEBUG)
 
 # DATABASE CONNECTING
 pg_db = PostgresqlDatabase(
@@ -33,19 +33,18 @@ class Tag(BaseModel):
 			.where(Tagging.tag == self)
 			.order_by(Bolg.title))
 
-		
-
 
 class Bolg(BaseModel):
 	title = CharField()
 	body = CharField()
 
 	def tags(self):
-		return (Tag
-			.select()
-			.join(Tagging, on=Tagging.tag)
-			.where(Tagging.bolg == self)
-			.order_by(Tag.name))
+		tag_list = []
+		tag_objects = Tag.select().join(Tagging, on=Tagging.tag).where(Tagging.bolg == self).order_by(Tag.name)
+		
+		map(lambda x: tag_list.append(x.name), tag_objects)
+
+		return(tag_list)
 
 
 class Tagging(BaseModel):
@@ -123,7 +122,7 @@ def create(title, body, tags):
 				existing_tag = existing_tag.first()
 				
 			else:
-				fresh_tag = tag_create(tag)
+				fresh_tag = tag_create(cleaned_tagname)
 				existing_tag = fresh_tag	
 			
 			tag_ids.append(existing_tag.id)
