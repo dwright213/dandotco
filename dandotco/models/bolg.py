@@ -2,10 +2,12 @@ from peewee import *
 from playhouse.shortcuts import model_to_dict, dict_to_model
 from IPython import embed
 
-# import logging
-# logger = logging.getLogger('peewee')
-# logger.addHandler(logging.StreamHandler())
-# logger.setLevel(logging.DEBUG)
+import re, datetime
+
+import logging
+logger = logging.getLogger('peewee')
+logger.addHandler(logging.StreamHandler())
+logger.setLevel(logging.INFO)
 
 # DATABASE CONNECTING
 pg_db = PostgresqlDatabase(
@@ -37,14 +39,20 @@ class Tag(BaseModel):
 class Bolg(BaseModel):
 	title = CharField()
 	body = CharField()
+	created = DateTimeField(default=datetime.datetime.now)
 
 	def tags(self):
 		tag_list = []
-		tag_objects = Tag.select().join(Tagging, on=Tagging.tag).where(Tagging.bolg == self).order_by(Tag.name)
-		
-		map(lambda x: tag_list.append(x.name), tag_objects)
+		tag_objects = (Tag
+						.select()
+						.join(Tagging, on=Tagging.tag)
+						.where(Tagging.bolg == self)
+						.order_by(Tag.name))
 
+		map(lambda x: tag_list.append(x.name), tag_objects)
+		tag_list = list(set(tag_list))
 		return(tag_list)
+
 
 
 class Tagging(BaseModel):
@@ -58,36 +66,27 @@ class Tagging(BaseModel):
 
 
 # BOLG STUFF
+def get_a_bolg(bolg_id):
+	chosen_bolg = Bolg.select().where(Bolg.id == bolg_id).first()
+	dict_bolg = []
+
+	if (not chosen_bolg):
+		print('nonexistent bolg requested')		
+	else:
+		dict_bolg = model_to_dict(chosen_bolg)
+
+	dict_bolg['tags'] = chosen_bolg.tags() 
+	return dict_bolg
+
 def get_some_bolgs(num):
 	bolgs = Bolg.select()[:num]
 	dict_bolgs = []
 	for bolg in bolgs:
-
-		tag_list = []
-		map(lambda x: tag_list.append(x.name), bolg.tags())
 		dict_bolg = model_to_dict(bolg)
-		dict_bolg['tags'] = tag_list
+		dict_bolg['tags'] = bolg.tags()
 		dict_bolgs.append(dict_bolg)
 
 	return dict_bolgs
-
-def get_a_bolg(bolg_id):
-	query = Bolg.select()
-	bolg_box = {'bolgs': [], 'errors': [], 'tags': []}
-	chosen_bolg = query.where(Bolg.id == bolg_id)
-	
-	if (not chosen_bolg):
-		bolg_box['errors'] = 'bolg is not exists?'
-		bolg_box['bolgs'] = query[:query.count()] 
-		
-	else:
-		bolg_box['bolgs'].append(model_to_dict(chosen_bolg[0]))
-
-	
-	for bolg in chosen_bolg[0].tags():
-		bolg_box['tags'].append(bolg)
-
-	return bolg_box 
 
 def get_latest():
 	latest = Bolg.select().order_by(Bolg.id.desc()).first().id
@@ -97,51 +96,53 @@ def get_tagged(tag_name):
 	current_tag = Tag.select().where(Tag.name == tag_name).first()
 	tagged_bolgs = []
 	for bolg in current_tag.bolgs():
-		tag_list = []
-		map(lambda x: tag_list.append(x.name), bolg.tags())
 		dict_bolg = model_to_dict(bolg)
-		dict_bolg['tags'] = tag_list
+		dict_bolg['tags'] = bolg.tags()
 		tagged_bolgs.append(dict_bolg)
-
-
 	return tagged_bolgs
 
 def create(title, body, tags):
-	# move all this tag stuff out to its own section/file/whatever, 
-	# once this works.
-
-	tag_ids = []
-
+	tags_found = []
 	if (tags):
-		for tag in tags.split(','):
-			cleaned_tagname = tag.strip()
-			query = Tag.select()
-			existing_tag = query.where(Tag.name == cleaned_tagname)
+		tags_found = tags_create(tags)
 
-			if (existing_tag.first()):
-				existing_tag = existing_tag.first()
-				
-			else:
-				fresh_tag = tag_create(cleaned_tagname)
-				existing_tag = fresh_tag	
-			
-			tag_ids.append(existing_tag.id)
-
+	clean_title = title.strip()
+	clean_title = re.sub(r'\s{2,}', ' ', clean_title)
 
 	try:
-		new_bolg = Bolg(title=title, body=body)
+		new_bolg = Bolg(title=clean_title, body=body)
 		new_bolg.save()
+		for tag_found in tags_found:
+			tagging_create(new_bolg.id, tag_found.id)
 
-		for tag_id in tag_ids:
-			tagging_create(new_bolg.id, tag_id)
-
-		return new_bolg
+		return get_a_bolg(new_bolg.id)
 	except:
 		return 'problems happened whist creating a bolg.'
 
 
 
 # TAG STUFF
+
+# make and return a list of tags from a string provided by user
+def tags_create(tag_string):
+	tag_list = []
+	for tag in tag_string.split(','):
+		cleaned_tagname = tag.strip()
+		current_tag = Tag.select().where(Tag.name == cleaned_tagname)
+
+		# if this tag already exists, use the one we've got.
+		if (current_tag.first()):
+			current_tag = current_tag.first()
+			
+		else:
+			current_tag = tag_create(cleaned_tagname)	
+
+		tag_list.append(current_tag)
+
+	return tag_list
+
+
+
 def tag_create(name):
 	try:
 		new_tag = Tag(name=name)

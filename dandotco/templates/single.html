@@ -10,9 +10,9 @@
 				{{bolg.body}}	
 			</p>
 			<p>
-			{% for tag in tags %} 
-				<a href="/tagged/{{tag.name}}">{{tag.name}}</a>
-				{% if loop.index < tags|length %} | {% endif %} 
+			{% for tag in bolg.tags %} 
+				<a href="/tagged/{{tag}}">{{tag}}</a>
+				{% if loop.index < bolg.tags|length %} // {% endif %} 
 			{% endfor %}	
 			</p>
 		</div>

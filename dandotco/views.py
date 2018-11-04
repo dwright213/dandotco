@@ -4,9 +4,7 @@ from flask import Response
 import os
 
 from IPython import embed
-
 from dandotco import app
-
 from dandotco.models import bolg
 
 @app.route('/')
@@ -15,14 +13,8 @@ def home():
 
 @app.route('/bolg/<int:bolg_id>')
 def view_bolg(bolg_id=0):
-	bolg_getter = bolg.get_a_bolg(bolg_id)
-
-	if bolg_getter['errors']:
-		print(bolg_getter['errors'])
-		return render_template('index.html', bolgs=bolg_getter['bolgs'])
-	single_bolg = bolg_getter['bolgs'][0]
-	tags = bolg_getter['tags']
-	return render_template('single.html', bolg=single_bolg, tags=tags, route_name='bolg')
+	chosen_bolg = bolg.get_a_bolg(bolg_id)
+	return render_template('single.html', bolg=chosen_bolg, route_name='bolg')
 
 @app.route('/tagged/<tag_name>')
 def tagged(tag_name):
@@ -40,7 +32,6 @@ def compose_bolg():
 	else:
 		return render_template('compose.html', route_name='compose')
 
-
 # ajax routes
 
 @app.route('/api')
@@ -55,7 +46,6 @@ def api_one(bolg_id=0):
 	bolg_getter = bolg.get_a_bolg(bolg_id)
 
 	if bolg_getter['errors']:
-		print(bolg_getter['errors'])
 		single_bolg = {'error': 'bolg not found'}
 	else: single_bolg = bolg_getter['bolgs'][0]
 
