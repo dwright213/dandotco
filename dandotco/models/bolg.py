@@ -33,7 +33,7 @@ class Tag(BaseModel):
 			.select()
 			.join(Tagging, on=Tagging.bolg)
 			.where(Tagging.tag == self)
-			.order_by(Bolg.title))
+			.order_by(Bolg.created))
 
 
 class Bolg(BaseModel):
