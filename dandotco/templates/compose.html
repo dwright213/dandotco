@@ -11,7 +11,7 @@
 			<input type="text" name="title" id="input-title" class="compose-form__input compose-form__input--half-width" placeholder="title">
 			<input type="text" name="slug" id="input-slug" class="compose-form__input compose-form__input--half-width" placeholder="slug">
 			<input type="text" name="excerpt" id="input-excerpt" class="compose-form__input" placeholder="excerpt">
-			<textarea type="text" name="body" id="input-body" class="compose-form__input compose-form__input--body" placeholder="body"></textarea>
+			<textarea type="text" name="body" id="input-body" class="compose-form__input compose-form__input--body" placeholder="body">{{ lipsum(n=5, html=False, min=20, max=100) }}</textarea>
 			<input type="text" name="tags" id="input-tags" class="compose-form__input" placeholder="tags">
 			<button type="submit" id="submit" class="compose-form__button">submit</button> 
 

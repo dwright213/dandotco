@@ -84,8 +84,8 @@ def get_a_bolg(bolg_id):
 	return dict_bolg
 
 def get_some_bolgs(num):
-	bolgs = Bolg.select()[:num]
 	dict_bolgs = []
+	bolgs = Bolg.select().order_by(Bolg.id.desc())[:num]
 	for bolg in bolgs:
 		dict_bolg = model_to_dict(bolg)
 		dict_bolg['tags'] = bolg.tags()

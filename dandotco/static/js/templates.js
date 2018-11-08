@@ -6,7 +6,7 @@ export var
 					{{ title }}
 				</a>
 			</h3>
-			<p>{{ body }}</p>
+			<p>{{ excerpt }}</p>
 			<br>
 
 			<span v-for="tag, index in tags">

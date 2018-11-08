@@ -1,5 +1,5 @@
-import unittest
 from dandotco.models.bolg import *
+import unittest
 import datetime
 
 
@@ -58,7 +58,6 @@ class BolgTests(unittest.TestCase):
 		"""
 		crappy_title_bolg = create( 
 			title="   im great at typing!!     :D   ", 
-			# slug=testbolg_slug, 
 			excerpt=testbolg_excerpt, 
 			body=testbolg_body,
 			tags=testbolg_tags)

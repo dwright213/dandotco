@@ -71,8 +71,8 @@ def compose_bolg():
 		body = request.form['body']
 		tags = request.form['tags']
 		new_bolg = bolg.create(title, body, tags, excerpt=excerpt)
-		bolg_id = str(new_bolg['id'])
-		return redirect(str('/bolg/'+ bolg_id))
+		new_bolg['slug']
+		return redirect(str('/bolg/'+ new_bolg['slug']))
 
 	else:
 		return render_template('compose.html', route_name='compose')

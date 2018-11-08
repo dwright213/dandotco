@@ -10,14 +10,14 @@ var
 	bolgs = [],
 
 	bolgListing = {
-		props: ['title', 'id', 'body', 'tags'],
+		props: ['title', 'slug', 'excerpt', 'id', 'body', 'tags'],
 		template: bolgTile,
 		methods: {
 			tileId: function() {
 				return 'bolg-' + this.id
 			},
 			bolgLink: function() {
-				return '/bolg/' + this.id
+				return '/bolg/' + this.slug
 			},
 			tagLink: function(tag) {
 				return '/tagged/' + tag
