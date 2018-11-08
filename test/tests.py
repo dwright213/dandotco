@@ -12,8 +12,10 @@ MODELS = [Bolg, Tag, Tagging]
 # use an in-memory SQLite for tests.
 test_db = SqliteDatabase(':memory:')
 
-testbolg_title = 'yo'
-testbolg_body = 'mtv raps'
+testbolg_title = 'yo mtv raps'
+testbolg_slug = 'yo-mtv-raps'
+testbolg_body = 'Important anecdotes about a cultural phenomenon. A scientific study of the Ed Lover Dance.'
+testbolg_excerpt = 'ed lover dancing intensifies'
 testbolg_tags = 'Ed Lover, Dr. Dre'
 
 class BolgTests(unittest.TestCase):
@@ -27,8 +29,10 @@ class BolgTests(unittest.TestCase):
 		
 		self.test_bolg = create( 
 			title=testbolg_title, 
+			slug=testbolg_slug, 
 			body=testbolg_body,
 			tags=testbolg_tags,
+			excerpt=testbolg_excerpt, 
 		)
 
 	def tearDown(self):
@@ -50,10 +54,12 @@ class BolgTests(unittest.TestCase):
 
 	def test_bolg_title_cleaning(self):
 		"""
-		test that even with crappy inputs, we are titling the blogs right.
+		test that even with crappy inputs, we are titling the bolgs right.
 		"""
 		crappy_title_bolg = create( 
 			title="   im great at typing!!     :D   ", 
+			# slug=testbolg_slug, 
+			excerpt=testbolg_excerpt, 
 			body=testbolg_body,
 			tags=testbolg_tags)
 		self.assertEqual(crappy_title_bolg['title'], "im great at typing!! :D")
@@ -94,6 +100,70 @@ class BolgTests(unittest.TestCase):
 		self.assertEqual(len(tags), len(correct_tag_number))
 
 
-	
+	def test_bolg_slug_creation(self):
+		"""
+		test that we are creating a dasherized, lowercased slug for our bolg model 
+		even if slug field is blank.
+		"""
+		test_bolg = create( 
+			title="Aol is my Internet pRoViDeR", 
+			slug='', 
+			excerpt=testbolg_excerpt, 
+			body=testbolg_body,
+			tags=testbolg_tags)
 
+		self.assertEqual(test_bolg['slug'], 'aol-is-my-internet-provider' )
 
+	def test_bolg_slug_characters(self):
+		"""
+		test that we are creating a dasherized, lowercased slug for our bolg model ,
+		with no special characters.
+		"""
+		test_bolg = create( 
+			title='i am l33t h/\\xx0r, who l!stens to ?uestlove', 
+			slug='i am l33t h/\\xx0r, who -->l!stens to ?uestlove', 
+			excerpt=testbolg_excerpt, 
+			body=testbolg_body,
+			tags=testbolg_tags)
+
+		self.assertEqual(test_bolg['slug'], 'i-am-l33t-hxx0r-who-lstens-to-uestlove' )
+
+	def test_bolg_slug_unique(self):
+		"""
+		test that the slug is unique, so it can be used for a memorable
+		bolg url.
+		"""
+		test_bolg_2 = create( 
+			title=testbolg_title,
+			slug='',
+			excerpt=testbolg_excerpt, 
+			body=testbolg_body,
+			tags=testbolg_tags)
+
+		self.assertNotEqual(test_bolg_2['slug'], self.test_bolg['slug'])
+
+	def test_bolg_excerpt_acceptance(self):
+		"""
+		test that we create a bolg excerpt when given one.
+		"""
+		self.assertEqual(self.test_bolg['excerpt'], testbolg_excerpt)
+
+	def test_bolg_excerpt_creation(self):
+		"""
+		test that we properly generate a bolg excerpt when not given one.
+		"""
+		test_bolg = create( 
+			title=testbolg_title,
+			slug=testbolg_slug,
+			excerpt=' ', 
+			body=testbolg_body,
+			tags=testbolg_tags)
+		self.assertEqual(test_bolg['excerpt'], 'Important anecdotes about a cultural phenomenon.')
+
+	def test_bolg_slug_get_by(self):
+		"""
+		test that we can get bolgs by their slugs, in a format useful for routing.
+		"""
+		test_bolg = get_by_slug('yo-mtv-raps')
+
+		self.assertEqual(test_bolg['id'], self.test_bolg['id'])

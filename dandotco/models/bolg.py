@@ -107,29 +107,39 @@ def get_tagged(tag_name):
 	return tagged_bolgs
 
 def get_by_slug(slug):
-	slugged = Bolg.select().where(Bolg.slug == slug)
-	return slugged
+	slugged = Bolg.select().where(Bolg.slug == slug).first()
+	return model_to_dict(slugged)
 
-def create(title, slug, excerpt, body, tags):
+def create(title, body, tags, **kwargs):
 	tags_found = []
 	if (tags):
 		tags_found = tags_create(tags)
 
-	if (not slug):
-		slug = title.replace(' ', '-')
-	
-	slugged = get_by_slug(slug)
+	clean_title = title.strip()
+	clean_title = re.sub(r'\s{2,}', ' ', clean_title)
+
+	if ('slug' in kwargs) and (len(kwargs['slug']) > 1):
+		slug = re.sub(r"[()\"\\#/@;:<>{}`+=~|.!?,]", "", kwargs['slug'])
+	else:
+		slug = re.sub(r"[()\"\\#/@;:<>{}`+=~|.!?,]", "", clean_title)
+
+
+	slug = (slug.replace(' ', '-')
+			.replace('--', '')
+			.lower())
+
+
+	slugged = Bolg.select().where(Bolg.slug == slug)
+
 	if (slugged.count()):
 		num = (slugged.count() + 1)
 		slug = (slug + '-' + str(num))
 
 
-	if (not excerpt):
-		print('blank excerpt.')
-
-
-	clean_title = title.strip()
-	clean_title = re.sub(r'\s{2,}', ' ', clean_title)
+	if ('excerpt' in kwargs) and (len(kwargs['excerpt']) > 1):
+		excerpt = kwargs['excerpt']
+	else:
+		excerpt = body.split('.', 1)[0].capitalize() + '.'
 
 
 	try:

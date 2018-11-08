@@ -70,7 +70,7 @@ def compose_bolg():
 		excerpt = request.form['excerpt']
 		body = request.form['body']
 		tags = request.form['tags']
-		new_bolg = bolg.create(title, slug, excerpt, body, tags)
+		new_bolg = bolg.create(title, body, tags, excerpt=excerpt)
 		bolg_id = str(new_bolg['id'])
 		return redirect(str('/bolg/'+ bolg_id))
 

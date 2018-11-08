@@ -7,7 +7,8 @@ CREATE TABLE bolg(
   title text not null,
   slug text not null,
   excerpt text,
-  body text not null,
+  body text,
+  body_src text not null,
   created date not null
 );
 
