@@ -1,10 +1,12 @@
 -- clean and set up database
 
-DROP TABLE bolg, tag, bolgs_tags;
+DROP TABLE IF EXISTS scientist, bolg, tag, bolgs_tags;
 
 CREATE TABLE bolg(
   id serial primary key,
   title text not null,
+  slug text not null,
+  excerpt text,
   body text not null,
   created date not null
 );
@@ -22,7 +24,6 @@ CREATE TABLE bolgs_tags(
 
 
 -- -- some fixtures to keep yall dancin
-
 -- INSERT INTO 
 --   bolg(title, body, created)
 -- VALUES 

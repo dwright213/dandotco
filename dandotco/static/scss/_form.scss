@@ -1,0 +1,34 @@
+
+@mixin input-spacing--mobile {
+	margin: 3px;
+	padding: 5px;
+}
+
+#form-holder {
+	width: 100%;
+}
+
+.compose-form {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+.compose-form__input {
+	border: 1px solid #c7c7c7;
+	font-size: 1rem;
+	@include input-spacing--mobile; 
+}
+
+.compose-form__input--body {
+	height:30rem;
+}
+
+.compose-form__input--half-width {
+	flex-grow: 1;	
+}
+.compose-form__button {
+	border: 1px solid #c7c7c7;
+	font-size: 1rem;
+	background-color: #fff;
+	@include input-spacing--mobile; 
+}

@@ -1,7 +1,7 @@
-@keyframes accordion-open {
-	from {height: 0px;}
-	to {height: $nav-item-height;}
-}
+// @keyframes accordion-open {
+// 	from {height: 0px;}
+// 	to {height: $nav-item-height;}
+// }
 
 @mixin main-transition {
 	transition: all .3s cubic-bezier(0.05, 0.28, 0.05, 0.81);

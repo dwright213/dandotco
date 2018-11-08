@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div id="bolg-holder">
+		<h3>
+			<i>
+				"join are lovely website!"
+			</i>
+		</h3>
+
+		<form method="post" action="/login">
+				<br>
+				<input type="text" name="username" placeholder="username">
+				<br>
+				<input type="password" name="password" placeholder="password">
+				<br>
+				<button>
+					login
+				</button> 
+
+		</form>
+
+	</div>
+{% endblock %}

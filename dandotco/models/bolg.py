@@ -4,10 +4,13 @@ from IPython import embed
 
 import re, datetime
 
-import logging
-logger = logging.getLogger('peewee')
-logger.addHandler(logging.StreamHandler())
-logger.setLevel(logging.INFO)
+from werkzeug.security import generate_password_hash, \
+     check_password_hash
+
+# import logging
+# logger = logging.getLogger('peewee')
+# logger.addHandler(logging.StreamHandler())
+# logger.setLevel(logging.INFO)
 
 # DATABASE CONNECTING
 pg_db = PostgresqlDatabase(
@@ -38,6 +41,8 @@ class Tag(BaseModel):
 
 class Bolg(BaseModel):
 	title = CharField()
+	slug = CharField()
+	excerpt = CharField()
 	body = CharField()
 	created = DateTimeField(default=datetime.datetime.now)
 
@@ -47,7 +52,7 @@ class Bolg(BaseModel):
 						.select()
 						.join(Tagging, on=Tagging.tag)
 						.where(Tagging.bolg == self)
-						.order_by(Tag.name))
+						.order_by(Tagging.id))
 
 		map(lambda x: tag_list.append(x.name), tag_objects)
 		tag_list = list(set(tag_list))
@@ -101,16 +106,34 @@ def get_tagged(tag_name):
 		tagged_bolgs.append(dict_bolg)
 	return tagged_bolgs
 
-def create(title, body, tags):
+def get_by_slug(slug):
+	slugged = Bolg.select().where(Bolg.slug == slug)
+	return slugged
+
+def create(title, slug, excerpt, body, tags):
 	tags_found = []
 	if (tags):
 		tags_found = tags_create(tags)
 
+	if (not slug):
+		slug = title.replace(' ', '-')
+	
+	slugged = get_by_slug(slug)
+	if (slugged.count()):
+		num = (slugged.count() + 1)
+		slug = (slug + '-' + str(num))
+
+
+	if (not excerpt):
+		print('blank excerpt.')
+
+
 	clean_title = title.strip()
 	clean_title = re.sub(r'\s{2,}', ' ', clean_title)
 
+
 	try:
-		new_bolg = Bolg(title=clean_title, body=body)
+		new_bolg = Bolg(title=clean_title, slug=slug, excerpt=excerpt, body=body)
 		new_bolg.save()
 		for tag_found in tags_found:
 			tagging_create(new_bolg.id, tag_found.id)

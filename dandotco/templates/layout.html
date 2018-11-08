@@ -13,8 +13,21 @@
 			<div id="header">
 			
 				{% include 'header.html' %}
-				
+
+
+				{% with messages = get_flashed_messages() %}
+					{% if messages %}
+						<ul class=flashes>
+							{% for message in messages %}
+								<li>
+									{{ message }}
+								</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				{% endwith %}
 			</div>
+
 			<div id="nav">
 				{% include 'nav.html' %}
 			</div>
@@ -33,10 +46,10 @@
 			<div id="footer">
 
 				{% include 'footer.html' %}
-			
+
 			</div>
 		</div>
-	 </body>
+	</body>
 	<script src="/static/dist/{{route_name}}.chunk.js"></script>
 </html>
 
