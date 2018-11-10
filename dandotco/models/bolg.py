@@ -108,6 +108,8 @@ def get_tagged(tag_name):
 
 def get_by_slug(slug):
 	slugged = Bolg.select().where(Bolg.slug == slug).first()
+	dict_slugged = model_to_dict(slugged)
+	dict_slugged['tags'] = slugged.tags() 
 	return model_to_dict(slugged)
 
 def create(title, body, tags, **kwargs):

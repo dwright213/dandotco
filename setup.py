@@ -14,7 +14,7 @@ setup(
 		'Jinja2==2.8',
 		'MarkupSafe==0.23',
 		'oauth2==1.9.0.post1',
-		# 'uWSGI==2.0.13.1',
+		'uWSGI==2.0.13.1',
 		'Werkzeug==0.11.11'
 
 	],
