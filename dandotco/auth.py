@@ -66,13 +66,13 @@ def compose_bolg():
 
 	if (request.method == 'POST'):
 		title = request.form['title']
-		slug = request.form['slug']
+		perma = request.form['perma']
 		excerpt = request.form['excerpt']
 		body = request.form['body']
 		tags = request.form['tags']
 		new_bolg = bolg.create(title, body, tags, excerpt=excerpt)
-		new_bolg['slug']
-		return redirect(str('/bolg/'+ new_bolg['slug']))
+		new_bolg['perma']
+		return redirect(str('/bolg/'+ new_bolg['perma']))
 
 	else:
 		return render_template('compose.html', route_name='compose')

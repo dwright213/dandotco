@@ -13,7 +13,7 @@ MODELS = [Bolg, Tag, Tagging]
 test_db = SqliteDatabase(':memory:')
 
 testbolg_title = 'yo mtv raps'
-testbolg_slug = 'yo-mtv-raps'
+testbolg_perma = 'yo-mtv-raps'
 testbolg_body = 'Important anecdotes about a cultural phenomenon. A scientific study of the Ed Lover Dance.'
 testbolg_excerpt = 'ed lover dancing intensifies'
 testbolg_tags = 'Ed Lover, Dr. Dre'
@@ -29,7 +29,7 @@ class BolgTests(unittest.TestCase):
 		
 		self.test_bolg = create( 
 			title=testbolg_title, 
-			slug=testbolg_slug, 
+			perma=testbolg_perma, 
 			body=testbolg_body,
 			tags=testbolg_tags,
 			excerpt=testbolg_excerpt, 
@@ -99,47 +99,61 @@ class BolgTests(unittest.TestCase):
 		self.assertEqual(len(tags), len(correct_tag_number))
 
 
-	def test_bolg_slug_creation(self):
+	def test_bolg_perma_creation(self):
 		"""
-		test that we are creating a dasherized, lowercased slug for our bolg model 
-		even if slug field is blank.
+		test that we are creating a dasherized, lowercased perma for our bolg model 
+		even if perma field is blank.
 		"""
 		test_bolg = create( 
 			title="Aol is my Internet pRoViDeR", 
-			slug='', 
+			perma='', 
 			excerpt=testbolg_excerpt, 
 			body=testbolg_body,
 			tags=testbolg_tags)
 
-		self.assertEqual(test_bolg['slug'], 'aol-is-my-internet-provider' )
+		self.assertEqual(test_bolg['perma'], 'aol-is-my-internet-provider' )
 
-	def test_bolg_slug_characters(self):
+	def test_bolg_perma_characters(self):
 		"""
-		test that we are creating a dasherized, lowercased slug for our bolg model ,
+		test that we are creating a dasherized, lowercased perma for our bolg model ,
 		with no special characters.
 		"""
 		test_bolg = create( 
 			title='i am l33t h/\\xx0r, who l!stens to ?uestlove', 
-			slug='i am l33t h/\\xx0r, who -->l!stens to ?uestlove', 
+			perma='i am l33t h/\\xx0r, who -->l!stens to ?uestlove', 
 			excerpt=testbolg_excerpt, 
 			body=testbolg_body,
 			tags=testbolg_tags)
 
-		self.assertEqual(test_bolg['slug'], 'i-am-l33t-hxx0r-who-lstens-to-uestlove' )
+		self.assertEqual(test_bolg['perma'], 'i-am-l33t-hxx0r-who-lstens-to-uestlove' )
 
-	def test_bolg_slug_unique(self):
+	def test_bolg_perma_character_count(self):
 		"""
-		test that the slug is unique, so it can be used for a memorable
+		test that our bolg's generated permalink character count is <50.
+		"""
+		test_bolg = create( 
+			title='Roberto Duran, Marvin Hagler, Sugar Ray Leonard, and Thomas Hearns', 
+			perma='', 
+			excerpt=testbolg_excerpt, 
+			body=testbolg_body,
+			tags=testbolg_tags)
+		
+		char_length = len(test_bolg['perma'])
+		self.assertEqual(char_length, 50 )
+
+	def test_bolg_perma_unique(self):
+		"""
+		test that the perma is unique, so it can be used for a memorable
 		bolg url.
 		"""
 		test_bolg_2 = create( 
 			title=testbolg_title,
-			slug='',
+			perma='',
 			excerpt=testbolg_excerpt, 
 			body=testbolg_body,
 			tags=testbolg_tags)
 
-		self.assertNotEqual(test_bolg_2['slug'], self.test_bolg['slug'])
+		self.assertNotEqual(test_bolg_2['perma'], self.test_bolg['perma'])
 
 	def test_bolg_excerpt_acceptance(self):
 		"""
@@ -153,16 +167,16 @@ class BolgTests(unittest.TestCase):
 		"""
 		test_bolg = create( 
 			title=testbolg_title,
-			slug=testbolg_slug,
+			perma=testbolg_perma,
 			excerpt=' ', 
 			body=testbolg_body,
 			tags=testbolg_tags)
 		self.assertEqual(test_bolg['excerpt'], 'Important anecdotes about a cultural phenomenon.')
 
-	def test_bolg_slug_get_by(self):
+	def test_bolg_perma_get_by(self):
 		"""
-		test that we can get bolgs by their slugs, in a format useful for routing.
+		test that we can get bolgs by their permas, in a format useful for routing.
 		"""
-		test_bolg = get_by_slug('yo-mtv-raps')
+		test_bolg = get_by_perma('yo-mtv-raps')
 
 		self.assertEqual(test_bolg['id'], self.test_bolg['id'])

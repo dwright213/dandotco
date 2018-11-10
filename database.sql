@@ -1,11 +1,11 @@
 -- clean and set up database
 
-DROP TABLE IF EXISTS scientist, bolg, tag, bolgs_tags;
+DROP TABLE IF EXISTS bolg, tag, bolgs_tags;
 
 CREATE TABLE bolg(
   id serial primary key,
   title text not null,
-  slug text not null,
+  perma text not null,
   excerpt text,
   body text,
   body_src text not null,

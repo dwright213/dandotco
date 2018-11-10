@@ -12,9 +12,12 @@ from dandotco.models import bolg
 def home():
 	return render_template('index.html', route_name='home')
 
-@app.route('/bolg/<slug>')
-def view_bolg(slug):
-	chosen_bolg = bolg.get_by_slug(slug)
+@app.route('/bolg/<perma>')
+def view_bolg(perma):
+	chosen_bolg = bolg.get_by_perma(perma)
+	print('-0-0-0-0-0-0-00-0--0-0')
+	print(chosen_bolg)
+	print('-0-0-0-0-0-0-00-0--0-0')
 	return render_template('single.html', bolg=chosen_bolg, route_name='bolg')
 
 @app.route('/tagged/<tag_name>')

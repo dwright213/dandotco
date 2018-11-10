@@ -41,7 +41,7 @@ class Tag(BaseModel):
 
 class Bolg(BaseModel):
 	title = CharField()
-	slug = CharField()
+	perma = CharField()
 	excerpt = CharField()
 	body = CharField()
 	created = DateTimeField(default=datetime.datetime.now)
@@ -106,11 +106,11 @@ def get_tagged(tag_name):
 		tagged_bolgs.append(dict_bolg)
 	return tagged_bolgs
 
-def get_by_slug(slug):
-	slugged = Bolg.select().where(Bolg.slug == slug).first()
-	dict_slugged = model_to_dict(slugged)
-	dict_slugged['tags'] = slugged.tags() 
-	return model_to_dict(slugged)
+def get_by_perma(perma):
+	permad = Bolg.select().where(Bolg.perma == perma).first()
+	dict_permad = model_to_dict(permad)
+	dict_permad['tags'] = permad.tags()
+	return dict_permad
 
 def create(title, body, tags, **kwargs):
 	tags_found = []
@@ -120,22 +120,23 @@ def create(title, body, tags, **kwargs):
 	clean_title = title.strip()
 	clean_title = re.sub(r'\s{2,}', ' ', clean_title)
 
-	if ('slug' in kwargs) and (len(kwargs['slug']) > 1):
-		slug = re.sub(r"[()\"\\#/@;:<>{}`+=~|.!?,]", "", kwargs['slug'])
+	if ('perma' in kwargs) and (len(kwargs['perma']) > 1):
+		perma = re.sub(r"[()\"\\#/@;:<>{}`+=~|.!?,]", "", kwargs['perma'])
 	else:
-		slug = re.sub(r"[()\"\\#/@;:<>{}`+=~|.!?,]", "", clean_title)
+		perma = re.sub(r"[()\"\\#/@;:<>{}`+=~|.!?,]", "", clean_title)
 
 
-	slug = (slug.replace(' ', '-')
+	perma = (perma.replace(' ', '-')
 			.replace('--', '')
 			.lower())
 
+	if (len(perma)>50):
+		perma = perma[:50]
 
-	slugged = Bolg.select().where(Bolg.slug == slug)
-
-	if (slugged.count()):
-		num = (slugged.count() + 1)
-		slug = (slug + '-' + str(num))
+	permad = Bolg.select().where(Bolg.perma == perma)
+	if (permad.count()):
+		num = (permad.count() + 1)
+		perma = (perma + '-' + str(num))
 
 
 	if ('excerpt' in kwargs) and (len(kwargs['excerpt']) > 1):
@@ -145,7 +146,7 @@ def create(title, body, tags, **kwargs):
 
 
 	try:
-		new_bolg = Bolg(title=clean_title, slug=slug, excerpt=excerpt, body=body)
+		new_bolg = Bolg(title=clean_title, perma=perma, excerpt=excerpt, body=body)
 		new_bolg.save()
 		for tag_found in tags_found:
 			tagging_create(new_bolg.id, tag_found.id)
