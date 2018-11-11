@@ -172,7 +172,23 @@ class BolgTests(unittest.TestCase):
 			body=testbolg_body,
 			tags=testbolg_tags)
 		
-		self.assertEqual(test_bolg['excerpt'], 'Important anecdotes about a cultural phenomenon.')
+		self.assertIn('Important anecdotes about a cultural phenomenon.', test_bolg['excerpt'])
+
+	def test_bolg_excerpt_not_contains_markdown(self):
+		"""
+		test that we are stripping some basic markdown stuff from our excerpt.
+		"""
+		test_bolg = create( 
+			title=testbolg_title,
+			perma=testbolg_perma,
+			excerpt='', 
+			body='''# HEADLINES,
+			> block quotes
+			
+			''',
+			tags=testbolg_tags)
+
+		self.assertIn('Headlines, block quotes', test_bolg['excerpt'])
 
 	def test_bolg_perma_get_by(self):
 		"""

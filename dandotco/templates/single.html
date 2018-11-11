@@ -12,7 +12,7 @@
 				{{bolg.excerpt}}
 			</p>
 			<p>
-				{{bolg.body}}	
+				{{bolg.body | safe}}	
 			</p>
 			<p>
 			{% for tag in bolg.tags %} 

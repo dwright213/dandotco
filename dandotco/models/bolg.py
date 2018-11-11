@@ -143,7 +143,11 @@ def create(title, body, tags, **kwargs):
 	if ('excerpt' in kwargs) and (len(kwargs['excerpt']) > 1):
 		excerpt = kwargs['excerpt']
 	else:
-		excerpt = body.split('.', 1)[0].capitalize() + '.'
+		excerpt = re.sub(r"[#>\n\t]", "", body.split('.', 1)[0]).strip().capitalize()
+		print('=-=-=-=-=-=-=0=0=')
+		print(excerpt.capitalize() + '.')
+		print('=-=-=-=-=-=-=0=0=')
+		excerpt = markdown.markdown(excerpt + '.')
 
 	body_html = markdown.markdown(body)
 
