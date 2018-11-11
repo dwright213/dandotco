@@ -188,7 +188,7 @@ class BolgTests(unittest.TestCase):
 			''',
 			tags=testbolg_tags)
 
-		self.assertIn('Headlines, block quotes', test_bolg['excerpt'])
+		self.assertIn('Headlines, block quotes.', test_bolg['excerpt'])
 
 	def test_bolg_perma_get_by(self):
 		"""

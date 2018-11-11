@@ -15,9 +15,6 @@ def home():
 @app.route('/bolg/<perma>')
 def view_bolg(perma):
 	chosen_bolg = bolg.get_by_perma(perma)
-	print('-0-0-0-0-0-0-00-0--0-0')
-	print(chosen_bolg)
-	print('-0-0-0-0-0-0-00-0--0-0')
 	return render_template('single.html', bolg=chosen_bolg, route_name='bolg')
 
 @app.route('/tagged/<tag_name>')
@@ -29,33 +26,4 @@ def tagged(tag_name):
 def bolg_by_id(bolg_id=0):
 	chosen_bolg = bolg.get_a_bolg(bolg_id)
 	return render_template('single.html', bolg=chosen_bolg, route_name='bolg')
-
-
-# ajax routes
-@app.route('/api')
-def api_all():
-	all_bolgs = bolg.get_some_bolgs(100)
-	resp = jsonify(all_bolgs)
-	resp.headers.add('Access-Control-Allow-Origin', '*')
-	return resp
-
-@app.route('/api/bolg/<int:bolg_id>')
-def api_one(bolg_id=0):
-	bolg_getter = bolg.get_a_bolg(bolg_id)
-
-	if bolg_getter['errors']:
-		single_bolg = {'error': 'bolg not found'}
-	else: single_bolg = bolg_getter['bolgs'][0]
-
-	resp = jsonify(single_bolg)
-	resp.headers.add('Access-Control-Allow-Origin', '*')
-
-	return resp
-
-@app.route('/api/tagged/<tag_name>')
-def api_tagged(tag_name):
-	tagged_bolgs = bolg.get_tagged(tag_name)
-	resp = jsonify(tagged_bolgs)
-	resp.headers.add('Access-Control-Allow-Origin', '*')
-	return resp
 

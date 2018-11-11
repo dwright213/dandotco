@@ -16,9 +16,11 @@ app.config.from_mapping(
 
 
 import dandotco.views
+import dandotco.api
 import dandotco.auth
 
 
 app.register_blueprint(auth.bp)
+app.register_blueprint(ajax.bp)
 
 

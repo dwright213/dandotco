@@ -29,7 +29,7 @@ def login_required(f):
 # 		flash('LOGGED IN')
 
 
-@bp.route('/login/', methods=('GET', 'POST'))
+@bp.route('/login', methods=['GET', 'POST'])
 def login():
 	if request.method == 'POST':
 		username = request.form['username']
@@ -60,7 +60,7 @@ def login():
 
 
 
-@bp.route('/compose/', methods = ['POST', 'GET'])
+@bp.route('/compose', methods = ['POST', 'GET'])
 @login_required
 def compose_bolg():
 
