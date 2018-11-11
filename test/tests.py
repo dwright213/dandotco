@@ -69,7 +69,7 @@ class BolgTests(unittest.TestCase):
 		"""
 		test that we are correctly creating our test bolg's body.
 		"""
-		self.assertEqual(self.test_bolg['body'], testbolg_body)
+		self.assertIn(testbolg_body, self.test_bolg['body'])
 
 
 
@@ -137,7 +137,7 @@ class BolgTests(unittest.TestCase):
 			excerpt=testbolg_excerpt, 
 			body=testbolg_body,
 			tags=testbolg_tags)
-		
+
 		char_length = len(test_bolg['perma'])
 		self.assertEqual(char_length, 50 )
 
@@ -171,6 +171,7 @@ class BolgTests(unittest.TestCase):
 			excerpt=' ', 
 			body=testbolg_body,
 			tags=testbolg_tags)
+		
 		self.assertEqual(test_bolg['excerpt'], 'Important anecdotes about a cultural phenomenon.')
 
 	def test_bolg_perma_get_by(self):
@@ -180,3 +181,24 @@ class BolgTests(unittest.TestCase):
 		test_bolg = get_by_perma('yo-mtv-raps')
 
 		self.assertEqual(test_bolg['id'], self.test_bolg['id'])
+
+	def test_bolg_bodysrc_saving(self):
+		"""
+		test that we are saving the the markdown source code of the blog's body.
+		"""
+		self.assertEqual(testbolg_body, self.test_bolg['body_src'])
+
+	def test_bolg_body_source_saving(self):
+		"""
+		test that we are rendering html from teh markdowns.
+		"""
+		test_bolg = create( 
+			title=testbolg_title,
+			perma=testbolg_perma,
+			excerpt=' ', 
+			body='# Large text',
+			tags=testbolg_tags)
+
+		html = u'<h1>Large text</h1>'
+
+		self.assertEqual(test_bolg['body'], html)

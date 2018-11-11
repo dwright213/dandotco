@@ -2,7 +2,7 @@ from peewee import *
 from playhouse.shortcuts import model_to_dict, dict_to_model
 from IPython import embed
 
-import re, datetime
+import re, datetime, markdown
 
 from werkzeug.security import generate_password_hash, \
      check_password_hash
@@ -44,6 +44,7 @@ class Bolg(BaseModel):
 	perma = CharField()
 	excerpt = CharField()
 	body = CharField()
+	body_src = CharField()
 	created = DateTimeField(default=datetime.datetime.now)
 
 	def tags(self):
@@ -144,9 +145,11 @@ def create(title, body, tags, **kwargs):
 	else:
 		excerpt = body.split('.', 1)[0].capitalize() + '.'
 
+	body_html = markdown.markdown(body)
+
 
 	try:
-		new_bolg = Bolg(title=clean_title, perma=perma, excerpt=excerpt, body=body)
+		new_bolg = Bolg(title=clean_title, perma=perma, excerpt=excerpt, body=body_html, body_src=body)
 		new_bolg.save()
 		for tag_found in tags_found:
 			tagging_create(new_bolg.id, tag_found.id)
