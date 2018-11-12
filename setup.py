@@ -5,7 +5,7 @@ setup(
 	packages=['dandotco'],
 	include_package_data=True,
 	install_requires=[
-		'flask',
+		'flask>=0.12.3'
 		'click==6.6',
 		'Flask==0.11.1',
 		'httplib2==0.9.2',
