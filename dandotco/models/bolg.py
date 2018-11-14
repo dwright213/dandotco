@@ -59,12 +59,6 @@ class Bolg(BaseModel):
 		tag_list = list(set(tag_list))
 		return(tag_list)
 
-	# def compare(bolg_ob):
-
-	# def update(self, **kwargs):
-	# 	# print(kwargs)
-	# 	return self
-
 
 class Tagging(BaseModel):
 	bolg = ForeignKeyField(Bolg, backref='bolg')
@@ -169,6 +163,7 @@ def edit(bolg_id, **kwargs):
 	chosen_bolg = Bolg.get(Bolg.id == bolg_id)
 	dict_bolg = model_to_dict(chosen_bolg)
 	proposed_edits = dict(**kwargs)
+	disallowed = ['body', 'id']
 
 	print(chosen_bolg)
 	if ('tags' in proposed_edits):
@@ -177,12 +172,12 @@ def edit(bolg_id, **kwargs):
 		if (tag_list != chosen_bolg.tags()):
 			tags_edit(bolg_id, tag_list, chosen_bolg.tags())
 
+	for key in disallowed:
+		proposed_edits.pop(key, None)
 
-	for edit in proposed_edits.keys():
-		if (dict_bolg[edit] == proposed_edits[edit]):
-			print("no edit for the following:")
-			print(edit)
-			# proposed_edits.pop(edit, None)
+	if ('body_src' in proposed_edits) and (proposed_edits['body_src'] != chosen_bolg.body_src):
+		proposed_edits['body'] = markdown.markdown(proposed_edits['body_src'])
+
 
 	chosen_bolg = Bolg.update(**proposed_edits).where(Bolg.id == bolg_id)
 	chosen_bolg.execute()

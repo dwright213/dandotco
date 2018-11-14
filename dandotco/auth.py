@@ -82,13 +82,12 @@ def compose_bolg():
 @login_required
 def edit_bolg(perma):
 	chosen_bolg = bolg.get_by_perma(perma)
-	# print(chosen_bolg)
 	if (request.method == 'POST'):
 		bolg_ob = {
 			'title': request.form['title'],
 			'perma': request.form['perma'],
 			'excerpt': request.form['excerpt'],
-			'body': request.form['body'],
+			'body_src': request.form['body'],
 			'tags': request.form['tags']}
 
 		bolg.edit(chosen_bolg['id'], **bolg_ob)
