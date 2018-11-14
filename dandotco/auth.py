@@ -77,3 +77,22 @@ def compose_bolg():
 	else:
 		return render_template('compose.html', route_name='compose')
 
+
+@bp.route('/edit/<perma>', methods=[ 'GET', 'POST'])
+@login_required
+def edit_bolg(perma):
+	chosen_bolg = bolg.get_by_perma(perma)
+	# print(chosen_bolg)
+	if (request.method == 'POST'):
+		bolg_ob = {
+			'title': request.form['title'],
+			'perma': request.form['perma'],
+			'excerpt': request.form['excerpt'],
+			'body': request.form['body'],
+			'tags': request.form['tags']}
+
+		bolg.edit(chosen_bolg['id'], **bolg_ob)
+		return redirect('/')
+
+	return render_template('edit.html', bolg=chosen_bolg, route_name='compose')
+

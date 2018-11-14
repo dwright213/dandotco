@@ -218,3 +218,20 @@ class BolgTests(unittest.TestCase):
 		html = u'<h1>Large text</h1>'
 
 		self.assertEqual(test_bolg['body'], html)
+
+
+	def test_bolg_editing(self):
+		"""
+		test that we are able to edit/update the content of a bolg.
+		"""
+		new_body = "I like to rhyme, I like my beats funky I'm spunky, I like my oatmeal lumpy"
+		new_perma = "thank-god-for-lysol"
+		updated_bolg = edit(self.test_bolg['id'], 
+							body_src=new_body, 
+							perma=new_perma, 
+							tags='Dr. Dre, Inspectah Deck, rza',
+							title=testbolg_title)
+
+		self.assertEqual(updated_bolg['perma'], new_perma)
+		self.assertEqual(updated_bolg['body_src'], new_body)
+		self.assertEqual(updated_bolg['tags'], [u'Inspectah Deck', u'Dr. Dre', u'rza'])

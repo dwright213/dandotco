@@ -59,6 +59,11 @@ class Bolg(BaseModel):
 		tag_list = list(set(tag_list))
 		return(tag_list)
 
+	# def compare(bolg_ob):
+
+	# def update(self, **kwargs):
+	# 	# print(kwargs)
+	# 	return self
 
 
 class Tagging(BaseModel):
@@ -159,9 +164,60 @@ def create(title, body, tags, **kwargs):
 	except:
 		return 'problems happened whist creating a bolg.'
 
+def edit(bolg_id, **kwargs):
+
+	chosen_bolg = Bolg.get(Bolg.id == bolg_id)
+	dict_bolg = model_to_dict(chosen_bolg)
+	proposed_edits = dict(**kwargs)
+
+	print(chosen_bolg)
+	if ('tags' in proposed_edits):
+		tag_list = list(set([tag.strip() for tag in kwargs['tags'].split(',')]))
+		proposed_edits.pop('tags')
+		if (tag_list != chosen_bolg.tags()):
+			tags_edit(bolg_id, tag_list, chosen_bolg.tags())
+
+
+	for edit in proposed_edits.keys():
+		if (dict_bolg[edit] == proposed_edits[edit]):
+			print("no edit for the following:")
+			print(edit)
+			# proposed_edits.pop(edit, None)
+
+	chosen_bolg = Bolg.update(**proposed_edits).where(Bolg.id == bolg_id)
+	chosen_bolg.execute()
+
+	return get_a_bolg(bolg_id)
 
 
 # TAG STUFF
+
+# diffs and creates/deletes a bolg's tags as necessary.
+def tags_edit(bolg_id, new_list, old_list):
+	old_list = [str(tag) for tag in old_list]
+	
+	all_list = set(new_list + old_list)
+	add_list = set(new_list) - set(old_list)
+	remove_list = set(old_list) - set(new_list)
+
+	created_list = []
+	for tag in add_list:
+		created_list.append(tag_create(tag))
+
+	for tag in created_list:
+		tagging_create(bolg_id, tag.id)
+
+	for tag in remove_list:
+		tag_id = Tag.select().where(Tag.name == tag).first().id
+		Tagging.delete().where((Tagging.bolg == bolg_id) and (Tagging.tag == tag_id)).execute()
+
+	for tag in remove_list:
+		current_tag = Tag.get(Tag.name==tag)
+		used = Tagging.select().where(Tagging.tag == current_tag.id)
+		if not used.count():
+			print('tag %s removed' %(current_tag.name))
+			current_tag.delete_instance()
+
 
 # make and return a list of tags from a string provided by user
 def tags_create(tag_string):
@@ -170,7 +226,7 @@ def tags_create(tag_string):
 		cleaned_tagname = tag.strip()
 		current_tag = Tag.select().where(Tag.name == cleaned_tagname)
 
-		# if this tag already exists, use the one we've got.
+		# if this tag already exists, use that existent one.
 		if (current_tag.first()):
 			current_tag = current_tag.first()
 			
@@ -200,3 +256,5 @@ def tagging_create(bolg_id, tag_id):
 		new_tagging.save()
 	except:
 		return 'problems happened whilst creating a tagging.'
+
+# def tagging_remove()
