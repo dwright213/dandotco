@@ -14,6 +14,7 @@ ecdsa==0.13
 enum34==1.1.6
 envs==1.2.6
 Flask==1.0.2
+Flask-Uploads==0.2.1
 funcsigs==1.0.2
 future==0.17.1
 futures==3.2.0
@@ -26,6 +27,7 @@ itsdangerous==0.24
 Jinja2==2.10
 jmespath==0.9.3
 lorem==0.1.1
+magickwand==0.2
 Markdown==3.0.1
 MarkupSafe==0.23
 more-itertools==4.3.0
@@ -58,6 +60,7 @@ six==1.11.0
 traitlets==4.3.2
 urllib3==1.24.1
 uWSGI==2.0.17
+Wand==0.4.5
 warrant-lite==1.0.3
 wcwidth==0.1.7
 Werkzeug==0.14.1

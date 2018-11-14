@@ -32,3 +32,7 @@ settings.cfg
 
 # node things
 **/node_modules/*
+
+# images used for dev/testing
+**/img/original/*
+**/img/processed/*
