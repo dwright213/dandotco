@@ -8,7 +8,9 @@
 		<H1>GOOD WORK</H1>
 		<H1>GOOD WORK</H1>
 		<H1>GOOD WORK</H1>
-		<img src="/static/img/{{ img }}">
+		{% for img in imgs %}
+			<img src="{{ img }}">
+		{% endfor %}
 	</body>
 
 </html>
