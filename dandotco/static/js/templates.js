@@ -16,5 +16,16 @@ export var
 
 		</div>
 
-	`;
+	`,
 
+	uploadForm = `
+		<form 	ref=uploadForm
+				method=POST 
+				enctype=multipart/form-data 
+				action="/upload/" 
+				@submit=checkForm>
+
+			<input type=file name=photo>
+			<input type="submit">
+		</form>
+	`;

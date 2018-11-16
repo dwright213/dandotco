@@ -93,5 +93,5 @@ def edit_bolg(perma):
 		bolg.edit(chosen_bolg['id'], **bolg_ob)
 		return redirect('/')
 
-	return render_template('edit.html', bolg=chosen_bolg, route_name='compose')
+	return render_template('edit.html', bolg=chosen_bolg, route_name='edit')
 

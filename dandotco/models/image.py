@@ -55,7 +55,7 @@ def process(image):
 				file_name = save_vars[2].replace('.', '_') + '_' + str(size) + '.jpg'
 				with img.clone() as i:
 					i.resize(size, height)
-					i.save(filename=(save_dir + '/' + file_name))
+					i.save(filename=(save_dir + file_name))
 					print(file_name)
 					images.append(frontend_dir + file_name)
 

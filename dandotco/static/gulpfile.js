@@ -44,6 +44,7 @@ gulp.task('scripts', function() {
 				home: './js/home.js',
 				bolg: './js/bolg.js',
 				compose: './js/compose.js',
+				edit: './js/edit.js',
 				tagged: './js/tagged.js'
 			},
 			output: {

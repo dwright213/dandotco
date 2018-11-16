@@ -2,6 +2,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 
+
 // my stuff
 import { bolgTile } from './templates.js';
 

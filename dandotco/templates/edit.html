@@ -6,14 +6,12 @@
 				"compost a nice bolgs"
 			</i>
 		</h3>
-		<p>
-			<form 	method=POST 
-					enctype=multipart/form-data 
-					action="/upload/{{ bolg.id }}">
 
-				<input type=file name=photo>
-				<input type="submit">
-			</form>
+		<p>
+		<div id="img-upload" data-bolg={{ bolg.id }}>			
+			<file-upload>
+			</file-upload>	
+		</div>
 		</p>
 
 		<form method="POST" action="/edit/{{ bolg.perma }}" class="compose-form">

@@ -8,6 +8,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "css-loader": "^1.0.1",
+    "form-data": "^2.3.3",
     "gulp": "^4.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-sass": "^4.0.2",
