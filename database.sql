@@ -1,5 +1,7 @@
 -- clean and set up database
 
+\c test_dandotco;
+
 DROP TABLE IF EXISTS bolg, tag, bolgs_tags;
 
 CREATE TABLE bolg(
@@ -9,7 +11,8 @@ CREATE TABLE bolg(
   excerpt text,
   body text,
   body_src text not null,
-  created date not null
+  created date not null,
+  images JSON
 );
 
 CREATE TABLE tag(

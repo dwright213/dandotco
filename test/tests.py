@@ -1,7 +1,8 @@
-from dandotco.models.bolg import *
 import unittest
 import datetime
 
+from dandotco.models.bolg import *
+from dandotco.models.image import *
 
 # all models should return data in string, list, or dict format, so we can 
 # avoid bringing models themselves into our router. this will keep biz 
@@ -10,7 +11,15 @@ import datetime
 MODELS = [Bolg, Tag, Tagging]
 
 # use an in-memory SQLite for tests.
-test_db = SqliteDatabase(':memory:')
+# test_db = SqliteDatabase(':memory:')
+
+test_db = PostgresqlDatabase(
+		'test_dandotco',
+		user='dandotco',
+		password='quux',
+		host='localhost',
+		port=5432)
+
 
 testbolg_title = 'yo mtv raps'
 testbolg_perma = 'yo-mtv-raps'
@@ -32,7 +41,7 @@ class BolgTests(unittest.TestCase):
 			perma=testbolg_perma, 
 			body=testbolg_body,
 			tags=testbolg_tags,
-			excerpt=testbolg_excerpt, 
+			excerpt=testbolg_excerpt
 		)
 
 	def tearDown(self):
@@ -235,3 +244,46 @@ class BolgTests(unittest.TestCase):
 		self.assertEqual(updated_bolg['perma'], new_perma)
 		self.assertEqual(updated_bolg['body_src'], new_body)
 		self.assertEqual(updated_bolg['tags'], [u'Inspectah Deck', u'Dr. Dre', u'rza'])
+
+
+	def test_bolg_add_image(self):
+		"""
+		test that we are able to add image name(s) to our bolg's images array.
+		"""
+
+		add_2_bolg(self.test_bolg['id'], '5th_ward_posse_jpg.jpg')
+		updated_test_bolg = Bolg.get(Bolg.id == 1)
+		
+		self.assertEqual(updated_test_bolg.images, [{'name': '5th_ward_posse_jpg.jpg'}])
+
+		'''
+		and add another.
+		'''
+		add_2_bolg(self.test_bolg['id'], 'franklin_avenue_posse_jpg.jpg')
+		updated_test_bolg = Bolg.get(Bolg.id == 1)
+		print(updated_test_bolg.images)
+
+		self.assertEqual(updated_test_bolg.images, [
+												{'name': '5th_ward_posse_jpg.jpg'},
+												{'name': 'franklin_avenue_posse_jpg.jpg'}
+												])
+
+	def test_bolg_delete_image(self):
+		add_2_bolg(self.test_bolg['id'], 'franklin_avenue_posse_jpg.jpg')
+		delete(self.test_bolg['id'], 'franklin_avenue_posse_jpg.jpg')
+
+		updated_test_bolg = Bolg.get(Bolg.id == 1)
+		self.assertEqual(updated_test_bolg.images, [])
+
+		add_2_bolg(self.test_bolg['id'], '5th_ward_posse_jpg.jpg')
+		add_2_bolg(self.test_bolg['id'], 'franklin_avenue_posse_jpg.jpg')
+		delete(self.test_bolg['id'], '5th_ward_posse_jpg.jpg')
+		
+		updated_test_bolg = Bolg.get(Bolg.id == 1)
+		self.assertEqual(updated_test_bolg.images, [{'name': 'franklin_avenue_posse_jpg.jpg'}])
+
+# def test_bolg_delete_image_files(self):
+	
+# 	img_path = 'dandotco/static/img/original/'
+# 	image_files = os.path.isfile(fname)
+# 	self.assertEqual(len(image_files), 0)

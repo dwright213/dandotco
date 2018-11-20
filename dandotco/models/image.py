@@ -1,10 +1,12 @@
+import json, os
+
+from flask import Flask, render_template, request
+from wand.display import display
+from wand.image import Image
 from IPython import embed
 
 from dandotco import app
-
-from wand.image import Image
-from wand.display import display
-import os
+from dandotco.models.bolg import Bolg
 
 """
 to start with, we will make 3 versions of each uploaded image:
@@ -29,12 +31,22 @@ Functions needed for this are gonna include:
 
 """
 
+"""
+bolgs are going to need references to images, because so many things are gonna be way easier.
+like getting all images associated with a bolg, and building their url's, based on bolg 
+attributes, instead of using the os lib to go searching directories.
+"""
+
 def process(image):
 	
 	save_vars = image.split('/')
 	get_dir = app.config.get('UPLOADED_PHOTOS_DEST') + image
 	save_dir = app.config.get('UPLOADED_PHOTOS_DEST') + 'processed/' + save_vars[1] +'/'
 	frontend_dir = app.config.get('PROCESSED_PHOTOS_DEST') + save_vars[1] + '/'
+
+	image_name = save_vars[2].replace('.', '_') + '_'
+
+	add_2_bolg(save_vars[1], image_name)
 
 	try:
 		os.mkdir(save_dir)
@@ -44,7 +56,6 @@ def process(image):
 	sizes = [400, 800, 1200]
 
 	with Image(filename=(get_dir)) as img:
-		print(img.size)
 		images = []
 		for size in sizes:
 			# what percentage of the image's width is the current size variable?
@@ -53,11 +64,43 @@ def process(image):
 			height = int((scale * .01) * img.height)
 			if img.width > size:
 				file_name = save_vars[2].replace('.', '_') + '_' + str(size) + '.jpg'
+				if os.path.isfile(save_dir + file_name):
+					print('processed version exists. Deleting.')
+					os.remove(save_dir + file_name)
+
 				with img.clone() as i:
 					i.resize(size, height)
 					i.save(filename=(save_dir + file_name))
-					print(file_name)
 					images.append(frontend_dir + file_name)
 
 	return images
 
+def add_2_bolg(bolg_id, img_name):
+	img = {'name': img_name}
+	bolg = Bolg.get(Bolg.id == bolg_id)
+	image_list = bolg.images
+	image_list.append(img)
+	updated_bolg = Bolg.update(images = image_list).where(Bolg.id == bolg_id)
+	updated_bolg.execute()
+	bolg = Bolg.get(Bolg.id == bolg_id)
+
+# go into the processed dir and delete all images containing the name string.
+# return either 'ok - deleted', or 'images not found.'
+def delete(bolg_id, img_name):
+	bolg = Bolg.get(Bolg.id == bolg_id)
+	images = bolg.images
+	axe_list = []
+	for i, img in enumerate(images):
+		if img['name'] == img_name:
+			axe_list.append(i)
+
+	map(lambda x: images.pop(x), axe_list)
+
+	updated_bolg = Bolg.update(images = images).where(Bolg.id == bolg_id)
+	updated_bolg.execute()
+
+	print('delete them images!')
+
+# delete raw and processed version of a particular image.
+def delete_files(file_name):
+	print('awesome show/grate job')

@@ -9,7 +9,7 @@ from wand.image import Image
 from wand.display import display
 
 
-# app.config['UPLOADED_PHOTOS_DEST'] = 'dandotco/static/img'
+
 photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
 
@@ -18,7 +18,20 @@ configure_uploads(app, photos)
 def upload(bolg_id=0):
 	if request.method == 'POST' and 'photo' in request.files:
 		bolg_folder = 'original/' + str(bolg_id)
+		prospective_filename = (  app.config['UPLOADED_PHOTOS_DEST']  
+								+ bolg_folder 
+								+ '/' 
+								+ request.files['photo'].filename)
+		
+		print(prospective_filename)
+		if os.path.isfile(prospective_filename):
+			print('photo exists. Deleting existing copy.')
+			os.remove(prospective_filename)
+
 		filename = photos.save(request.files['photo'], folder=bolg_folder)
+		print(filename)
+		# embed()
+		print(bolg_folder + '/' + request.files['photo'].filename)
 		processed_images = image.process(filename)
 
 		resp = jsonify(processed_images)

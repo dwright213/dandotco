@@ -1,5 +1,8 @@
+import json
 from peewee import *
 from playhouse.shortcuts import model_to_dict, dict_to_model
+from playhouse.postgres_ext import *
+
 from IPython import embed
 
 import re, datetime, markdown
@@ -46,6 +49,7 @@ class Bolg(BaseModel):
 	body = CharField()
 	body_src = CharField()
 	created = DateTimeField(default=datetime.datetime.now)
+	images = JSONField(null=True)
 
 	def tags(self):
 		tag_list = []
@@ -149,7 +153,12 @@ def create(title, body, tags, **kwargs):
 
 
 	try:
-		new_bolg = Bolg(title=clean_title, perma=perma, excerpt=excerpt, body=body_html, body_src=body)
+		new_bolg = Bolg(title=clean_title, 
+						perma=perma, 
+						excerpt=excerpt, 
+						body=body_html, 
+						body_src=body,
+						images=[])
 		new_bolg.save()
 		for tag_found in tags_found:
 			tagging_create(new_bolg.id, tag_found.id)
@@ -157,6 +166,13 @@ def create(title, body, tags, **kwargs):
 		return get_a_bolg(new_bolg.id)
 	except:
 		return 'problems happened whist creating a bolg.'
+
+# def add_image(bolg_id, img_name):
+# 	print('found me!')
+# 	print('found me!')
+# 	print('found me!')
+# 	print('found me!')
+# 	return 'no sir'
 
 def edit(bolg_id, **kwargs):
 
