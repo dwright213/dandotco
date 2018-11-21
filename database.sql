@@ -1,6 +1,5 @@
 -- clean and set up database
 
-\c test_dandotco;
 
 DROP TABLE IF EXISTS bolg, tag, bolgs_tags;
 

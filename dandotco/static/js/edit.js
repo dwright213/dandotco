@@ -4,11 +4,11 @@ import axios from 'axios';
 import FormData from 'form-data';
 
 // my stuff
-import { uploadForm } from './templates.js'
+import { uploadForm, imageThumb } from './templates.js'
 
 var
 	bolgId = null,
-
+	images = [],
 	uploader = {
 		template: uploadForm,
 		methods: {
@@ -18,7 +18,9 @@ var
 				this.upload()
 
 			},
-
+			refreshImgs(imgs) {
+				console.log('refreshing images..')
+			},
 			upload() {
 				var myFormData = new FormData(this.$refs.uploadForm);
 				axios({
@@ -27,9 +29,8 @@ var
 						data: myFormData,
 						config: { headers: { 'Content-Type': 'multipart/form-data' } }
 					})
-					.then(function(response) {
-						console.log(response);
-					})
+					.then(response => (this.$parent.images = response.data.images))
+
 					.catch(function(error) {
 						console.log(error);
 					});
@@ -39,18 +40,40 @@ var
 		mounted() {
 			console.log('component componentized.')
 		}
+	},
+	thumber = {
+		props: ['format', 'id', 'name', 'orig_name'],
+		template: imageThumb,
+		methods: {
+			imgLoc() {
+				return `/static/img/processed/${bolgId}/${this.name}100.${this.format}`
+			}
+		},
+
+		mounted() {
+			console.log('thumber thumbed')
+		}
+
 	};
 
 
 new Vue({
 	el: '#img-upload',
+	data: {
+		images: []
 
+	},
 	components: {
-		'fileUpload': uploader
+		'fileUpload': uploader,
+		'imageThumb': thumber
 	},
 
 	mounted() {
 		bolgId = this.$el.dataset.bolg
 		console.log('vue instanced')
+		console.log(this)
+		axios
+			.get(`/api/${bolgId}/images`, { crossdomain: false })
+			.then(response => (this.images = response.data.images))
 	}
 });

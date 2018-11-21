@@ -37,16 +37,16 @@ like getting all images associated with a bolg, and building their url's, based 
 attributes, instead of using the os lib to go searching directories.
 """
 
-def process(image):
-	print(image)
+def process(image, **kwargs):
+
 	save_vars = image.split('/')
 	get_dir = app.config.get('UPLOADED_PHOTOS_DEST') + image
 	save_dir = app.config.get('UPLOADED_PHOTOS_DEST') + 'processed/' + save_vars[1] +'/'
 	frontend_dir = app.config.get('PROCESSED_PHOTOS_DEST') + save_vars[1] + '/'
 
 	image_name = save_vars[2].replace('.', '_') + '_'
-
-	add_2_bolg(save_vars[1], image_name, 'jpg', save_vars[2])
+	if not kwargs['overwrite']:
+		add_2_bolg(save_vars[1], image_name, 'jpg', save_vars[2])
 
 	try:
 		os.mkdir(save_dir)
@@ -77,15 +77,18 @@ def process(image):
 	return images
 
 def add_2_bolg(bolg_id, img_name, img_format, orig_name):
+	
+	bolg = Bolg.get(Bolg.id == bolg_id)
+	image_list = bolg.images
+	img_id = len(bolg.images) + 1
 	img = {
+		'id': img_id,
 		'name': img_name,
 		'format': img_format,
 		'orig_name': orig_name
 		}
-
-	bolg = Bolg.get(Bolg.id == bolg_id)
-	image_list = bolg.images
 	image_list.append(img)
+
 	updated_bolg = Bolg.update(images = image_list).where(Bolg.id == bolg_id)
 	updated_bolg.execute()
 	bolg = Bolg.get(Bolg.id == bolg_id)
@@ -99,10 +102,13 @@ def delete(bolg_id, img_name):
 		if img['name'] == img_name:
 			axe_list.append(i)
 
+	delete_files(bolg_id, img_name)
+	
 	map(lambda x: images.pop(x), axe_list)
-
 	updated_bolg = Bolg.update(images = images).where(Bolg.id == bolg_id)
 	updated_bolg.execute()
+
+
 
 
 # delete raw and processed version of a particular image.
@@ -113,8 +119,6 @@ def delete_files(bolg_id, filename):
 		print(img)
 		if img['orig_name'] == filename:
 			img_name = img['name']
-
-
 
 	orig_dir = (app.config.get('UPLOADED_PHOTOS_DEST') 
 					+ 'original/'
@@ -139,3 +143,7 @@ def delete_files(bolg_id, filename):
 
 def namer(orig_name):
 	return orig_name.replace('.', '_') + '_'
+
+def get_images(bolg_id):
+	bolg = Bolg.get(Bolg.id == bolg_id)
+	return bolg.images

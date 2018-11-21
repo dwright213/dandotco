@@ -28,4 +28,8 @@ export var
 			<input type=file name=photo>
 			<input type="submit">
 		</form>
+	`,
+
+	imageThumb = `
+		<img v-bind:src=imgLoc() />
 	`;

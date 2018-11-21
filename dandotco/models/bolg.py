@@ -78,12 +78,10 @@ class Tagging(BaseModel):
 def get_a_bolg(bolg_id):
 	chosen_bolg = Bolg.select().where(Bolg.id == bolg_id).first()
 	dict_bolg = []
-
 	if (not chosen_bolg):
 		print('nonexistent bolg requested')		
 	else:
 		dict_bolg = model_to_dict(chosen_bolg)
-
 	dict_bolg['tags'] = chosen_bolg.tags() 
 	return dict_bolg
 

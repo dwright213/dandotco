@@ -24,14 +24,16 @@ def upload(bolg_id=0):
 								+ request.files['photo'].filename)
 		
 		print(prospective_filename)
+		overwrite = False
 		if os.path.isfile(prospective_filename):
 			print('photo exists. Deleting existing copy.')
 			os.remove(prospective_filename)
+			overwrite = True
 
 		filename = photos.save(request.files['photo'], folder=bolg_folder)
-		processed_images = image.process(filename)
-
-		resp = jsonify(processed_images)
+		processed_images = image.process(filename, overwrite=overwrite)
+		bolg_imgs = {'images': image.get_images(bolg_id)}
+		resp = jsonify(bolg_imgs)
 		resp.headers.add('Access-Control-Allow-Origin', '*')
 		return resp
 

@@ -26,13 +26,11 @@ def api_all(count=20):
 	resp.headers.add('Access-Control-Allow-Origin', '*')
 	return resp
 
-@bp.route('/bolg/<int:bolg_id>', methods=['GET'])
+@bp.route('<int:bolg_id>/images', methods=['GET'])
 def api_one(bolg_id=0):
-	bolg_getter = bolg.get_a_bolg(bolg_id)
-	if bolg_getter['errors']:
-		single_bolg = {'error': 'bolg not found'}
-	else: single_bolg = bolg_getter['bolgs'][0]
+	single_bolg = bolg.get_a_bolg(bolg_id)
 	resp = jsonify(single_bolg)
+	print(resp)
 	resp.headers.add('Access-Control-Allow-Origin', '*')
 	return resp
 

@@ -11,10 +11,23 @@
 		<div id="img-upload" data-bolg={{ bolg.id }}>			
 			<file-upload>
 			</file-upload>	
+
+			<image-thumb
+				v-for="img in images"
+				:key="img.id"
+				:format="img.format"
+				:name="img.name">
+			</image-thumb>	
 		</div>
 		</p>
 
-		<form method="POST" action="/edit/{{ bolg.perma }}" class="compose-form">
+<!-- 		<p>
+		<div id="img-thumb" data-bolg={{ bolg.id }}>			
+		</div>
+		</p>
+
+ -->
+ 		<form method="POST" action="/edit/{{ bolg.perma }}" class="compose-form">
 			<input 
 				type="text" 
 				name="title" 
