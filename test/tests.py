@@ -1,5 +1,6 @@
 import unittest
 import datetime
+import os, shutil
 
 from dandotco.models.bolg import *
 from dandotco.models.image import *
@@ -251,39 +252,54 @@ class BolgTests(unittest.TestCase):
 		test that we are able to add image name(s) to our bolg's images array.
 		"""
 
-		add_2_bolg(self.test_bolg['id'], '5th_ward_posse_jpg.jpg')
+		add_2_bolg(self.test_bolg['id'], '5th_ward_posse_jpg.jpg', 'jpg', '5th_ward_posse_jpg.jpg')
 		updated_test_bolg = Bolg.get(Bolg.id == 1)
 		
-		self.assertEqual(updated_test_bolg.images, [{'name': '5th_ward_posse_jpg.jpg'}])
+		self.assertEqual(len(updated_test_bolg.images), 1)
 
 		'''
 		and add another.
 		'''
-		add_2_bolg(self.test_bolg['id'], 'franklin_avenue_posse_jpg.jpg')
+		add_2_bolg(self.test_bolg['id'], 'franklin_avenue_posse_jpg.jpg', 'jpg', 'franklin_avenue_posse_jpg.jpg')
 		updated_test_bolg = Bolg.get(Bolg.id == 1)
 		print(updated_test_bolg.images)
 
-		self.assertEqual(updated_test_bolg.images, [
-												{'name': '5th_ward_posse_jpg.jpg'},
-												{'name': 'franklin_avenue_posse_jpg.jpg'}
-												])
+		self.assertEqual(len(updated_test_bolg.images), 2)
 
 	def test_bolg_delete_image(self):
-		add_2_bolg(self.test_bolg['id'], 'franklin_avenue_posse_jpg.jpg')
+		"""
+		test that we are able to delete images from association with bolgs.
+		"""
+		add_2_bolg(self.test_bolg['id'], 'franklin_avenue_posse_jpg.jpg', 'jpg', 'franklin_avenue_posse_jpg.jpg')
 		delete(self.test_bolg['id'], 'franklin_avenue_posse_jpg.jpg')
 
 		updated_test_bolg = Bolg.get(Bolg.id == 1)
 		self.assertEqual(updated_test_bolg.images, [])
 
-		add_2_bolg(self.test_bolg['id'], '5th_ward_posse_jpg.jpg')
-		add_2_bolg(self.test_bolg['id'], 'franklin_avenue_posse_jpg.jpg')
+		add_2_bolg(self.test_bolg['id'], '5th_ward_posse_jpg.jpg', 'jpg', '5th_ward_posse_jpg.jpg')
+		add_2_bolg(self.test_bolg['id'], 'franklin_avenue_posse_jpg.jpg', 'jpg', 'franklin_avenue_posse_jpg.jpg')
 		delete(self.test_bolg['id'], '5th_ward_posse_jpg.jpg')
 		
 		updated_test_bolg = Bolg.get(Bolg.id == 1)
-		self.assertEqual(updated_test_bolg.images, [{'name': 'franklin_avenue_posse_jpg.jpg'}])
+		self.assertEqual(len(updated_test_bolg.images), 1)
 
-# def test_bolg_delete_image_files(self):
-	
-# 	img_path = 'dandotco/static/img/original/'
-# 	image_files = os.path.isfile(fname)
-# 	self.assertEqual(len(image_files), 0)
+	def test_blog_delete_image_file(self):
+		"""
+		test that we can remove original uploaded images.
+		"""
+		img_name = 'screwed_up_click.jpg'
+		test_img = './test/img/'+ img_name
+		uploaded_img = './dandotco/static/img/original/1/'+ img_name
+		shutil.copy(test_img, uploaded_img)
+
+		proc_images = process('original/1/'+ img_name)
+
+		delete_files(1, img_name)
+
+		file_exists = os.path.isfile(uploaded_img)
+		self.assertEqual(file_exists, False)
+
+		file_exists = os.path.isfile('./dandotco/' + proc_images[0])
+		self.assertEqual(file_exists, False)
+
+

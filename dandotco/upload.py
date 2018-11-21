@@ -29,14 +29,15 @@ def upload(bolg_id=0):
 			os.remove(prospective_filename)
 
 		filename = photos.save(request.files['photo'], folder=bolg_folder)
-		print(filename)
-		# embed()
-		print(bolg_folder + '/' + request.files['photo'].filename)
 		processed_images = image.process(filename)
 
 		resp = jsonify(processed_images)
 		resp.headers.add('Access-Control-Allow-Origin', '*')
 		return resp
-		# return render_template('upload.html', imgs=processed_images)
+
 	
+@app.route('/remove/<int:bolg_id>/<img_name>/', methods=['POST'])
+def delete_image(img_name, bolg_id):
+	if request.method == 'POST':
+		image.delete(bolg_id, filename)
 

@@ -38,7 +38,7 @@ attributes, instead of using the os lib to go searching directories.
 """
 
 def process(image):
-	
+	print(image)
 	save_vars = image.split('/')
 	get_dir = app.config.get('UPLOADED_PHOTOS_DEST') + image
 	save_dir = app.config.get('UPLOADED_PHOTOS_DEST') + 'processed/' + save_vars[1] +'/'
@@ -46,14 +46,14 @@ def process(image):
 
 	image_name = save_vars[2].replace('.', '_') + '_'
 
-	add_2_bolg(save_vars[1], image_name)
+	add_2_bolg(save_vars[1], image_name, 'jpg', save_vars[2])
 
 	try:
 		os.mkdir(save_dir)
 	except: 
 		print('directory exists, i guess...')
 
-	sizes = [400, 800, 1200]
+	sizes = app.config.get('IMG_SIZES')
 
 	with Image(filename=(get_dir)) as img:
 		images = []
@@ -69,14 +69,20 @@ def process(image):
 					os.remove(save_dir + file_name)
 
 				with img.clone() as i:
+
 					i.resize(size, height)
 					i.save(filename=(save_dir + file_name))
 					images.append(frontend_dir + file_name)
 
 	return images
 
-def add_2_bolg(bolg_id, img_name):
-	img = {'name': img_name}
+def add_2_bolg(bolg_id, img_name, img_format, orig_name):
+	img = {
+		'name': img_name,
+		'format': img_format,
+		'orig_name': orig_name
+		}
+
 	bolg = Bolg.get(Bolg.id == bolg_id)
 	image_list = bolg.images
 	image_list.append(img)
@@ -84,8 +90,7 @@ def add_2_bolg(bolg_id, img_name):
 	updated_bolg.execute()
 	bolg = Bolg.get(Bolg.id == bolg_id)
 
-# go into the processed dir and delete all images containing the name string.
-# return either 'ok - deleted', or 'images not found.'
+# remove image from Bolg
 def delete(bolg_id, img_name):
 	bolg = Bolg.get(Bolg.id == bolg_id)
 	images = bolg.images
@@ -99,8 +104,38 @@ def delete(bolg_id, img_name):
 	updated_bolg = Bolg.update(images = images).where(Bolg.id == bolg_id)
 	updated_bolg.execute()
 
-	print('delete them images!')
 
 # delete raw and processed version of a particular image.
-def delete_files(file_name):
-	print('awesome show/grate job')
+def delete_files(bolg_id, filename):
+	bolg = Bolg.get(Bolg.id == bolg_id)
+	img_name = ''
+	for img in bolg.images:
+		print(img)
+		if img['orig_name'] == filename:
+			img_name = img['name']
+
+
+
+	orig_dir = (app.config.get('UPLOADED_PHOTOS_DEST') 
+					+ 'original/'
+					+ str(bolg_id)
+					+'/') 
+
+	proc_dir = (app.config.get('UPLOADED_PHOTOS_DEST') 
+				+ 'processed/'
+				+ str(bolg_id)
+				+ '/')
+
+	for size in app.config['IMG_SIZES']:
+		image_to_delete = proc_dir + img_name + str(size) + '.jpg'
+		if os.path.isfile(image_to_delete):
+			print('deleting file ' + image_to_delete )
+			os.remove(image_to_delete)
+	
+	if os.path.isfile(orig_dir + filename):
+		os.remove(orig_dir + filename)
+
+
+
+def namer(orig_name):
+	return orig_name.replace('.', '_') + '_'
