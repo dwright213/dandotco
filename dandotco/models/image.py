@@ -94,15 +94,15 @@ def add_2_bolg(bolg_id, img_name, img_format, orig_name):
 	bolg = Bolg.get(Bolg.id == bolg_id)
 
 # remove image from Bolg
-def delete(bolg_id, img_name):
+def delete(bolg_id, orig_name):
 	bolg = Bolg.get(Bolg.id == bolg_id)
 	images = bolg.images
 	axe_list = []
 	for i, img in enumerate(images):
-		if img['name'] == img_name:
+		if img['orig_name'] == orig_name:
 			axe_list.append(i)
 
-	delete_files(bolg_id, img_name)
+	delete_files(bolg_id, orig_name)
 	
 	map(lambda x: images.pop(x), axe_list)
 	updated_bolg = Bolg.update(images = images).where(Bolg.id == bolg_id)
@@ -115,8 +115,10 @@ def delete(bolg_id, img_name):
 def delete_files(bolg_id, filename):
 	bolg = Bolg.get(Bolg.id == bolg_id)
 	img_name = ''
+
 	for img in bolg.images:
-		print(img)
+		print(img['orig_name'])
+		print(filename)
 		if img['orig_name'] == filename:
 			img_name = img['name']
 
@@ -137,6 +139,7 @@ def delete_files(bolg_id, filename):
 			os.remove(image_to_delete)
 	
 	if os.path.isfile(orig_dir + filename):
+		print('deleting original file; ' + filename)
 		os.remove(orig_dir + filename)
 
 

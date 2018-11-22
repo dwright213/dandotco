@@ -31,5 +31,9 @@ export var
 	`,
 
 	imageThumb = `
-		<img v-bind:src=imgLoc() />
+		<div>
+			<span v-on:click="removeImg()">x</span>
+			<img v-bind:src=imgLoc() />
+			
+		</div>
 	`;

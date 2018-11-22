@@ -14,12 +14,8 @@ var
 		methods: {
 			checkForm: function(e) {
 				e.preventDefault()
-				console.log(this.$refs)
 				this.upload()
 
-			},
-			refreshImgs(imgs) {
-				console.log('refreshing images..')
 			},
 			upload() {
 				var myFormData = new FormData(this.$refs.uploadForm);
@@ -30,7 +26,6 @@ var
 						config: { headers: { 'Content-Type': 'multipart/form-data' } }
 					})
 					.then(response => (this.$parent.images = response.data.images))
-
 					.catch(function(error) {
 						console.log(error);
 					});
@@ -38,7 +33,7 @@ var
 		},
 
 		mounted() {
-			console.log('component componentized.')
+
 		}
 	},
 	thumber = {
@@ -47,11 +42,17 @@ var
 		methods: {
 			imgLoc() {
 				return `/static/img/processed/${bolgId}/${this.name}100.${this.format}`
+			},
+			removeImg() {
+				axios
+					.post(`/remove/${bolgId}/${this.orig_name}`, { crossdomain: false })
+					.then(response => (this.$parent.images = response.data.images))
+					.catch(function(error){ console.log(error) })
+				
 			}
 		},
 
 		mounted() {
-			console.log('thumber thumbed')
 		}
 
 	};
@@ -70,8 +71,6 @@ new Vue({
 
 	mounted() {
 		bolgId = this.$el.dataset.bolg
-		console.log('vue instanced')
-		console.log(this)
 		axios
 			.get(`/api/${bolgId}/images`, { crossdomain: false })
 			.then(response => (this.images = response.data.images))

@@ -38,8 +38,14 @@ def upload(bolg_id=0):
 		return resp
 
 	
-@app.route('/remove/<int:bolg_id>/<img_name>/', methods=['POST'])
+@app.route('/remove/<int:bolg_id>/<img_name>', methods=['POST'])
 def delete_image(img_name, bolg_id):
 	if request.method == 'POST':
-		image.delete(bolg_id, filename)
+		image.delete(bolg_id, img_name)
+		bolg_imgs = {'images': image.get_images(bolg_id)}
+		resp = jsonify(bolg_imgs)
+		resp.headers.add('Access-Control-Allow-Origin', '*')
+		return resp
+
+
 
