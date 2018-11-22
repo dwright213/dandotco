@@ -3,6 +3,8 @@ from flask_uploads import UploadSet, configure_uploads, IMAGES
 from IPython import embed
 from dandotco import app
 from dandotco.models import image 
+from auth import login_required 
+
 import os
 
 from wand.image import Image
@@ -15,6 +17,7 @@ configure_uploads(app, photos)
 
 
 @app.route('/upload/<int:bolg_id>', methods=['POST'])
+@login_required
 def upload(bolg_id=0):
 	if request.method == 'POST' and 'photo' in request.files:
 		bolg_folder = 'original/' + str(bolg_id)
@@ -39,6 +42,7 @@ def upload(bolg_id=0):
 
 	
 @app.route('/remove/<int:bolg_id>/<img_name>', methods=['POST'])
+@login_required
 def delete_image(img_name, bolg_id):
 	if request.method == 'POST':
 		image.delete(bolg_id, img_name)

@@ -6,12 +6,12 @@ export var
 					{{ title }}
 				</a>
 			</h3>
-			<p>{{ excerpt }}</p>
+			<p v-html="excerpt"></p>
 			<br>
 
 			<span v-for="tag, index in tags">
 				<a v-bind:href=tagLink(tag)>{{ tag }}</a>
-				<span v-if="index <= (tags.length - 1)"> // </span>				
+				<span v-if="index < (tags.length - 1)"> // </span>				
 			</span>
 
 		</div>
@@ -33,6 +33,8 @@ export var
 	imageThumb = `
 		<div>
 			<span v-on:click="removeImg()">x</span>
+			<span>{{ name }}.{{ format }}</span>
+			<br>
 			<img v-bind:src=imgLoc() />
 			
 		</div>
