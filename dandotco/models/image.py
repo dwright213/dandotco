@@ -71,6 +71,17 @@ def process(image, **kwargs):
 				with img.clone() as i:
 
 					i.resize(size, height)
+					# i.type = 'palette'
+					if size < 1200:
+						print('giffing up image because size is ' + str(size))
+						i.format = 'gif'
+						i.quantize(number_colors=24,
+									colorspace_type='rgb',
+									treedepth=0,
+									dither=True,
+									measure_error=False)
+					i.format = 'jpg'
+					i.compression_quality = 92
 					i.save(filename=(save_dir + file_name))
 					images.append(frontend_dir + file_name)
 

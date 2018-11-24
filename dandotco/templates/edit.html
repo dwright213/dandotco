@@ -11,14 +11,15 @@
 		<div id="img-upload" data-bolg={{ bolg.id }}>			
 			<file-upload>
 			</file-upload>	
-
-			<image-thumb
-				v-for="img in images"
-				:key="img.id"
-				:format="img.format"
-				:name="img.name"
-				:orig_name="img.orig_name">
-			</image-thumb>	
+			<div id="thumb-holder">
+				<image-thumb
+					v-for="img in images"
+					:key="img.id"
+					:format="img.format"
+					:name="img.name"
+					:orig_name="img.orig_name">
+				</image-thumb>					
+			</div>
 		</div>
 		</p>
 

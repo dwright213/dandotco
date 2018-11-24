@@ -50,7 +50,9 @@
 			</div>
 		</div>
 	</body>
-	<script src="/static/dist/{{route_name}}.chunk.js"></script>
+	{% if route_name %}
+		<script src="/static/dist/{{route_name}}.chunk.js"></script>
+	{% endif %}
 </html>
 
 

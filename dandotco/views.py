@@ -1,11 +1,18 @@
 # from datetime import datetime
-from flask import Flask, flash, render_template, request, g, abort, jsonify, json
+from flask import Flask, flash, render_template, request, g, abort, jsonify, json, session
 from flask import Response
 import os
 
 from IPython import embed
 from dandotco import app
 from dandotco.models import bolg
+
+@app.before_request
+def before_request():
+	if (not session):
+		g.logged = False
+	else:
+		g.logged = True
 
 
 @app.route('/')

@@ -4,7 +4,10 @@
 
 		<div class="bolg">
 			<h2>
-				{{bolg.title}} (<a href="/edit/{{bolg.perma}}">edit</a>)
+				{{bolg.title}} 
+				{% if g.logged == True %}
+				(<a href="/edit/{{bolg.perma}}">edit</a>)
+				{% endif %}
 			</h2>
 			<h3>{{bolg.date}}</h3>
 			<p>

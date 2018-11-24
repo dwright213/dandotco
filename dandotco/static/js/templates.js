@@ -22,20 +22,21 @@ export var
 		<form 	ref=uploadForm
 				method=POST 
 				enctype=multipart/form-data 
-				action="/upload/" 
 				@submit=checkForm>
 
-			<input type=file name=photo>
-			<input type="submit">
+			<input class="compose-form__input" type=file name=photo>
+			<input class="compose-form__button" type="submit">
 		</form>
 	`,
 
 	imageThumb = `
-		<div>
-			<span v-on:click="removeImg()">x</span>
-			<span>{{ name }}.{{ format }}</span>
-			<br>
-			<img v-bind:src=imgLoc() />
+		<div class="img-thumb" v-bind:style="thumbBg">
+			<div class="img-thumb__delete-btn" v-on:click="removeImg()">delete?</div>
+			<div class="img-thumb__info-text">{{ name }}100.{{ format }}</div>
+			<div class="img-thumb__info-text">{{ name }}400.{{ format }}</div>
+			<div class="img-thumb__info-text">{{ name }}800.{{ format }}</div>
+			<div class="img-thumb__info-text">{{ name }}1200.{{ format }}</div>
+			<!-- <img v-bind:src=imgLoc() /> -->
 			
 		</div>
 	`;

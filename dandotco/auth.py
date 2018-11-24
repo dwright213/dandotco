@@ -48,7 +48,7 @@ def login():
 			return redirect(url_for('home'))
 			
 		except:
-			flash('oops, an error happened (probably password related')
+			flash('oops, an error happened (probably password related)')
 			return render_template('login.html', route_name='login')
 
 	else:
@@ -56,7 +56,7 @@ def login():
 		flash('good work logging out')
 
 
-	return render_template('login.html', route_name='login')
+	return render_template('login.html')
 
 
 

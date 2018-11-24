@@ -1,0 +1,45 @@
+#thumb-holder {
+	display: flex;
+	flex-flow: row wrap;
+	align-content: space-around;
+}
+
+.img-thumb {
+	border: 1px solid #000;
+	width: 150px;
+	margin: 5px;
+
+	display: flex;
+	flex-flow: column nowrap;
+
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	font-size: .8rem;
+
+}
+
+.img-thumb:hover * {
+	opacity: 1;
+	backdrop-filter: blur(7px);
+}
+
+.img-thumb__delete-btn {
+	opacity: 0;
+	border: 1px solid #000;
+	background: hsla(0, 0%, 100%, .1);
+	@include main-transition;
+}
+
+.img-thumb__delete-btn:hover {
+	cursor: pointer;
+	background: $danger-color;
+}
+
+.img-thumb__info-text {
+	overflow: auto;
+	opacity: 0;
+	border: 1px solid #000;
+	background: hsla(0, 0%, 100%, 0.1);
+	@include main-transition;
+}

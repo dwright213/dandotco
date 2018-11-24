@@ -39,6 +39,12 @@ var
 	thumber = {
 		props: ['format', 'id', 'name', 'orig_name'],
 		template: imageThumb,
+		computed: {
+			thumbBg: function() {
+				return {backgroundImage: `url('${this.imgLoc()}')`}
+			}
+
+		},
 		methods: {
 			imgLoc() {
 				return `/static/img/processed/${bolgId}/${this.name}100.${this.format}`

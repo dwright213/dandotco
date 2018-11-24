@@ -6,12 +6,18 @@
 		 <a href="/">home</a> 
 	</div>
 
-	<div class="nav-link">
-		 <a href="/compose">compose</a> 
-	</div>
+	{% if g.logged == True %}
+		<div class="nav-link">
+			 <a href="/compose">compose</a> 
+		</div>
 
-	<div class="nav-link">
-		 <a href="/login">log</a> 
-	</div>
+		<div class="nav-link">
+			 <a href="/login">log out</a> 
+		</div>
+	{% else %}
+		<div class="nav-link">
+			 <a href="/login">log in</a> 
+		</div>
+	{% endif %}
 
 </div>

@@ -10,8 +10,6 @@ import os
 from wand.image import Image
 from wand.display import display
 
-
-
 photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
 
@@ -26,7 +24,6 @@ def upload(bolg_id=0):
 								+ '/' 
 								+ request.files['photo'].filename)
 		
-		print(prospective_filename)
 		overwrite = False
 		if os.path.isfile(prospective_filename):
 			print('photo exists. Deleting existing copy.')
