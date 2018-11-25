@@ -2,6 +2,7 @@
 <label for="nav-toggle"></label>
 
 <div id="nav-item-list">
+
 	<div class="nav-link">
 		 <a href="/">home</a> 
 	</div>
@@ -19,5 +20,20 @@
 			 <a href="/login">log in</a> 
 		</div>
 	{% endif %}
+
+	<div class="nav-link" id="tagbox">
+	<input @input="search($event.target.value)">	
+<!-- 		<search-box @input="search($event.target.value)"
+					:value="searchTag">
+		</search-box> -->
+
+		<result-box v-for="bolg in bolgs" 
+					v-bind:key="bolg.id" 
+					v-bind:id="bolg.id" 
+					v-bind:title="bolg.title">
+		</result-box>
+	</div>
+
+
 
 </div>

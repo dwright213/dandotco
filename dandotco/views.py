@@ -17,7 +17,8 @@ def before_request():
 
 @app.route('/')
 def home():
-	return render_template('index.html', route_name='home')
+	bolgs = bolg.get_some_bolgs(20)
+	return render_template('index.html', bolgs=bolgs, route_name='home')
 
 @app.route('/bolg/<perma>')
 def view_bolg(perma):

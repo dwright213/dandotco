@@ -78,10 +78,10 @@ def compose_bolg():
 		return render_template('compose.html', route_name='compose')
 
 
-@bp.route('/edit/<perma>', methods=[ 'GET', 'POST'])
+@bp.route('/edit/<id>', methods=[ 'GET', 'POST'])
 @login_required
-def edit_bolg(perma):
-	chosen_bolg = bolg.get_by_perma(perma)
+def edit_bolg(id):
+	chosen_bolg = bolg.get_a_bolg(id)
 	if (request.method == 'POST'):
 		bolg_ob = {
 			'title': request.form['title'],

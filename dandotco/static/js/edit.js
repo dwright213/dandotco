@@ -17,6 +17,7 @@ var
 				this.upload()
 
 			},
+			
 			upload() {
 				var myFormData = new FormData(this.$refs.uploadForm);
 				axios({

@@ -1,19 +1,24 @@
 {% extends "layout.html" %}
 {% block content %}
 
-	<div id="vuecont">
-		<div id="bolg-holder">
-			<bolg-listing   
-				v-for="bolg in bolgs"
-				v-bind:key="bolg.id"
-				v-bind:id="bolg.id"
-				v-bind:title="bolg.title"
-				v-bind:perma="bolg.perma"
-				v-bind:body="bolg.body"
-				v-bind:excerpt="bolg.excerpt"
-				v-bind:tags="bolg.tags">	
-			</bolg-listing>
-		</div>
+	<div id="bolg-holder">
+		{% for bolg in bolgs %}
+			<div class="bolg">
+				<h3>
+					<a href="/bolg/{{ bolg.perma }}">
+						{{ bolg.title }}
+					</a>
+				</h3>
+				<p>{{ bolg.excerpt|safe }}</p>
+				<br>
+
+				{% for tag in bolg.tags %} 
+					<a href="/tagged/{{tag}}">{{tag}}</a>
+					{% if loop.index < bolg.tags|length %} // {% endif %} 
+				{% endfor %}	
+
+			</div>
+		{% endfor %}
 	</div>
 
  {% endblock %}
