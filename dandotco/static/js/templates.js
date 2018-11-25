@@ -39,22 +39,6 @@ export var
 			<!-- <img v-bind:src=imgLoc() /> -->
 			
 		</div>
-	`,
-
-	searchBox = `
-		<input type="text" 
-				ref="searchInput"
-				name="tag-search" 
-				placeholder="tag search"
-				/>
-
-	`,
-
-	resultBox = `
-		<span>
-			{{ id }}
-		</span>
-
 	`
 
 	;

@@ -100,12 +100,19 @@ def get_latest():
 	return latest
 
 def get_tagged(tag_name):
-	current_tag = Tag.select().where(Tag.name == tag_name).first()
-	tagged_bolgs = []
-	for bolg in current_tag.bolgs():
-		dict_bolg = model_to_dict(bolg)
-		dict_bolg['tags'] = bolg.tags()
-		tagged_bolgs.append(dict_bolg)
+	tagged_bolgs = {'results': [], 'count': 0}
+	try:
+		current_tag = Tag.get(Tag.name == tag_name)
+		if len(current_tag.bolgs()) > 0:
+			for bolg in current_tag.bolgs():
+				dict_bolg = model_to_dict(bolg)
+				dict_bolg['tags'] = bolg.tags()
+				tagged_bolgs['results'].append(dict_bolg)
+				tagged_bolgs['status'] = 'success'
+	except:
+		tagged_bolgs['status'] = 'nothing'
+		print('nothing found.') 
+
 	return tagged_bolgs
 
 def get_by_perma(perma):

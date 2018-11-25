@@ -30,7 +30,6 @@ def api_all(count=20):
 def api_one(bolg_id=0):
 	single_bolg = bolg.get_a_bolg(bolg_id)
 	resp = jsonify(single_bolg)
-	print(resp)
 	resp.headers.add('Access-Control-Allow-Origin', '*')
 	return resp
 

@@ -22,16 +22,11 @@
 	{% endif %}
 
 	<div class="nav-link" id="tagbox">
-	<input @input="search($event.target.value)">	
-<!-- 		<search-box @input="search($event.target.value)"
-					:value="searchTag">
-		</search-box> -->
+	<input  @input="search(searchTag)" 
+			@blur="statusCheck()" 
+			v-model="searchTag"
+			placeholder="tag">	
 
-		<result-box v-for="bolg in bolgs" 
-					v-bind:key="bolg.id" 
-					v-bind:id="bolg.id" 
-					v-bind:title="bolg.title">
-		</result-box>
 	</div>
 
 
