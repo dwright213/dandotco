@@ -1,38 +1,22 @@
 {% extends "layout.html" %}
 {% block content %}
 
-	<div id="bolg-holder">
-		<h3 v-bind:class="{ invisible: hideNoResults }">
-			Oops, no luck with that tag.
-		</h3>
-		<bolg-listing   
-			v-for="bolg in bolgs"
-			v-bind:key="bolg.id"
-			v-bind:id="bolg.id"
-			v-bind:title="bolg.title"
-			v-bind:perma="bolg.perma"
-			v-bind:body="bolg.body"
-			v-bind:excerpt="bolg.excerpt"
-			v-bind:tags="bolg.tags">	
-		</bolg-listing>
+	{% for bolg in bolgs %}
+		<div class="bolg" v-bind:class="{ invisible: searching }">
+			<h3>
+				<a href="/bolg/{{ bolg.perma }}">
+					{{ bolg.title }}
+				</a>
+			</h3>
+			<p>{{ bolg.excerpt|safe }}</p>
+			<br>
 
-		{% for bolg in bolgs %}
-			<div class="bolg" v-bind:class="{ invisible: searching }">
-				<h3>
-					<a href="/bolg/{{ bolg.perma }}">
-						{{ bolg.title }}
-					</a>
-				</h3>
-				<p>{{ bolg.excerpt|safe }}</p>
-				<br>
+			{% for tag in bolg.tags %} 
+				<a href="/tagged/{{tag}}">{{tag}}</a>
+				{% if loop.index < bolg.tags|length %} // {% endif %} 
+			{% endfor %}	
 
-				{% for tag in bolg.tags %} 
-					<a href="/tagged/{{tag}}">{{tag}}</a>
-					{% if loop.index < bolg.tags|length %} // {% endif %} 
-				{% endfor %}	
-
-			</div>
-		{% endfor %}
-	</div>
+		</div>
+	{% endfor %}
 
  {% endblock %}

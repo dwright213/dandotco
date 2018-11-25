@@ -22,11 +22,21 @@
 	{% endif %}
 
 	<div class="nav-link" id="tagbox">
-	<input  @input="search(searchTag)" 
-			@blur="statusCheck()" 
-			v-model="searchTag"
-			placeholder="tag">	
+		<input  ref="tagInput"
+				@input="search(searchTag)" 
+				@blur="statusCheck()" 
+				v-model="searchTag"
+				class="tag-search_text-input"
+				placeholder="tag"
+				{% if tag_name %}
+					value="{{ tag_name }}"
+					data-tagged="{{ tag_name }}"
+				{% else %}
 
+				{% endif %}
+
+			>
+		</input>			
 	</div>
 
 

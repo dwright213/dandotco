@@ -23,12 +23,13 @@ def home():
 @app.route('/bolg/<perma>')
 def view_bolg(perma):
 	chosen_bolg = bolg.get_by_perma(perma)
-	return render_template('single.html', bolg=chosen_bolg, route_name='bolg')
+	return render_template('single.html', bolg=chosen_bolg, route_name='home')
 
 @app.route('/tagged/<tag_name>')
 def tagged(tag_name):
-	# tagged_bolgs = bolg.get_tagged(tag_name)
-	return render_template('tagged.html', route_name='tagged', tag_name=tag_name)
+	tagged_bolgs = bolg.get_tagged(tag_name)
+	bolgs = tagged_bolgs['results']
+	return render_template('index.html', route_name='home', bolgs=bolgs, tag_name=tag_name)
 
 @app.route('/by_id/<int:bolg_id>')
 def bolg_by_id(bolg_id=0):

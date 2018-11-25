@@ -1,0 +1,14 @@
+	<h3 v-bind:class="{ invisible: hideNoResults }"
+		v-cloak>
+		Oops, no luck with that tag.
+	</h3>
+	<bolg-listing   
+		v-for="bolg in bolgs"
+		v-bind:key="bolg.id"
+		v-bind:id="bolg.id"
+		v-bind:title="bolg.title"
+		v-bind:perma="bolg.perma"
+		v-bind:body="bolg.body"
+		v-bind:excerpt="bolg.excerpt"
+		v-bind:tags="bolg.tags">	
+	</bolg-listing>

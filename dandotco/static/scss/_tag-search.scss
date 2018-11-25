@@ -1,0 +1,23 @@
+.tag-search_text-input {
+	background-color: transparent;
+	border: 0;
+	font-size: 1rem;
+	color: #666;
+
+	&:hover {
+		cursor: pointer;
+	}
+	&:focus {
+		color:#000;
+	}
+		
+	&::placeholder {
+		color: blue;
+		text-decoration: underline;
+	}
+
+	&:focus::placeholder {
+		color: #666;
+		text-decoration: none;
+	}
+}
