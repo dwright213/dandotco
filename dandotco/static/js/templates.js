@@ -10,7 +10,8 @@ export var
 			<br>
 
 			<span v-for="tag, index in tags">
-				<a v-bind:href=tagLink(tag)>{{ tag }}</a>
+				<a  v-bind:href=tagLink(tag.name) v-html="tag.html">
+				</a>
 				<span v-if="index < (tags.length - 1)"> // </span>				
 			</span>
 

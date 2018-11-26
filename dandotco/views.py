@@ -27,12 +27,11 @@ def view_bolg(perma):
 
 @app.route('/tagged/<tag_name>')
 def tagged(tag_name):
-	tagged_bolgs = bolg.get_tagged(tag_name)
-	bolgs = tagged_bolgs['results']
-	return render_template('index.html', route_name='home', bolgs=bolgs, tag_name=tag_name)
+	tagged_bolgs = bolg.tag_name_search(tag_name)
+	# bolgs = tagged_bolgs['results']
+	return render_template('index.html', route_name='home', bolgs=tagged_bolgs, tag_name=tag_name)
 
-@app.route('/by_id/<int:bolg_id>')
-def bolg_by_id(bolg_id=0):
-	chosen_bolg = bolg.get_a_bolg(bolg_id)
-	return render_template('single.html', bolg=chosen_bolg, route_name='bolg')
-
+@app.route('/tagz/<search_term>')
+def tagz_experiment(search_term):
+	resp = jsonify(bolg.tag_name_search(search_term))
+	return resp

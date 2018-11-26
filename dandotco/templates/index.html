@@ -12,7 +12,7 @@
 			<br>
 
 			{% for tag in bolg.tags %} 
-				<a href="/tagged/{{tag}}">{{tag}}</a>
+				<a href="/tagged/{{tag.name}}">{{ tag.html|safe }}</a>
 				{% if loop.index < bolg.tags|length %} // {% endif %} 
 			{% endfor %}	
 

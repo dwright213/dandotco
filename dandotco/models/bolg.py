@@ -63,6 +63,31 @@ class Bolg(BaseModel):
 		tag_list = list(set(tag_list))
 		return(tag_list)
 
+	def serialize(self, format, **kwargs):
+		formatted_bolg = {}
+		if (format == 'search_result'):
+			tags_highlighted = []
+			
+			for tag in self.tags():
+				if 'search_term' in kwargs:
+					term = kwargs['search_term']
+					html = tag.replace( term,('<strong>%s</strong>' %(term)) )
+				else:
+					html = tag
+				tag_ob = {}
+				tag_ob['name'] = tag
+				tag_ob['html'] = html
+				tags_highlighted.append(tag_ob)
+
+			formatted_bolg['title'] = self.title
+			formatted_bolg['perma'] = self.perma
+			formatted_bolg['excerpt'] = self.excerpt
+			formatted_bolg['created'] = self.created
+			formatted_bolg['tags'] = tags_highlighted
+		else:
+			print('unrecognized format, throwing the whole thing in there.')
+
+		return formatted_bolg
 
 class Tagging(BaseModel):
 	bolg = ForeignKeyField(Bolg, backref='bolg')
@@ -89,8 +114,7 @@ def get_some_bolgs(num):
 	dict_bolgs = []
 	bolgs = Bolg.select().order_by(Bolg.id.desc())[:num]
 	for bolg in bolgs:
-		dict_bolg = model_to_dict(bolg)
-		dict_bolg['tags'] = bolg.tags()
+		dict_bolg = bolg.serialize('search_result') 
 		dict_bolgs.append(dict_bolg)
 
 	return dict_bolgs
@@ -114,6 +138,24 @@ def get_tagged(tag_name):
 		print('nothing found.') 
 
 	return tagged_bolgs
+
+def tag_name_search(search_term):
+	tags = Tag.select().where(
+		Tag.name.contains(search_term))
+
+	bolg_id_set = set()
+
+	if len(tags) > 0:
+		for tag in tags:
+			map(lambda x: bolg_id_set.add(x.id), tag.bolgs())
+
+
+	bolg_list = []
+
+	for bolg_id in bolg_id_set:
+		bolg_list.append( Bolg.get_by_id(bolg_id).serialize('search_result', search_term=search_term))
+
+	return bolg_list
 
 def get_by_perma(perma):
 	permad = Bolg.select().where(Bolg.perma == perma).first()
