@@ -5,7 +5,7 @@ import os
 
 from IPython import embed
 from dandotco import app
-from dandotco.models import bolg
+from dandotco.models import bolg, error
 
 @app.before_request
 def before_request():
@@ -13,6 +13,12 @@ def before_request():
 		g.logged = False
 	else:
 		g.logged = True
+
+@app.errorhandler(error.InvalidUsage)
+def handle_invalid_usage(error):
+    response = jsonify(error.to_dict())
+    response.status_code = error.status_code
+    return response
 
 
 @app.route('/')
@@ -31,7 +37,19 @@ def tagged(tag_name):
 	# bolgs = tagged_bolgs['results']
 	return render_template('index.html', route_name='home', bolgs=tagged_bolgs, tag_name=tag_name)
 
+
+# @app.errorhandler(404)
+# def page_not_found(e):
+#     # note that we set the 404 status explicitly
+#     return render_template('error.html'), 404
+
+
+
 @app.route('/tagz/<search_term>')
 def tagz_experiment(search_term):
+
 	resp = jsonify(bolg.tag_name_search(search_term))
+	print(search_term)
+	print(resp)
+	raise error.InvalidUsage('This view is gone', status_code=410)
 	return resp

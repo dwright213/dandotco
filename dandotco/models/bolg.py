@@ -2,13 +2,11 @@ import json
 from peewee import *
 from playhouse.shortcuts import model_to_dict, dict_to_model
 from playhouse.postgres_ext import *
-
+from flask import abort
 from IPython import embed
 
 import re, datetime, markdown
 
-from werkzeug.security import generate_password_hash, \
-     check_password_hash
 
 # import logging
 # logger = logging.getLogger('peewee')
@@ -123,35 +121,17 @@ def get_latest():
 	latest = Bolg.select().order_by(Bolg.id.desc()).first().id
 	return latest
 
-def get_tagged(tag_name):
-	tagged_bolgs = {'results': [], 'count': 0}
-	try:
-		current_tag = Tag.get(Tag.name == tag_name)
-		if len(current_tag.bolgs()) > 0:
-			for bolg in current_tag.bolgs():
-				dict_bolg = model_to_dict(bolg)
-				dict_bolg['tags'] = bolg.tags()
-				tagged_bolgs['results'].append(dict_bolg)
-				tagged_bolgs['status'] = 'success'
-	except:
-		tagged_bolgs['status'] = 'nothing'
-		print('nothing found.') 
-
-	return tagged_bolgs
-
 def tag_name_search(search_term):
+	
 	tags = Tag.select().where(
 		Tag.name.contains(search_term))
-
+	
 	bolg_id_set = set()
-
 	if len(tags) > 0:
 		for tag in tags:
 			map(lambda x: bolg_id_set.add(x.id), tag.bolgs())
 
-
 	bolg_list = []
-
 	for bolg_id in bolg_id_set:
 		bolg_list.append( Bolg.get_by_id(bolg_id).serialize('search_result', search_term=search_term))
 
@@ -213,13 +193,6 @@ def create(title, body, tags, **kwargs):
 		return get_a_bolg(new_bolg.id)
 	except:
 		return 'problems happened whist creating a bolg.'
-
-# def add_image(bolg_id, img_name):
-# 	print('found me!')
-# 	print('found me!')
-# 	print('found me!')
-# 	print('found me!')
-# 	return 'no sir'
 
 def edit(bolg_id, **kwargs):
 

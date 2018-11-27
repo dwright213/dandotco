@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block title %}Page Not Found{% endblock %}
+{% block content %}
+
+  <h1>{{ err.msg }}</h1>
+  <p>{{ err.desc }}
+  <p><a href="{{ url_for('home') }}">Fine, take me home then.</a>
+
+{% endblock %}

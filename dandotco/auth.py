@@ -3,7 +3,7 @@ from IPython import embed
 from dandotco.models import bolg
 from warrant_lite import WarrantLite
 from flask import (
-	Blueprint, flash, g, redirect, render_template, request, session, url_for, Flask
+	Blueprint, flash, g, redirect, render_template, request, session, url_for, Flask, abort
 )
 
 app = Flask(__name__)
@@ -16,7 +16,8 @@ def login_required(f):
 	@wraps(f)
 	def decorated_function(*args, **kwargs):
 		if (not session):
-			return redirect(url_for('auth.login'))
+			abort(403)
+			# return redirect(url_for('auth.login'))
 		return f(*args, **kwargs)
 	return decorated_function
 

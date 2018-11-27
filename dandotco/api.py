@@ -1,6 +1,6 @@
 from functools import wraps
 from IPython import embed
-from dandotco.models import bolg
+from dandotco.models import bolg, error
 from warrant_lite import WarrantLite
 from flask import (
 	Blueprint, flash, g, redirect, render_template, request, session, url_for, Flask, jsonify
@@ -11,6 +11,13 @@ app = Flask(__name__)
 app.config.from_pyfile('settings.cfg', silent=False)
 
 bp = Blueprint('api', __name__, url_prefix='/api')
+
+@bp.errorhandler(error.InvalidUsage)
+def handle_invalid_usage(error):
+    response = jsonify(error.to_dict())
+    response.status_code = error.status_code
+    return response
+
 
 @bp.route('/', methods=['GET'])
 def api_latest():
@@ -35,6 +42,9 @@ def api_one(bolg_id=0):
 
 @bp.route('/tagged/<tag_name>', methods=['GET'])
 def api_tagged(tag_name):
+	
+	# raise error.InvalidUsage('This view is gone', status_code=410)
+	
 	results = bolg.tag_name_search(tag_name)
 	tagged_bolgs = {'results': results, 
 					'count': len(results) }
