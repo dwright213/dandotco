@@ -5,6 +5,8 @@ from playhouse.postgres_ext import *
 from flask import abort
 from IPython import embed
 
+from dandotco import app
+
 import re, datetime, markdown
 
 
@@ -16,10 +18,10 @@ import re, datetime, markdown
 # DATABASE CONNECTING
 pg_db = PostgresqlDatabase(
 		'dandotco',
-		user='dandotco',
-		password='quux',
-		host='localhost',
-		port=5432)
+		host=	  app.config.get('DB_HOST'),
+		user=	  app.config.get('DB_USER'),
+		password= app.config.get('DB_PW'),
+		port=	  5432)
 
 
 

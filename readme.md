@@ -13,29 +13,13 @@ $~> flask run
 #### tech choices
 
 ##### backend: 
-	python/flask because I don't need anything too fancy here. Ideally I won't need to maintain this thing much, once it's deployed.
+python/flask
 
 ##### database: 
-	postgres for the same reasons as above. I wanted to use mongo but I have more confidence in sql at this point. 
+postgres, with peewee orm.
 
-##### backend:
-	TBD but probably sass and vuejs.
-
-
-#### my (very unique) schema:
-
-bolgs
-	- id
-	- title
-	- body
-
-tags
-	- id
-	- name
-
-bolgs_tags
-	- bolg_id
-	- tag_id
+##### frontend:
+vuejs and sass, compiled by a gulp/webpack toolchain.
 
 
 #### update: vuejs
@@ -47,9 +31,27 @@ With Vue, my favored approach is to use webpack's "chunking" feature to make dif
 
 #### Things we'll need in prod:
 user related stuff:
-	- create sudo user
-	- give user my publickeys
-	- disable root/password login
+- create sudo user
+- give user my publickeys
+- disable root/password login
 
-other: 
-	- install/make fish the default shell
+ubuntu packages:
+- fish
+- python-pip
+- virtualenv
+- node @10.0.0
+- postgresql postgresql-contrib
+
+- psql
+- nginx
+
+### prod environment
+
+create some dirs:
+
+app: /home/user/dandotco
+images: /var/media/img/
+css: /var/media/dist/main.css
+js: /var/media/dist/main.js
+
+create psql user 'dandotco'

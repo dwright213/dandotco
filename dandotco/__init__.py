@@ -6,6 +6,8 @@ app.config.from_envvar('ENV')
 app.config.from_pyfile('settings.cfg', silent=False)
 app.config['IMG_SIZES'] = [100, 400, 800, 1200]
 
+
+
 app.config.from_mapping(
 	SECRET_KEY=app.config.get('SECRET_KEY'),
 )
