@@ -41,6 +41,7 @@ ubuntu packages:
 - virtualenv
 - node @10.0.0
 - postgresql postgresql-contrib
+- libmagickwand-dev
 
 - psql
 - nginx
