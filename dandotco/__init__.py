@@ -2,8 +2,8 @@ from flask import Flask, g, session
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
-app.config.from_envvar('ENV')
 app.config.from_pyfile('settings.cfg', silent=False)
+app.config.from_envvar('ENV')
 app.config['IMG_SIZES'] = [100, 400, 800, 1200]
 
 

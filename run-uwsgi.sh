@@ -1,4 +1,5 @@
 export FLASK_DEBUG=true
+export ENV=configs/production.py
 export FLASK_APP=dandotco
 export SETTINGS=./settings.cfg
 
