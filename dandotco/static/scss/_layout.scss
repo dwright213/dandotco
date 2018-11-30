@@ -149,7 +149,7 @@ body {
 		position: absolute;
 		top: 5px;
 		left: 5px;
-		background: url(img/sprite.svg);
+		background: url(../img/ui/arrow.svg);
 		display: inline-block;
 		cursor: pointer;
 		@include main-transition;	
@@ -179,5 +179,5 @@ body {
 	width: 93px;
 	height: 42px;
 	background-repeat: no-repeat;
-	background-image: url(/static/dist/img/catscape.png);
+	background-image: url(../img/ui/catscape.png);
 }
