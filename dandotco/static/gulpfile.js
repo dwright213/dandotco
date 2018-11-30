@@ -39,7 +39,7 @@ var
 
 gulp.task('default', function (done) {
 	dist = '/var/media/'
-	webpackConf.mode = 'production'
+	webpackConf.mode = 'development'
 	gulp.series('sprites', 'styles', 'scripts')();
 	done();
 })
