@@ -46,7 +46,7 @@ gulp.task('default', function (done) {
 })
 
 gulp.task('develop', function() {
-	webpackConf.resolve = vueAlias
+	// webpackConf.resolve = vueAlias
 	webpackConf.mode = 'development'
 	gulp.watch(jsGlob, gulp.parallel('scripts'))
 	gulp.watch(scssGlob, gulp.parallel('styles'))

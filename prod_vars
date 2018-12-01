@@ -1,0 +1,3 @@
+ENV=configs/production.py
+FLASK_APP=dandotco
+SETTINGS=./settings.cfg
