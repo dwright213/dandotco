@@ -3,7 +3,7 @@
 <html>
 
 	<head>
-		<link rel="stylesheet" href="/static/dist/css/main.css">
+		<link rel="stylesheet" href="{{ config['DEV_STATIC'] }}/css/main.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
 	<title>dandotco</title>
@@ -11,9 +11,7 @@
 	<body>
 		<div id="main-container">
 			<div id="header">
-			
 				{% include 'header.html' %}
-
 
 				{% with messages = get_flashed_messages() %}
 					{% if messages %}
@@ -55,7 +53,7 @@
 		</div>
 	</body>
 	{% if route_name %}
-		<script src="/static/dist/js/{{route_name}}.chunk.js"></script>
+		<script src="{{ config['DEV_STATIC'] }}/js/{{route_name}}.chunk.js"></script>
 	{% endif %}
 </html>
 

@@ -38,13 +38,6 @@ def tagged(tag_name):
 	return render_template('index.html', route_name='home', bolgs=tagged_bolgs, tag_name=tag_name)
 
 
-# @app.errorhandler(404)
-# def page_not_found(e):
-#     # note that we set the 404 status explicitly
-#     return render_template('error.html'), 404
-
-
-
 @app.route('/tagz/<search_term>')
 def tagz_experiment(search_term):
 
