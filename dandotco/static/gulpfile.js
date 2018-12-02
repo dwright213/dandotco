@@ -61,8 +61,8 @@ var
 
 gulp.task('default', function(done) {
 	dist = '/var/media/'
-	webpackConf.mode = 'development'
-	// webpackConf.resolve = vueAlias
+	// webpackConf.mode = 'development'
+	webpackConf.resolve = vueAlias
 	gulp.series('sprites', 'styles', 'scripts')();
 	done();
 })
