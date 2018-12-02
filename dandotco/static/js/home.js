@@ -1,42 +1,11 @@
-// libs
 import Vue from 'vue'
 import axios from 'axios'
 import debounce from 'lodash.debounce'
 
+import bolgListing from './components/bolgListing'
 
 
-// my stuff
-import { bolgTile } from './templates.js';
-
-var
-	bolgs = [],
-
-	bolgListing = {
-		props: ['title', 'perma', 'excerpt', 'id', 'body', 'tags'],
-		template: bolgTile,
-		computed: {
-			highlight: function() {
-				console.log(this)
-			}
-		},
-		methods: {
-
-			tileId: function() {
-				return 'bolg-' + this.id
-			},
-
-			bolgLink: function() {
-				return '/bolg/' + this.perma
-			},
-
-			tagLink: function(tag) {
-				return '/tagged/' + tag
-			}
-
-		}
-	};
-
-
+var bolgs = [];
 var taggart = new Vue({
 	el: '#main-container',
 
@@ -54,7 +23,7 @@ var taggart = new Vue({
 				return false
 			} else {
 				return true
-			}	
+			}
 		}
 	},
 
@@ -69,7 +38,7 @@ var taggart = new Vue({
 				taggart.bolgs = []
 				taggart.searching = false
 				if (this.taggedUri == true) {
-					
+
 				}
 			}
 		},
@@ -77,27 +46,29 @@ var taggart = new Vue({
 		highlighter: function(tags) {
 			let highlighted_tags = []
 			tags.map(tag => {
-				highlighted_tags.push({ 'name': tag,
-										'html': tag.replace(taggart.searchTag, `<strong>${taggart.searchTag}</strong>`)})
+				highlighted_tags.push({
+					'name': tag,
+					'html': tag.replace(taggart.searchTag, `<strong>${taggart.searchTag}</strong>`)
+				})
 			})
-			
+
 			return highlighted_tags
 		},
 
 		search: debounce((value) => {
-			if (value.length > 0 && taggart.taggedUriString != taggart.searchTag){
+			if (value.length > 0 && taggart.taggedUriString != taggart.searchTag) {
 				axios
 					.get(`/api/tagged/${value}`, { crossdomain: false })
 					.then(response => {
 						taggart.bolgs = response.data.results
-						
+
 						// taggart.bolgs.map(bolg => {
 						// 	let tags = taggart.highlighter(bolg.tags)
 						// 	bolg.tags = tags
 						// })
-						
+
 					})
-					.catch(function(error){ console.log(error) })
+					.catch(function(error) { console.log(error) })
 
 				taggart.searching = true
 
@@ -119,3 +90,5 @@ var taggart = new Vue({
 
 
 })
+
+

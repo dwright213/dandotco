@@ -17,6 +17,7 @@ configure_uploads(app, photos)
 @app.route('/upload/<int:bolg_id>', methods=['POST'])
 @login_required
 def upload(bolg_id=0):
+
 	if request.method == 'POST' and 'photo' in request.files:
 		bolg_folder = 'original/' + str(bolg_id)
 		prospective_filename = (  app.config['UPLOADED_PHOTOS_DEST']  
