@@ -3,21 +3,18 @@
 	border: 0;
 	font-size: 1rem;
 	color: #666;
-
-	&:hover {
-		cursor: pointer;
-	}
+	border-radius: 3px;
+	&:hover,
 	&:focus {
-		color:#000;
+		outline: none;
+		color: #666;
+		background-color: rgba(0, 0, 0, 0.11);
+
 	}
 		
-	&::placeholder {
-		color: blue;
-		text-decoration: underline;
-	}
-
+	&:hover::placeholder,
 	&:focus::placeholder {
-		color: #666;
+		color: #d0d0d0;
 		text-decoration: none;
 	}
 }

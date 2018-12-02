@@ -9,12 +9,12 @@ var
 	vueGlob = './js/components/*.vue',
 	jsGlob = './js/**/*.js',
 	scssGlob = './scss/**/*.scss',
-	svgGlob = './img/*.svg',
+	imgGlob = './img/ui/*',
 
 	// input paths
 	jsInput = './js/main.js',
 	scssInput = './scss/main.scss',
-	svgInput = './img/ui/*',
+	imgInput = './img/ui/*',
 
 	// output paths
 	dist = 'dist/',
@@ -63,7 +63,7 @@ gulp.task('default', function(done) {
 	dist = '/var/media/'
 	// webpackConf.mode = 'development'
 	webpackConf.resolve['alias'] = vueAlias
-	gulp.series('sprites', 'styles', 'scripts')();
+	gulp.series('images', 'styles', 'scripts')();
 	done();
 })
 
@@ -72,12 +72,12 @@ gulp.task('develop', function() {
 	webpackConf.mode = 'development'
 	gulp.watch([jsGlob, vueGlob], gulp.parallel('scripts'))
 	gulp.watch(scssGlob, gulp.parallel('styles'))
-	gulp.watch(svgGlob, gulp.parallel('sprites'))
+	gulp.watch(imgGlob, gulp.parallel('images'))
 
 });
 
-gulp.task('sprites', function() {
-	return gulp.src(svgInput)
+gulp.task('images', function() {
+	return gulp.src(imgInput)
 		.pipe(gulp.dest(`${dist}img/ui`));
 });
 

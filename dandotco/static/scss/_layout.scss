@@ -50,12 +50,13 @@ body {
 }
 
 .bar {
-	flex-grow: 1;
-	width: 20%;
+	// flex-grow: 1;
+	width: 10%;
 	// background-color: #d3ffcb;
 }
 
 #bolg-holder {
+	flex-grow: 1;
 	display: flex;
 	flex-flow: column nowrap;
 
