@@ -1,6 +1,6 @@
 {
   "name": "dandotco",
-  "version": "0.0.01",
+  "version": "0.0.1",
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
@@ -4305,6 +4305,7 @@
         }
       }
     },
+    "node-pre-gyp": {},
     "node-sass": {
       "version": "4.9.4",
       "resolved": "https://registry.npmjs.org/node-sass/-/node-sass-4.9.4.tgz",
