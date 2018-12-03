@@ -42,7 +42,7 @@ body {
 
 
 #content {
-	order: 3;
+	order: 4;
 	flex-grow: 1;
 	display: flex;
 	flex-flow: row nowrap;
@@ -170,7 +170,7 @@ body {
 }
 
 #footer {
-	order: 4;
+	order: 5;
 	padding: 15px;
 	margin: 10px 0 0 0;
 	// background-color: #7fffd4;
@@ -179,6 +179,19 @@ body {
 #footer__badges {
 	width: 93px;
 	height: 42px;
+	background-position: center center;
+	display: inline-block;
+
+}
+.catscape {
 	background-repeat: no-repeat;
 	background-image: url(../img/ui/catscape.png);
+}	
+.twitter {
+	background-repeat: no-repeat;
+	background-image: url(../img/ui/twitter.svg);
 }
+.github {
+	background-repeat: no-repeat;
+	background-image: url(../img/ui/github.svg);
+}	

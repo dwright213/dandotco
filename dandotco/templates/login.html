@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
+<div class="bolg" v-bind:class="{ invisible: searching }">
+	
 	<div id="bolg-holder">
 		<h3>
 			<i>
@@ -20,4 +22,5 @@
 		</form>
 
 	</div>
+</div>
 {% endblock %}
