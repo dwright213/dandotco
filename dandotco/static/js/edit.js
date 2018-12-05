@@ -16,7 +16,8 @@ var
 		el: '#img-upload',
 		data: {
 			bolgId: '',
-			images: []
+			images: [],
+			imgDir:''
 
 		},
 
@@ -56,6 +57,7 @@ var
 
 		mounted() {
 			this.bolgId = this.$el.dataset.bolg
+			this.imgDir = this.$el.dataset.imgLoc
 			axios
 				.get(`/api/${this.bolgId}/images`, { crossdomain: false })
 				.then(response => (this.images = response.data.images))

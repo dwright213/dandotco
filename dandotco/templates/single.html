@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
-	<div class="bolg" v-bind:class="{ invisible: searching }">
+	<div class="bolg" id="bolg-view" v-bind:class="{ invisible: searching }">
 		<h2>
 			{{bolg.title}} 
 			{% if g.logged == True %}

@@ -1,6 +1,12 @@
-$font-size: 17px;
-$danger-color: red;
+// text/fonts
+$text-size: 17px;
 
+$text-color: #000;
+$text-muted: lighten($text-color, 30%);
+
+
+
+$danger-color: red;
 
 $nav-toggle-size: 50px;
 $nav-item-height: 20px;

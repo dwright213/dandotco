@@ -29,7 +29,7 @@ def home():
 @app.route('/bolg/<perma>')
 def view_bolg(perma):
 	chosen_bolg = bolg.get_by_perma(perma)
-	return render_template('single.html', bolg=chosen_bolg, route_name='home')
+	return render_template('single.html', bolg=chosen_bolg, route_name='bolg')
 
 @app.route('/tagged/<tag_name>')
 def tagged(tag_name):

@@ -12,7 +12,7 @@
 
 		methods: {
 			imgLoc() {
-				return `/img/processed/${this.$parent.bolgId}/${this.name}100.${this.format}`
+				return `${this.$parent.imgDir}${this.$parent.bolgId}/${this.name}100.${this.format}`
 			},
 			removeImg() {
 				this.$parent.delete(this.orig_name)

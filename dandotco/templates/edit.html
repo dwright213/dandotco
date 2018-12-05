@@ -8,7 +8,11 @@
 		</h3>
 
 		<p>
-		<div id="img-upload" data-bolg={{ bolg.id }}>			
+
+		<div id="img-upload" 
+			data-bolg="{{ bolg.id }}" 
+			data-img-loc="{{ config['PROCESSED_PHOTOS_DEST'] }}">
+			
 			<file-upload>
 			</file-upload>	
 			<div id="thumb-holder">
@@ -23,12 +27,6 @@
 		</div>
 		</p>
 
-<!-- 		<p>
-		<div id="img-thumb" data-bolg={{ bolg.id }}>			
-		</div>
-		</p>
-
- -->
  		<form method="POST" action="/edit/{{ bolg.id }}" class="compose-form">
 			<input 
 				type="text" 

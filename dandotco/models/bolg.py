@@ -2,12 +2,14 @@ import json
 from peewee import *
 from playhouse.shortcuts import model_to_dict, dict_to_model
 from playhouse.postgres_ext import *
+
 from flask import abort
 from IPython import embed
 
 from dandotco import app
+import re, datetime
 
-import re, datetime, markdown
+import markdown
 
 
 # import logging
@@ -181,7 +183,7 @@ def create(title, body, tags, **kwargs):
 		excerpt = markdown.markdown(excerpt + '.')
 
 	body_html = markdown.markdown(body)
-
+	# markdown.markdown(s, extensions=['fenced_code'])
 
 	try:
 		new_bolg = Bolg(title=clean_title, 
@@ -216,7 +218,7 @@ def edit(bolg_id, **kwargs):
 		proposed_edits.pop(key, None)
 
 	if ('body_src' in proposed_edits) and (proposed_edits['body_src'] != chosen_bolg.body_src):
-		proposed_edits['body'] = markdown.markdown(proposed_edits['body_src'])
+		proposed_edits['body'] = markdown.markdown(proposed_edits['body_src'], extensions=['attr_list'])
 
 
 	chosen_bolg = Bolg.update(**proposed_edits).where(Bolg.id == bolg_id)

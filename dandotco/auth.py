@@ -92,7 +92,7 @@ def edit_bolg(id):
 			'tags': request.form['tags']}
 
 		bolg.edit(chosen_bolg['id'], **bolg_ob)
-		return redirect('/')
+		return redirect('/edit/'+ str(id))
 
 	return render_template('edit.html', bolg=chosen_bolg, route_name='edit')
 

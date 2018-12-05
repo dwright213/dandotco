@@ -1,5 +1,5 @@
 body {
-	font-size: $font-size;
+	font-size: $text-size;
 	margin: 0;
 	background-color: #b7b7b7;
 }
@@ -20,26 +20,8 @@ body {
 #header-tagline {
 	display: block;
 	margin-left: 100px;
-	color: #30303099;
+	color: $text-muted;
 }
-
-
-#nav {
-	order: 2;
-	margin: 0 0 10px 0;
-	text-align: center;
-	padding: 5px;
-	// background-color: #7fffd4;
-	display: flex;
-	flex-flow: row nowrap;
-	justify-content: center;
-}
-
-.nav-link {
-	margin: 0 15px 0 15px;
-}
-
-
 
 #content {
 	order: 4;
@@ -67,16 +49,6 @@ body {
 	padding: 0 15px 15px 15px;
 	margin: 0 10px 10px 10px;
 	justify-content: space-between;
-}
-
-#nav-toggle {
-
-	display: none;
-}
-
-#nav-item-list {
-	display: flex;
-	flex-flow: row nowrap;
 }
 
 @media screen and (max-width: 768px) {
@@ -118,55 +90,6 @@ body {
 		padding-right: 5px;
 	}
 
-
-	#nav {
-		order: 0;
-		flex-flow: column nowrap;
-		justify-content: left;
-		padding: 0;
-		margin: 0;
-	}
-
-	#nav-item-list {
-		display: flex;
-		flex-flow: column nowrap;
-		overflow: hidden;
-		height: 0;
-		@include main-transition;
-	}
-
-	.nav-link {
-		text-align: start;
-		display: block;
-		padding: 5px;
-		&:nth-of-type(1) {
-			padding: 50px 0 0 5px;
-		}
-	}
-
-	#nav label {
-		width: $nav-toggle-size;
-		height: $nav-toggle-size;
-		position: absolute;
-		top: 5px;
-		left: 5px;
-		background: url(../img/ui/arrow.svg);
-		display: inline-block;
-		cursor: pointer;
-		@include main-transition;	
-	}
-
-	#nav-toggle {
-		opacity: 0;
-		&:checked ~ label {
-			transform: rotate(45deg);
-		}
-		&:checked ~ #nav-item-list {
-			display: block;
-			opacity: 1;
-			height: 160px;
-		}
-	}
 }
 
 #footer {
