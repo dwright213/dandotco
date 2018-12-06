@@ -6,25 +6,43 @@
 
 #bolg-view {
 
+	// for the couple millis before the images are put into figures.
 	img {
 		max-width: 100%;
 		margin: 5px 0 5px 0;
-
+		&:first-of-type, &:last-of-type {
+			margin-bottom: 10px;
+			margin-top: 10px;
+		}
+		
+	}
+	figure {
+		max-width: 100%;
+		margin: 5px 0 5px 0;
+		background-color: lighten($bgcolor, 10%);
+		display: inline-block;
 		&:first-of-type {
 			margin-top: 10px;		
 		}
-
 		&:last-of-type {
 			margin-bottom: 10px;
 		}
 
-		// things I can change
-		// &.float-left {
-		// 	float: left;
-		// }
-		// &.float-right {
-		// 	float: right;
-		// }
+		img {
+			&:first-of-type, &:last-of-type {
+				margin-bottom: 0;
+				margin-top: 0;
+			}
+			margin: 0;
+			vertical-align: middle;
+			max-width: 100%;
+		}
+
+		figcaption {
+			font-size: .8rem;
+			padding: 3px;
+		}
+		
 	}
 
 	blockquote {
@@ -50,8 +68,24 @@
 			color: $text-muted;
 			font-size: 1rem;
 			line-height: 2.5rem;
+			font-weight: 600;
 		}
 
 	}
+
+	@media screen and (min-width: 480px) {
+		// figure {
+			.float-left {
+				float: left;
+				margin: 10px;
+			}
+			.float-right {
+				float: right;
+				margin: 10px;
+			}
+
+		// }
+	}
+
 }
 
