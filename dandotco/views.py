@@ -23,8 +23,20 @@ def handle_invalid_usage(error):
 
 @app.route('/')
 def home():
+	
+
 	bolgs = bolg.get_some_bolgs(20)
 	return render_template('index.html', bolgs=bolgs, route_name='home')
+
+@app.route('/about')
+def about():
+	page = bolg.get_page('about')
+	return render_template('single.html', bolg=page, route_name='bolg')
+
+@app.route('/research')
+def research():
+	page = bolg.get_page('research')
+	return render_template('single.html', bolg=page, route_name='bolg')
 
 @app.route('/bolg/<perma>')
 def view_bolg(perma):

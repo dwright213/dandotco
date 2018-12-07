@@ -1,3 +1,4 @@
+import './home'
 
 var
 	bolg = document.getElementById('bolg-view'),

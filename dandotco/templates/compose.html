@@ -45,6 +45,14 @@
 				placeholder="body"
 				> {{ lipsum(n=5, html=False, min=20, max=100) }}
 			</textarea>
+
+			<select 
+				name="kind"
+				id="input-kind"
+				class="compose-form__input compose-form__input--half-width">
+				<option value="post">standard bolg post</option>
+				<option value="page">conent for a 'page'</option>
+			</select>
 			
 			<input type="text" 
 				name="tags" 

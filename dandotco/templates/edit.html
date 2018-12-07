@@ -57,7 +57,15 @@
 				placeholder="body"
 				>{{ bolg.body_src }}
 			</textarea>
-			
+
+			<select 
+				name="kind"
+				id="input-kind"
+				class="compose-form__input compose-form__input--half-width">
+				<option value="post">standard bolg post</option>
+				<option value="page">conent for a 'page'</option>
+			</select>
+
 			<input 
 			type="text" 
 			name="tags" 

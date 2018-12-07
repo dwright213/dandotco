@@ -54,6 +54,7 @@ class Bolg(BaseModel):
 	body_src = CharField()
 	created = DateTimeField(default=datetime.datetime.now)
 	images = JSONField(null=True)
+	kind = CharField()
 
 	def tags(self):
 		tag_list = []
@@ -88,6 +89,13 @@ class Bolg(BaseModel):
 			formatted_bolg['excerpt'] = self.excerpt
 			formatted_bolg['created'] = self.created
 			formatted_bolg['tags'] = tags_highlighted
+
+		elif (format == 'page'):
+			formatted_bolg['title'] = self.title
+			formatted_bolg['perma'] = self.perma
+			formatted_bolg['body'] = self.body
+			formatted_bolg['created'] = self.created
+
 		else:
 			print('unrecognized format, throwing the whole thing in there.')
 
@@ -116,7 +124,7 @@ def get_a_bolg(bolg_id):
 
 def get_some_bolgs(num):
 	dict_bolgs = []
-	bolgs = Bolg.select().order_by(Bolg.id.desc())[:num]
+	bolgs = Bolg.select().where(Bolg.kind != 'page').order_by(Bolg.id.desc())[:num]
 	for bolg in bolgs:
 		dict_bolg = bolg.serialize('search_result') 
 		dict_bolgs.append(dict_bolg)
@@ -126,6 +134,11 @@ def get_some_bolgs(num):
 def get_latest():
 	latest = Bolg.select().order_by(Bolg.id.desc()).first().id
 	return latest
+
+def get_page(perma):
+	lookup = Bolg.select().where((Bolg.kind != 'post') and (Bolg.perma == perma)).first()
+	page = lookup.serialize('page')
+	return page
 
 def tag_name_search(search_term):
 	
@@ -149,7 +162,7 @@ def get_by_perma(perma):
 	dict_permad['tags'] = permad.tags()
 	return dict_permad
 
-def create(title, body, tags, **kwargs):
+def create(title, body, kind, tags, **kwargs):
 	tags_found = []
 	if (tags):
 		tags_found = tags_create(tags)
@@ -191,6 +204,7 @@ def create(title, body, tags, **kwargs):
 						excerpt=excerpt, 
 						body=body_html, 
 						body_src=body,
+						kind=kind,
 						images=[])
 		new_bolg.save()
 		for tag_found in tags_found:
@@ -207,7 +221,6 @@ def edit(bolg_id, **kwargs):
 	proposed_edits = dict(**kwargs)
 	disallowed = ['body', 'id']
 
-	print(chosen_bolg)
 	if ('tags' in proposed_edits):
 		tag_list = list(set([tag.strip() for tag in kwargs['tags'].split(',')]))
 		proposed_edits.pop('tags')

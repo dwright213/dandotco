@@ -70,8 +70,9 @@ def compose_bolg():
 		perma = request.form['perma']
 		excerpt = request.form['excerpt']
 		body = request.form['body']
+		kind = request.form['kind']
 		tags = request.form['tags']
-		new_bolg = bolg.create(title, body, tags, excerpt=excerpt)
+		new_bolg = bolg.create(title, body, kind, tags, excerpt=excerpt)
 		new_bolg['perma']
 		return redirect(str('/bolg/'+ new_bolg['perma']))
 
@@ -89,6 +90,7 @@ def edit_bolg(id):
 			'perma': request.form['perma'],
 			'excerpt': request.form['excerpt'],
 			'body_src': request.form['body'],
+			'kind': request.form['kind'],
 			'tags': request.form['tags']}
 
 		bolg.edit(chosen_bolg['id'], **bolg_ob)

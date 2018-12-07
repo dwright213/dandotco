@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+
+	<div class="bolg" id="bolg-view" v-bind:class="{ invisible: searching }">
+		<h2>
+			{{bolg.title}} 
+			{% if g.logged == True %}
+			(<a href="/edit/{{bolg.id}}">edit</a>)
+			{% endif %}
+		</h2>
+
+		<h3>{{bolg.date}}</h3>
+		
+		<p>
+			{{bolg.body | safe}}	
+		</p>
+		
+		<p>
+		{% for tag in bolg.tags %} 
+			<a href="/tagged/{{tag}}">{{tag}}</a>
+			{% if loop.index < bolg.tags|length %} // {% endif %} 
+		{% endfor %}	
+		</p>
+
+	</div>
+
+{% endblock %}
