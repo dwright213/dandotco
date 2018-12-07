@@ -1,4 +1,7 @@
-var imgs = Array.from(document.getElementsByTagName('img'));
+
+var
+	bolg = document.getElementById('bolg-view'),
+	imgs = Array.from(bolg.getElementsByTagName('img'));
 
 for (let img of imgs) {
 	let wrapper = document.createElement('figure');

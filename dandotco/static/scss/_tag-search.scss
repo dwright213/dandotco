@@ -2,19 +2,24 @@
 	background-color: transparent;
 	border: 0;
 	font-size: 1rem;
-	color: #666;
+	color: $text-less-muted;
 	border-radius: 3px;
+	max-width: 90px;
+	&::placeholder {
+		color: $text-muted;
+	}	
+
 	&:hover,
 	&:focus {
 		outline: none;
-		color: #666;
+		color: $text-less-muted;
 		background-color: rgba(0, 0, 0, 0.11);
 
 	}
-		
 	&:hover::placeholder,
 	&:focus::placeholder {
-		color: #d0d0d0;
+		// color: green;
+		color: $text-less-muted;
 		text-decoration: none;
 	}
 }

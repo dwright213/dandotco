@@ -1,5 +1,9 @@
-<input type="checkbox" id="nav-toggle">
+<input 
+	type="checkbox" 
+	id="nav-toggle"
+	aria-label="Navigation Dropdown" />
 <label for="nav-toggle"></label>
+
 
 <div id="nav-item-list">
 
@@ -28,11 +32,14 @@
 
 
 	<div class="nav-link" id="tagbox">
+
 		<input  ref="tagInput"
 				@input="search(searchTag)" 
 				@blur="statusCheck()" 
 				v-model="searchTag"
+				aria-label="Tag Search"
 				class="tag-search_text-input"
+				id="tag-search"
 				placeholder="tag"
 				{% if tag_name %}
 					value="{{ tag_name }}"
