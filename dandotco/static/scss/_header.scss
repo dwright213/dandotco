@@ -12,7 +12,7 @@
 	align-content: center;
 	justify-content: center;
 	width: 250px;	
-	background-image: url(/static/dist/img/ui/mosaic_bg.gif);
+	background-image: url(../img/ui/mosaic_bg.gif);
 	background-size: contain;
 	border: 3px solid #000;
 	padding: 3px 10px 15px;
@@ -20,7 +20,7 @@
 
 .mosaic-n {
 	background-position: center;
-	background-image: url(/static/dist/img/ui/mosaic_n.png);
+	background-image: url(../img/ui/mosaic_n.png);
 	background-size: contain;
 	background-repeat: no-repeat;
 	color: transparent;
