@@ -1,5 +1,8 @@
 // text/fonts
-$text-size: 17px;
+$text-size: 13px;
+$text-size-desktop: 17px;
+$text-size-nav: 17px;
+$font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
 
 $text-color: #000;
 $text-muted: lighten($text-color, 30%);

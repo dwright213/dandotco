@@ -1,13 +1,12 @@
 {% extends "layout.html" %}
 {% block content %}
-
 	<div class="bolg" id="bolg-view" v-bind:class="{ invisible: searching }">
-		<h2>
-			{{bolg.title}} 
+		<p>
+			{{g.cat}} / <strong>{{bolg.title}}</strong>
 			{% if g.logged == True %}
 			(<a href="/edit/{{bolg.id}}">edit</a>)
 			{% endif %}
-		</h2>
+		</p>
 
 		<h3>{{bolg.date}}</h3>
 		
@@ -16,10 +15,15 @@
 		</p>
 		
 		<p>
-		{% for tag in bolg.tags %} 
-			<a href="/tagged/{{tag}}">{{tag}}</a>
-			{% if loop.index < bolg.tags|length %} // {% endif %} 
-		{% endfor %}	
+		<br>
+		{% if bolg.tags %}
+			<h4>
+				file under:
+			</h4>
+			{% for tag in bolg.tags %} 
+				<a href="/tagged/{{tag}}">#{{tag}}</a>
+			{% endfor %}	
+		{% endif %}
 		</p>
 
 	</div>

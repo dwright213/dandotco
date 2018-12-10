@@ -1,0 +1,26 @@
+#footer {
+	order: 5;
+	padding: 15px;
+	margin: 10px 0 0 0;
+	// background-color: #7fffd4;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-end;
+
+}
+.footer__badge {
+	width: 93px;
+	height: 42px;
+	background-position: center center;
+	margin: 0 0 0 10px;
+
+}
+
+.twitter {
+	background-repeat: no-repeat;
+	background-image: url(../img/ui/twitter.gif);
+}
+.github {
+	background-repeat: no-repeat;
+	background-image: url(../img/ui/github.gif);
+}	

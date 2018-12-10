@@ -1,10 +1,18 @@
+// variables, mixins, etc
 @import 'variables';
 @import 'utilities';
 @import 'animations';
+
+// Overall layout
+@import 'global';
 @import 'layout';
+@import 'nav';
+@import 'header';
+@import 'footer';
+
+// specific page components
+@import 'flash-message';
+@import 'tag-search';
+@import 'bolg';
 @import 'form';
 @import 'img-upload';
-@import 'tag-search';
-@import 'flash-message';
-@import 'bolg';
-@import 'nav';

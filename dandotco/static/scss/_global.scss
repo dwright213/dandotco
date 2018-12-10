@@ -1,0 +1,27 @@
+html {
+	font-size: $text-size;
+	
+}
+body {
+	margin: 0;
+	background-color: $bgcolor;
+	font-family: $font-family;
+}
+
+input {
+	font-family: $font-family;
+}
+
+a {
+	text-decoration: none;
+	&:hover,
+	&:focus {
+		text-decoration: underline;
+	}
+}
+
+@media screen and (min-width: 768px) {
+	html {
+		font-size: $text-size-desktop;
+	}
+}

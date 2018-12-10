@@ -3,7 +3,7 @@
 $height: 30;
 
 // number of nav menu options:
-$count: 7;
+$count: 5;
 
 // determine our nav menu height for mobile presentation:
 @function nav-height() {
@@ -12,6 +12,7 @@ $count: 7;
 
 #nav {
 	order: 2;
+	font-size: 1rem;
 	margin: 0 0 10px 0;
 	text-align: center;
 	padding: 5px;
@@ -39,6 +40,7 @@ $count: 7;
 @media screen and (max-width: 480px) {
 
 	#nav {
+		font-size: $text-size-nav;
 		order: 0;
 		flex-flow: column nowrap;
 		justify-content: left;

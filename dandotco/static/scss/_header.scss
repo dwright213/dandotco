@@ -1,0 +1,79 @@
+#header {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	color: #010002;
+}
+
+#header-titled {
+	font-size: 1.2rem;
+	display: flex;
+	flex-flow: column nowrap;
+	align-content: center;
+	justify-content: center;
+	width: 250px;	
+	background-image: url(/static/dist/img/ui/mosaic_bg.gif);
+	background-size: contain;
+	border: 3px solid #000;
+	padding: 3px 10px 15px;
+}
+
+.mosaic-n {
+	background-position: center;
+	background-image: url(/static/dist/img/ui/mosaic_n.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	color: transparent;
+	width: .8em;
+}
+
+.logo {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	flex-grow: 1;	
+	font-family: Times New Roman;
+}
+
+.logo__first-line {
+	font-size: 1.1em;
+	padding-bottom: 0;
+	border-bottom: 0;
+
+}
+
+.logo__second-line {
+	font-size: 3.3em;
+	padding-top: 0;
+	border-top: 0;
+}
+
+.logo__third-line {
+	font-size: .6em;
+	padding-top: 0;
+	border-top: 0;
+	text-align: center;
+	font-weight: 600;
+	// color: #2A1654;
+	color: #3e1b87;
+	div	{
+		flex-grow: 1;
+		padding: 0 7px;
+		&:first-of-type {
+			text-align: left;
+		}
+
+		&:last-of-type {
+			text-align: right;
+		}
+	}
+}
+
+
+@media screen and (min-width: 768px) {
+	#header-titled {
+		width: 400px;
+		font-size: 1.7rem;
+		background-size: auto;
+	}
+}

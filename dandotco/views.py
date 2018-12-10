@@ -23,38 +23,31 @@ def handle_invalid_usage(error):
 
 @app.route('/')
 def home():
-	
-
 	bolgs = bolg.get_some_bolgs(20)
 	return render_template('index.html', bolgs=bolgs, route_name='home')
 
 @app.route('/about')
 def about():
+	g.cat = 'pages'
 	page = bolg.get_page('about')
 	return render_template('single.html', bolg=page, route_name='bolg')
 
 @app.route('/research')
 def research():
+	g.cat = 'pages'
 	page = bolg.get_page('research')
 	return render_template('single.html', bolg=page, route_name='bolg')
 
 @app.route('/bolg/<perma>')
 def view_bolg(perma):
+	g.cat = 'posts'
 	chosen_bolg = bolg.get_by_perma(perma)
 	return render_template('single.html', bolg=chosen_bolg, route_name='bolg')
 
 @app.route('/tagged/<tag_name>')
 def tagged(tag_name):
+	g.cat = 'tagged'
 	tagged_bolgs = bolg.tag_name_search(tag_name)
 	# bolgs = tagged_bolgs['results']
 	return render_template('index.html', route_name='home', bolgs=tagged_bolgs, tag_name=tag_name)
 
-
-@app.route('/tagz/<search_term>')
-def tagz_experiment(search_term):
-
-	resp = jsonify(bolg.tag_name_search(search_term))
-	print(search_term)
-	print(resp)
-	raise error.InvalidUsage('This view is gone', status_code=410)
-	return resp
