@@ -41,7 +41,7 @@
 		<p v-html="excerpt"></p>
 		<br>
 		<span v-for="tag, index in tags">
-			<a  v-bind:href=tagLink(tag.name) v-html="'#'+tag.html"></a>
+			<a  v-bind:href=tagLink(tag.name) v-html="'#'+tag.html+' '"></a>
 		</span>
 		<hr>
 	</div>
