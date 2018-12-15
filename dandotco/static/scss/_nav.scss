@@ -37,6 +37,13 @@ $count: 5;
 
 
 
+@media screen and (min-width: 768px) {
+	#nav-item-list {
+		justify-content: space-between;
+		width: 30rem;
+	}
+}
+
 @media screen and (max-width: 480px) {
 
 	#nav {

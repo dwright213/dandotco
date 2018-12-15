@@ -3,20 +3,21 @@
 
 	{% for bolg in bolgs %}
 		<div class="bolg" v-bind:class="{ invisible: searching }">
-			<h3>
-				<a href="/bolg/{{ bolg.perma }}">
-					{{ bolg.title }}
-				</a>
-			</h3>
-			<p>{{ bolg.excerpt|safe }}</p>
-			<br>
 
-			{% for tag in bolg.tags %} 
-				<a href="/tagged/{{tag.name}}">#{{ tag.html|safe }}</a>
-			{% endfor %}
-			<hr>	
+				<h3>
+					<a href="/bolg/{{ bolg.perma }}">
+						>{{ bolg.title }}
+					</a>
+				</h3>
+				<p>{{ bolg.excerpt|safe }}</p>
+				<br>
+
+				{% for tag in bolg.tags %} 
+					<a href="/tagged/{{tag.name}}">#{{ tag.html|safe }}</a>
+				{% endfor %}
 
 		</div>
+		<hr>	
 	{% endfor %}
 
 {% endblock %}
