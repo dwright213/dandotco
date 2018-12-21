@@ -27,7 +27,8 @@ var
 			bolg: './js/bolg.js',
 			compose: './js/compose.js',
 			edit: './js/edit.js',
-			tagged: './js/tagged.js'
+			tagged: './js/tagged.js',
+			labs: './js/labs.js'
 		},
 		resolve: {
 			extensions: ['*', '.js', '.vue', '.json'] 

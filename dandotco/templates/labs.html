@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+
+	<div class="bolg" id="bolg-view" v-bind:class="{ invisible: searching }">
+		Display size comparator.
+		<hr>
+		
+	</div>
+
+		<div id="comparator">
+			
+			<div id='comparator__controls'>
+				<div>
+					<input type="radio" value="centered" name="display" checked>
+					<label for="huey">centered</label>
+				</div>
+
+				<div>
+					<input type="radio" value="diagonal" name="display">
+					<label for="dewey">diagonal</label>
+				</div>
+
+				<div>
+					<input type="radio" value="top" name="display">
+					<label for="louie">top</label>
+				</div>
+			</div>
+
+			<div id="comparator__display-list">
+				<display-comparator
+					v-for="display in this.displays"
+					:name="display.name"
+					:aspect="display.aspect"
+					:diag="display.diag"
+					:color="display.color"
+					:key="display.id"
+					:rectid="display.rectid"
+					:style="{color: display.color}">
+				</display-comparator>
+				
+			</div>
+		</div>
+
+
+{% endblock %}
