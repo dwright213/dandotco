@@ -32,7 +32,8 @@
 
 <template>
 
-	<div :id=tileId() class="bolg">
+	<div 	:id=tileId() 
+			class="bolg">
 		<h3>
 			<a v-bind:href=bolgLink()>
 				{{ title }}

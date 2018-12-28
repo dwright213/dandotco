@@ -23,6 +23,7 @@ def handle_invalid_usage(error):
 
 @app.route('/')
 def home():
+	print(request.headers['Host'])
 	bolgs = bolg.get_some_bolgs(20)
 	return render_template('index.html', bolgs=bolgs, route_name='home')
 

@@ -55,20 +55,21 @@ var
 		]
 	},
 
-	vueAlias = { vue: 'vue/dist/vue.js' };
+	devAlias = { vue: 'vue/dist/vue.js' },
+	prodAlias = { vue: 'vue/dist/vue.min.js' };
 
 
 
 gulp.task('default', function(done) {
 	dist = '/var/media/'
 	// webpackConf.mode = 'development'
-	webpackConf.resolve['alias'] = vueAlias
+	webpackConf.resolve['alias'] = prodAlias
 	gulp.series('images', 'styles', 'scripts')();
 	done();
 })
 
 gulp.task('develop', function() {
-	webpackConf.resolve['alias'] = vueAlias
+	webpackConf.resolve['alias'] = devAlias
 	webpackConf.mode = 'development'
 	gulp.watch([jsGlob, vueGlob], gulp.parallel('scripts'))
 	gulp.watch(scssGlob, gulp.parallel('styles'))

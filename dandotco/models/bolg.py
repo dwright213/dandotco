@@ -131,10 +131,6 @@ def get_some_bolgs(num):
 
 	return dict_bolgs
 
-def get_latest():
-	latest = Bolg.select().order_by(Bolg.id.desc()).first().id
-	return latest
-
 def get_page(perma):
 	lookup = Bolg.select().where((Bolg.kind != 'post') and (Bolg.perma == perma)).first()
 	page = lookup.serialize('page')

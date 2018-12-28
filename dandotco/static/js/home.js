@@ -14,7 +14,8 @@ var taggart = new Vue({
 		searchTag: '',
 		taggedUriString: '',
 		taggedUri: false,
-		searching: false
+		searching: false,
+		explanation: ''
 
 	},
 	computed: {
@@ -43,30 +44,21 @@ var taggart = new Vue({
 			}
 		},
 
-		highlighter: function(tags) {
-			let highlighted_tags = []
-			tags.map(tag => {
-				highlighted_tags.push({
-					'name': tag,
-					'html': tag.replace(taggart.searchTag, `<strong>${taggart.searchTag}</strong>`)
-				})
-			})
-
-			return highlighted_tags
-		},
 
 		search: debounce((value) => {
-			if (value.length > 0 && taggart.taggedUriString != taggart.searchTag) {
+			var 
+				specialCharFilter = /\W|_/g,
+				tag = value.replace(specialCharFilter, '');
+
+			if (tag.length > 0 && taggart.taggedUriString != taggart.searchTag) {
 				axios
-					.get(`/api/tagged/${value}`, { crossdomain: false })
+					.get(`/api/tagged/${tag}`, { crossdomain: false })
 					.then(response => {
+
+						if (response.data.results.length == 0) {
+							taggart.explanation = response.data.explanation
+						}
 						taggart.bolgs = response.data.results
-
-						// taggart.bolgs.map(bolg => {
-						// 	let tags = taggart.highlighter(bolg.tags)
-						// 	bolg.tags = tags
-						// })
-
 					})
 					.catch(function(error) { console.log(error) })
 

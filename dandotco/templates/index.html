@@ -6,7 +6,7 @@
 
 				<h3>
 					<a href="/bolg/{{ bolg.perma }}">
-						>{{ bolg.title }}
+						{{ bolg.title }}
 					</a>
 				</h3>
 				<p>{{ bolg.excerpt|safe }}</p>
@@ -17,7 +17,7 @@
 				{% endfor %}
 
 		</div>
-		<hr>	
+		<hr v-bind:class="{ invisible: searching }">	
 	{% endfor %}
 
 {% endblock %}
