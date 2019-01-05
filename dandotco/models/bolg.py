@@ -95,6 +95,7 @@ class Bolg(BaseModel):
 			formatted_bolg['perma'] = self.perma
 			formatted_bolg['body'] = self.body
 			formatted_bolg['created'] = self.created
+			formatted_bolg['id'] = self.id
 
 		else:
 			print('unrecognized format, throwing the whole thing in there.')
