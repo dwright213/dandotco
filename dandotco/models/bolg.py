@@ -7,7 +7,8 @@ from flask import abort
 from IPython import embed
 
 from dandotco import app
-import re, datetime
+
+import re, datetime, os, shutil
 
 import markdown
 
@@ -159,10 +160,38 @@ def get_by_perma(perma):
 	dict_permad['tags'] = permad.tags()
 	return dict_permad
 
+# delete a bolg and it's images
+def nope(bolg_id):
+	deletion_candidate = Bolg.select().where(Bolg.id == bolg_id).first()	
+	orig_dir = app.config.get('UPLOADED_PHOTOS_DEST') + 'original/' + str(bolg_id)
+	proc_dir = app.config.get('UPLOADED_PHOTOS_DEST') + 'processed/' + str(bolg_id) 
+	
+	if len(deletion_candidate.images):
+		if os.path.isdir(orig_dir):
+
+			try:
+				shutil.rmtree(orig_dir)
+				shutil.rmtree(proc_dir)
+
+			except shutil.Error as err:
+				print(err)
+	
+	else:
+		print('bolg has no images.')
+	
+	# using our existing tags_edit function to handle tag/tagging removal.
+	# we are replacing the bolg's current list of tags with '[]'
+	tags_edit(bolg_id, [], deletion_candidate.tags())
+
+	deletion_candidate.delete_instance()
+
+	return 'That bolg is gone now.'
+
 def create(title, body, kind, tags, **kwargs):
 	tags_found = []
 	if (tags):
-		tags_found = tags_create(tags)
+		tag_list = tags.split(',')
+		tags_found = tags_create(tag_list)
 
 	clean_title = title.strip()
 	clean_title = re.sub(r'\s{2,}', ' ', clean_title)
@@ -247,29 +276,34 @@ def tags_edit(bolg_id, new_list, old_list):
 	add_list = set(new_list) - set(old_list)
 	remove_list = set(old_list) - set(new_list)
 
-	created_list = []
-	for tag in add_list:
-		created_list.append(tag_create(tag))
+	created_list = tags_create(add_list)
+	print(created_list)
 
 	for tag in created_list:
 		tagging_create(bolg_id, tag.id)
 
 	for tag in remove_list:
 		tag_id = Tag.select().where(Tag.name == tag).first().id
-		Tagging.delete().where((Tagging.bolg == bolg_id) and (Tagging.tag == tag_id)).execute()
-
-	for tag in remove_list:
-		current_tag = Tag.get(Tag.name==tag)
-		used = Tagging.select().where(Tagging.tag == current_tag.id)
-		if not used.count():
-			print('tag %s removed' %(current_tag.name))
-			current_tag.delete_instance()
+		taggings_list = Tagging.select().where((Tagging.bolg == bolg_id) and (Tagging.tag == tag_id))
+		print('taggings this would delete:')
+		for tagging in taggings_list:
+			if tagging.bolg_id == bolg_id:
+				Tagging.delete().where((Tagging.id == tagging.id)).execute()
 
 
-# make and return a list of tags from a string provided by user
-def tags_create(tag_string):
+# lets hold off on deleting unused tags, for the moment. 
+	# for tag in remove_list:
+	# 	current_tag = Tag.get(Tag.name==tag)
+	# 	used = Tagging.select().where(Tagging.tag == current_tag.id)
+	# 	if not used.count():
+	# 		print('tag %s removed' %(current_tag.name))
+	# 		current_tag.delete_instance()
+
+
+# make and return a list of tags from a list of strings provided by user
+def tags_create(tags):
 	tag_list = []
-	for tag in tag_string.split(','):
+	for tag in tags:
 		cleaned_tagname = tag.strip()
 		current_tag = Tag.select().where(Tag.name == cleaned_tagname)
 
@@ -304,4 +338,5 @@ def tagging_create(bolg_id, tag_id):
 	except:
 		return 'problems happened whilst creating a tagging.'
 
-# def tagging_remove()
+# def tagging_remove(bolg_id):
+	# remove all taggings between a b
