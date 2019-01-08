@@ -163,7 +163,8 @@ def get_by_perma(perma):
 # delete a bolg and it's images
 def nope(bolg_id):
 	deletion_candidate = Bolg.select().where(Bolg.id == bolg_id).first()	
-	
+	bolg_name = deletion_candidate.title
+
 	if len(deletion_candidate.images):
 		orig_dir = app.config.get('UPLOADED_PHOTOS_DEST') + 'original/' + str(bolg_id)
 		proc_dir = app.config.get('UPLOADED_PHOTOS_DEST') + 'processed/' + str(bolg_id) 
@@ -183,7 +184,7 @@ def nope(bolg_id):
 
 	deletion_candidate.delete_instance()
 
-	return 'That bolg is gone forever now.'
+	return ('"%s" is gone forever now.' % (bolg_name))
 
 def create(title, body, kind, tags, **kwargs):
 	tags_found = []

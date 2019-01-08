@@ -33,6 +33,8 @@
 	@include input-spacing--mobile; 
 }
 
+
+// invisible form with text link button.
 .inline {
   display: inline;
 }
@@ -41,13 +43,15 @@
   background: none;
   border: none;
   color: blue;
-  text-decoration: underline;
+  text-decoration: none;
   cursor: pointer;
   font-size: 1em;
   padding: 0;
   font-family: $font-family;
 }
-.link-button:focus {
+.link-button:focus,
+.link-button:hover {
+  text-decoration: underline;
   outline: none;
 }
 .link-button:active {
