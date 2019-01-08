@@ -98,3 +98,12 @@ def edit_bolg(id):
 
 	return render_template('edit.html', bolg=chosen_bolg, route_name='edit')
 
+
+@bp.route('/delete/<int:bolg_id>', methods=['GET'])
+@login_required
+def delete(bolg_id):
+
+	# return(bolg.nope(bolg_id))
+
+
+	return(request.remote_addr)

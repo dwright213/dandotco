@@ -1,12 +1,9 @@
-{% extends "layout.html" %}
+{% extends "layout/layout.html" %}
 {% block content %}
 	<div class="bolg" id="bolg-view" v-bind:class="{ invisible: searching }">
-		<p>
-			{{g.cat}} / <strong>{{bolg.title}}</strong>
-			{% if g.logged == True %}
-			(<a href="/edit/{{bolg.id}}">edit</a>)
-			{% endif %}
-		</p>
+
+		{% include 'partials/path.html' %}
+		{% include 'partials/auth.html' %}
 
 		<h3>{{bolg.date}}</h3>
 		

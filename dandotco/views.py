@@ -26,10 +26,6 @@ def home():
 	bolgs = bolg.get_some_bolgs(20)
 	return render_template('index.html', bolgs=bolgs, route_name='home')
 
-@app.route('/nope/<int:bolg_id>')
-def nope(bolg_id):
-	return(bolg.nope(bolg_id))
-
 @app.route('/about')
 def about():
 	g.cat = 'pages'

@@ -12,11 +12,11 @@
 		<div id="main-container">
 
 			<div id="header">
-				{% include 'header.html' %}
+				{% include 'layout/header.html' %}
 			</div>
 
 			<div id="nav">
-				{% include 'nav.html' %}
+				{% include 'layout/nav.html' %}
 			</div>
 				
 			<div id="flash-messages">
@@ -36,7 +36,7 @@
 			<div id="content">
 				<div id="bolg-holder">
 				
-					{% include 'tag_search.html' %}
+					{% include 'partials/tag_search.html' %}
  					
  					{% block content %}
 					{% endblock %}
@@ -47,7 +47,7 @@
 			
 			<div id="footer">
 
-				{% include 'footer.html' %}
+				{% include 'layout/footer.html' %}
 
 			</div>
 		</div>

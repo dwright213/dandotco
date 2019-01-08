@@ -163,10 +163,11 @@ def get_by_perma(perma):
 # delete a bolg and it's images
 def nope(bolg_id):
 	deletion_candidate = Bolg.select().where(Bolg.id == bolg_id).first()	
-	orig_dir = app.config.get('UPLOADED_PHOTOS_DEST') + 'original/' + str(bolg_id)
-	proc_dir = app.config.get('UPLOADED_PHOTOS_DEST') + 'processed/' + str(bolg_id) 
 	
 	if len(deletion_candidate.images):
+		orig_dir = app.config.get('UPLOADED_PHOTOS_DEST') + 'original/' + str(bolg_id)
+		proc_dir = app.config.get('UPLOADED_PHOTOS_DEST') + 'processed/' + str(bolg_id) 
+		
 		if os.path.isdir(orig_dir):
 
 			try:
@@ -176,16 +177,13 @@ def nope(bolg_id):
 			except shutil.Error as err:
 				print(err)
 	
-	else:
-		print('bolg has no images.')
-	
 	# using our existing tags_edit function to handle tag/tagging removal.
 	# we are replacing the bolg's current list of tags with '[]'
 	tags_edit(bolg_id, [], deletion_candidate.tags())
 
 	deletion_candidate.delete_instance()
 
-	return 'That bolg is gone now.'
+	return 'That bolg is gone forever now.'
 
 def create(title, body, kind, tags, **kwargs):
 	tags_found = []
