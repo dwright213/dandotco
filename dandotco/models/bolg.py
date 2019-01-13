@@ -236,7 +236,8 @@ def create(title, body, kind, tags, **kwargs):
 			tagging_create(new_bolg.id, tag_found.id)
 
 		return get_a_bolg(new_bolg.id)
-	except:
+	except Exception as err:
+		print(err)
 		return 'problems happened whist creating a bolg.'
 
 def edit(bolg_id, **kwargs):

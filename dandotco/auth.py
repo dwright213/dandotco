@@ -73,6 +73,10 @@ def compose_bolg():
 		kind = request.form['kind']
 		tags = request.form['tags']
 		new_bolg = bolg.create(title, body, kind, tags, excerpt=excerpt)
+		print(new_bolg)
+		print(new_bolg)
+		print(new_bolg)
+
 		new_bolg['perma']
 		return redirect(str('/bolg/'+ new_bolg['perma']))
 

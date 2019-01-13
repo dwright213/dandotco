@@ -1,0 +1,2 @@
+ALTER TABLE bolg 
+ALTER COLUMN created SET DATA TYPE timestamp;
