@@ -91,6 +91,22 @@ class Bolg(BaseModel):
 			formatted_bolg['created'] = self.created
 			formatted_bolg['tags'] = tags_highlighted
 
+		elif (format == 'post'):
+
+			created_year = self.created.year
+			current_year = datetime.datetime.now().year
+
+			if created_year != current_year:
+				bolg_date = self.created.strftime('%-m/%-d/%Y')
+			else:
+				bolg_date = self.created.strftime('%b %-d')
+
+			formatted_bolg['title'] = self.title
+			formatted_bolg['perma'] = self.perma
+			formatted_bolg['body'] = self.body
+			formatted_bolg['created'] = bolg_date
+			formatted_bolg['id'] = self.id
+
 		elif (format == 'page'):
 			formatted_bolg['title'] = self.title
 			formatted_bolg['perma'] = self.perma
@@ -133,13 +149,17 @@ def get_some_bolgs(num):
 
 	return dict_bolgs
 
+def get_bolg(perma):
+	lookup = Bolg.select().where((Bolg.kind == 'post') and (Bolg.perma == perma)).first()
+	bolg = lookup.serialize('post')
+	return bolg
+
 def get_page(perma):
 	lookup = Bolg.select().where((Bolg.kind != 'post') and (Bolg.perma == perma)).first()
 	page = lookup.serialize('page')
 	return page
 
 def tag_name_search(search_term):
-	
 	tags = Tag.select().where(
 		Tag.name.contains(search_term))
 	

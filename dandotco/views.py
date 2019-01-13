@@ -41,7 +41,7 @@ def research():
 @app.route('/bolg/<perma>')
 def view_bolg(perma):
 	g.cat = 'posts'
-	chosen_bolg = bolg.get_by_perma(perma)
+	chosen_bolg = bolg.get_bolg(perma)
 	return render_template('single.html', bolg=chosen_bolg, route_name='bolg')
 
 @app.route('/tagged/<tag_name>')

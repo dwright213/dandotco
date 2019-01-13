@@ -1,3 +1,9 @@
 <p>
-	{{g.cat}} / <strong>{{bolg.title}}</strong>
+	{{g.cat}} / 
+	<strong>
+		{{bolg.title}} 
+		{% if g.cat == 'posts' -%}
+			- {{ bolg.created | lower() }}
+		{%- endif -%}
+	</strong> 
 </p>
