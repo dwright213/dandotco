@@ -72,8 +72,8 @@ class Bolg(BaseModel):
 	def serialize(self, format, **kwargs):
 		formatted_bolg = {}
 		if (format == 'search_result'):
-			tags_highlighted = []
 			
+			tags_highlighted = []
 			for tag in self.tags():
 				if 'search_term' in kwargs:
 					term = kwargs['search_term']
@@ -95,6 +95,7 @@ class Bolg(BaseModel):
 			formatted_bolg['title'] = self.title
 			formatted_bolg['perma'] = self.perma
 			formatted_bolg['body'] = self.body
+			formatted_bolg['tags'] = self.tags()
 			formatted_bolg['created'] = date_formatter(self.created)
 			formatted_bolg['id'] = self.id
 

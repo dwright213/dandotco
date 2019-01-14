@@ -74,18 +74,22 @@
 	}
 
 	@media screen and (min-width: 480px) {
-		// figure {
-			.float-left {
-				float: left;
-				margin: 10px;
-			}
-			.float-right {
-				float: right;
-				margin: 10px;
-			}
 
-		// }
+		.float-left {
+			float: left;
+			margin: 10px;
+		}
+		.float-right {
+			float: right;
+			margin: 10px;
+		}
+
 	}
 
 }
 
+// more BEMmy
+.bolg-view__time-stamp {
+	color: $text-muted;
+	float: right;
+}

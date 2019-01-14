@@ -3,7 +3,7 @@
 	<strong>
 		{{bolg.title}} 
 		{% if g.cat == 'posts' -%}
-			- {{ bolg.created | lower() }}
+			<span class="bolg-view__time-stamp"> {{ bolg.created | lower() }}</span>
 		{%- endif -%}
 	</strong> 
 </p>
