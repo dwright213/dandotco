@@ -147,7 +147,7 @@ def get_a_bolg(bolg_id):
 
 def get_some_bolgs(num):
 	dict_bolgs = []
-	bolgs = Bolg.select().where(Bolg.kind != 'page').order_by(Bolg.id.desc())[:num]
+	bolgs = Bolg.select().where(Bolg.kind != 'page').order_by(Bolg.created.desc())[:num]
 	for bolg in bolgs:
 		dict_bolg = bolg.serialize('search_result') 
 		dict_bolgs.append(dict_bolg)

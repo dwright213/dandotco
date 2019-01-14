@@ -61,8 +61,16 @@
 				name="kind"
 				id="input-kind"
 				class="compose-form__input compose-form__input--half-width">
-				<option value="post">standard bolg post</option>
-				<option value="page">conent for a 'page'</option>
+				<option 
+					value="post" 
+					{% if bolg.kind == 'post' %}
+						selected="selected"
+					{% endif %}>standard bolg post</option>
+				<option 
+					value="page"
+					{% if bolg.kind == 'page' %}
+						selected="selected"
+					{% endif %}>conent for a 'page'</option>
 			</select>
 
 			<input 
