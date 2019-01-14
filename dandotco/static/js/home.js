@@ -25,6 +25,9 @@ var taggart = new Vue({
 			} else {
 				return true
 			}
+		},
+		resultsLength() {
+			return this.bolgs.length
 		}
 	},
 

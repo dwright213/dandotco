@@ -8,16 +8,20 @@
 					<a href="/bolg/{{ bolg.perma }}">
 						{{ bolg.title }}
 					</a>
+					<span class='listing-date'> {{ bolg.created | lower() }}</span>
 				</h3>
 				<p>{{ bolg.excerpt|safe }}</p>
-				<br>
-
-				{% for tag in bolg.tags %} 
-					<a href="/tagged/{{tag.name}}">#{{ tag.html|safe }}</a>
-				{% endfor %}
+				{% if bolg.tags -%}
+					<br>
+					{% for tag in bolg.tags %} 
+						<a href="/tagged/{{tag.name}}">#{{ tag.html|safe }}</a>
+					{% endfor %}
+				{%- endif %}
 
 		</div>
-		<hr v-bind:class="{ invisible: searching }">	
+		{% if loop.index < loop.length -%}
+			<hr v-bind:class="{ invisible: searching }">
+		{% endif %}
 	{% endfor %}
 
 {% endblock %}

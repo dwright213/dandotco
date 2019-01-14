@@ -3,10 +3,10 @@
 
 	 
 	var bolgListing = {
-		props: ['title', 'perma', 'excerpt', 'id', 'body', 'tags'],
+		props: ['title', 'perma', 'excerpt', 'id', 'tags', 'created', 'resultsLength', 'index'],
 		computed: {
-			highlight: function() {
-				console.log(this)
+			lastOne() {
+
 			}
 		},
 		methods: {
@@ -36,15 +36,16 @@
 			class="bolg">
 		<h3>
 			<a v-bind:href=bolgLink()>
-				{{ title }}
+				{{ title }} {{ resultsLength }} {{ index }}
 			</a>
+			<span class='listing-date'> {{ created.toLowerCase() }}</span>
 		</h3>
 		<p v-html="excerpt"></p>
 		<br>
 		<span v-for="tag, index in tags">
 			<a  v-bind:href=tagLink(tag.name) v-html="'#'+tag.html+' '"></a>
 		</span>
-		<hr>
+		<hr v-if="(index+1) < resultsLength">
 	</div>
 
 </template>

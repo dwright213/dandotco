@@ -4,12 +4,15 @@
 		Oops, no luck with that tag.
 	</h3>
 	<bolg-listing   
-		v-for="bolg in bolgs"
+		v-for="(bolg, index) in bolgs"
 		v-bind:key="bolg.id"
 		v-bind:id="bolg.id"
 		v-bind:title="bolg.title"
+		v-bind:created="bolg.created"
 		v-bind:perma="bolg.perma"
 		v-bind:body="bolg.body"
 		v-bind:excerpt="bolg.excerpt"
-		v-bind:tags="bolg.tags">	
+		v-bind:tags="bolg.tags"	
+		v-bind:results-length="resultsLength"	
+		v-bind:index="index">	
 	</bolg-listing>

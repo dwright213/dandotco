@@ -88,23 +88,14 @@ class Bolg(BaseModel):
 			formatted_bolg['title'] = self.title
 			formatted_bolg['perma'] = self.perma
 			formatted_bolg['excerpt'] = self.excerpt
-			formatted_bolg['created'] = self.created
+			formatted_bolg['created'] = date_formatter(self.created)
 			formatted_bolg['tags'] = tags_highlighted
 
 		elif (format == 'post'):
-
-			created_year = self.created.year
-			current_year = datetime.datetime.now().year
-
-			if created_year != current_year:
-				bolg_date = self.created.strftime('%-m/%-d/%Y')
-			else:
-				bolg_date = self.created.strftime('%b %-d')
-
 			formatted_bolg['title'] = self.title
 			formatted_bolg['perma'] = self.perma
 			formatted_bolg['body'] = self.body
-			formatted_bolg['created'] = bolg_date
+			formatted_bolg['created'] = date_formatter(self.created)
 			formatted_bolg['id'] = self.id
 
 		elif (format == 'page'):
@@ -130,6 +121,19 @@ class Tagging(BaseModel):
 
 
 # BOLG STUFF
+
+def date_formatter(date):
+	created_year = date.year
+	current_year = datetime.datetime.now().year
+
+	if created_year != current_year:
+		pretty_date = date.strftime('%-m/%-d/%Y')
+	else:
+		pretty_date = date.strftime('%b %-d')
+
+	return pretty_date
+
+
 def get_a_bolg(bolg_id):
 	chosen_bolg = Bolg.select().where(Bolg.id == bolg_id).first()
 	dict_bolg = []
