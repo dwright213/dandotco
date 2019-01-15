@@ -68,7 +68,7 @@ $count: 5;
 		display: block;
 		padding: 5px;
 		&:nth-of-type(1) {
-			padding: 50px 0 0 5px;
+			padding: 55px 0 0 5px;
 		}
 	}
 
@@ -93,7 +93,7 @@ $count: 5;
 		&:checked ~ #nav-item-list {
 			display: block;
 			opacity: 1;
-			padding-top: 45px;
+			padding-top: 55px;
 			height: #{nav-height()}px;
 
 				.nav-link:nth-of-type(1) {
