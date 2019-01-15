@@ -1,0 +1,33 @@
+.path {
+		
+}
+
+.path__category {
+	display: none;
+}
+
+.path__time-stamp {
+	&::before {
+		content: ' - ';
+	}
+	color: $text-muted;
+	font-size: .8rem;
+}
+
+
+
+@media screen and (min-width: 768px) {
+
+	.path__category {
+		display: none;
+	}
+
+	.path__time-stamp {
+		color: $text-muted;
+		float: right;
+		font-size: 1em;
+		&::before {
+			content: '';
+		}
+	}
+}
