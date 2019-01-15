@@ -28,6 +28,7 @@ def home():
 
 @app.route('/bolg/<perma>')
 def view_bolg(perma):
+	print(dir(request))
 	g.cat = 'posts'
 	chosen_bolg = bolg.get_bolg(perma)
 	return render_template('bolg.html', bolg=chosen_bolg, route_name='bolg')
