@@ -10,6 +10,7 @@ var
 	jsGlob = './js/**/*.js',
 	scssGlob = './scss/**/*.scss',
 	imgGlob = './img/ui/*',
+	faviconGlob = './img/ui/favicons/*',
 
 	// input paths
 	jsInput = './js/main.js',
@@ -62,9 +63,8 @@ var
 
 gulp.task('default', function(done) {
 	dist = '/var/media/'
-	// webpackConf.mode = 'development'
 	webpackConf.resolve['alias'] = prodAlias
-	gulp.series('images', 'styles', 'scripts')();
+	gulp.series('images', 'styles', 'scripts', 'favicons')();
 	done();
 })
 
@@ -82,6 +82,11 @@ gulp.task('images', function() {
 		.pipe(gulp.dest(`${dist}img/ui`));
 });
 
+gulp.task('favicons', function() {
+	return gulp.src(faviconGlob)
+		.pipe(gulp.dest(`${dist}img/ui/favicons`));
+});
+
 gulp.task('styles', function() {
 	return gulp.src(scssInput)
 		.pipe(sass().on('error', sass.logError))
@@ -93,4 +98,5 @@ gulp.task('scripts', function() {
 		.pipe(webpack(webpackConf))
 		.pipe(gulp.dest(`${dist}js/`));
 });
+
 

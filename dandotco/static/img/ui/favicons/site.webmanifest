@@ -1,0 +1,14 @@
+{
+    "name": "danwright.co",
+    "short_name": "danwright",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#b7b7b7",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}
