@@ -36,9 +36,9 @@
 			class="bolg">
 		<h3>
 			<a v-bind:href=bolgLink()>
-				{{ title }} {{ resultsLength }} {{ index }}
+				{{ title }}
 			</a>
-			<span class='listing-date'> {{ created.toLowerCase() }}</span>
+			<span class='bolg-listing__time-stamp'> {{ created.toLowerCase() }}</span>
 		</h3>
 		<p v-html="excerpt"></p>
 		<br>

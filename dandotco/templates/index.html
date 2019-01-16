@@ -8,7 +8,7 @@
 					<a href="/bolg/{{ bolg.perma }}">
 						{{ bolg.title }}
 					</a>
-					<span class="bolg-listing__date-stamp"> {{ bolg.created | lower() }}</span>
+					<span class="bolg-listing__time-stamp"> {{ bolg.created | lower() }}</span>
 				</h3>
 				<p>{{ bolg.excerpt|safe }}</p>
 				{% if bolg.tags -%}
