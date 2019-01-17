@@ -2,14 +2,16 @@
 {% block content %}
 	
 	{% for bolg in bolgs %}
-		<div class="bolg" v-bind:class="{ invisible: searching }">
+		<div class="bolg bolg-listing" v-bind:class="{ invisible: searching }">
 
-				<h3>
-					<a href="/bolg/{{ bolg.perma }}">
-						{{ bolg.title }}
-					</a>
-					<span class="bolg-listing__time-stamp"> {{ bolg.created | lower() }}</span>
-				</h3>
+				<p>
+					<strong>
+						<span class="bolg-listing__time-stamp"> {{ bolg.created }}</span>
+						<a href="/bolg/{{ bolg.perma }}">
+							{{ bolg.title }}
+						</a>
+					</strong>
+				</p>
 				<p>{{ bolg.excerpt|safe }}</p>
 				{% if bolg.tags -%}
 					<br>

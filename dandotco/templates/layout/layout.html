@@ -16,6 +16,10 @@
 		{%- if g.cat -%}
 		 :: {{ bolg.title }}
 		{%- endif %}
+
+		{%- if tag_name -%}
+		 :: tagged: {{ tag_name }}
+		{%- endif %}
 	</title>
 
 	<body>

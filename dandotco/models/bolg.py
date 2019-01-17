@@ -124,13 +124,7 @@ class Tagging(BaseModel):
 # BOLG STUFF
 
 def date_formatter(date):
-	created_year = date.year
-	current_year = datetime.datetime.now().year
-
-	if created_year != current_year:
-		pretty_date = date.strftime('%-m/%-d/%Y')
-	else:
-		pretty_date = date.strftime('%b %-d')
+	pretty_date = date.strftime('%-m/%-d/%Y')
 
 	return pretty_date
 

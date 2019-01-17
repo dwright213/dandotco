@@ -34,9 +34,7 @@ def view_bolg(perma):
 
 @app.route('/tagged/<tag_name>')
 def tagged(tag_name):
-	g.cat = 'tagged'
 	tagged_bolgs = bolg.tag_name_search(tag_name)
-	# bolgs = tagged_bolgs['results']
 	return render_template('index.html', route_name='home', bolgs=tagged_bolgs, tag_name=tag_name)
 
 # pages

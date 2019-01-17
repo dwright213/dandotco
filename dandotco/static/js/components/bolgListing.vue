@@ -33,13 +33,15 @@
 <template>
 
 	<div 	:id=tileId() 
-			class="bolg">
-		<h3>
-			<a v-bind:href=bolgLink()>
-				{{ title }}
-			</a>
-			<span class='bolg-listing__time-stamp'> {{ created.toLowerCase() }}</span>
-		</h3>
+			class="bolg bolg-listing">
+		<p>
+			<strong>
+				<span class='bolg-listing__time-stamp'> {{ created.toLowerCase() }}</span>
+				<a v-bind:href=bolgLink()>
+					{{ title }}
+				</a>
+			</strong>
+		</p>
 		<p v-html="excerpt"></p>
 		<br>
 		<span v-for="tag, index in tags">

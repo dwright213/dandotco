@@ -1,15 +1,20 @@
 .path {
-		
+	font-size: 1rem;
 }
 
 .path__category {
 	display: none;
 }
 
+.path__title {
+	
+}
+	
 .path__time-stamp {
 	&::before {
-		content: ' - ';
+		content: '';
 	}
+	float: right;
 	color: $text-muted;
 	font-size: .8rem;
 }
@@ -17,15 +22,14 @@
 
 
 @media screen and (min-width: 768px) {
-
 	.path__category {
-		display: none;
+		display: inline;
 	}
 
 	.path__time-stamp {
 		color: $text-muted;
 		float: right;
-		font-size: 1em;
+		// font-size: 1rem;
 		&::before {
 			content: '';
 		}
