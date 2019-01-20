@@ -7,6 +7,10 @@
 
 		{% include 'partials/favicon_meta.html' %}
 
+		{% if bolg %}
+			{% include 'partials/twitter_meta.html' %}
+		{% endif %}
+
 		<link rel="stylesheet" href="{{ config['DEV_STATIC'] }}/css/main.css">
 		<style type="text/css"></style>
 	</head>

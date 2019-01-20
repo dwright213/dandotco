@@ -98,6 +98,8 @@ class Bolg(BaseModel):
 			formatted_bolg['tags'] = self.tags()
 			formatted_bolg['created'] = date_formatter(self.created)
 			formatted_bolg['id'] = self.id
+			formatted_bolg['images'] = self.images
+			formatted_bolg['excerpt'] = self.excerpt
 
 		elif (format == 'page'):
 			formatted_bolg['title'] = self.title
@@ -105,6 +107,8 @@ class Bolg(BaseModel):
 			formatted_bolg['body'] = self.body
 			formatted_bolg['created'] = self.created
 			formatted_bolg['id'] = self.id
+			formatted_bolg['images'] = self.images
+			formatted_bolg['excerpt'] = self.excerpt
 
 		else:
 			print('unrecognized format, throwing the whole thing in there.')
