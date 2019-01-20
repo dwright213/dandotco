@@ -1,15 +1,20 @@
 <meta name="twitter:card" 		 content="summary" />
 <meta name="twitter:site" 		 content="@burgersquid" />
-<meta name="twitter:title"		 content="{{ bolg.title }}" />
-<meta name="twitter:description" content="{{ bolg.excerpt }}" />
 
-{% if bolg.images %}
+{% if bolg %}
 	
-	{% set img = bolg.images[0] %}
-	
-	<meta name="twitter:image" content="https://{{ request.host }}
-		{{- config['PROCESSED_PHOTOS_DEST'] }}
-		{{- bolg.id }}/
-		{{- img.name }}_400.jpg"/>
+	<meta name="twitter:title"		 content="{{ bolg.title }}" />
+	<meta name="twitter:description" content="{{ bolg.excerpt }}" />
 
+	{% if bolg.images %}
+		{% set img = bolg.images[0] %}
+		<meta name="twitter:image" content="https://{{ request.host }}
+			{{- config['PROCESSED_PHOTOS_DEST'] }}
+			{{- bolg.id }}/
+			{{- img.name }}_400.jpg"/>
+	{% endif %}
+
+{% else %}
+	<meta name="twitter:title"		 content="{{ request.host }}" />
+	<meta name="twitter:description" content="Official website of some guy in Portland what writes code to stay out of trouble." />
 {% endif %}
