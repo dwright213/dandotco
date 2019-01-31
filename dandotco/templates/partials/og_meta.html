@@ -1,25 +1,25 @@
-<meta name="og:url" 		 	content="{{ request.url }}" />
+<meta property="og:url" 		 	content="{{ request.url }}" />
 
 {% if bolg %}
 	
-	<meta name="og:title"		content="{{ bolg.title }}" />
-	<meta name="og:description" content="{{ bolg.excerpt }}" />
+	<meta property="og:title"		content="{{ bolg.title }}" />
+	<meta property="og:description" content="{{ bolg.excerpt }}" />
 
 {% else %}
 
-	<meta name="og:title"		 content="{{ request.host }}" />
-	<meta name="og:description" content="Official website of some guy in Portland what writes code to stay out of trouble." />
+	<meta property="og:title"		 content="{{ request.host }}" />
+	<meta property="og:description" content="Official website of some guy in Portland what writes code to stay out of trouble." />
 {% endif %}
 
 {% if bolg and bolg.images %}
 {# use the first of this bolg's images.. #}
 	{% set img = bolg.images[0] %}
-	<meta name="og:image" content="https://{{ request.host }}
+	<meta property="og:image" content="https://{{ request.host }}
 		{{- config['PROCESSED_PHOTOS_DEST'] }}
 		{{- bolg.id }}/
-		{{- img.name }}400.jpg"/>
+		{{- img.property }}400.jpg"/>
 {% else %}
 {# no bolg or no bolg images? Let's use a picture of some cats. #}
-	<meta name="og:image" content="https://{{ request.host -}}
+	<meta property="og:image" content="https://{{ request.host -}}
 	/img/processed/13/IMG_20181024_093150851_HDR_1_jpg_1200.jpg" />
 {% endif %}
