@@ -21,6 +21,8 @@ postgres, with peewee orm.
 ##### frontend:
 vuejs and sass, compiled by a gulp/webpack toolchain.
 
+##### authentication:
+amazon cognito (i'm not an infosec expert).
 
 #### Things we'll need in prod:
 user related stuff:
