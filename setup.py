@@ -3,6 +3,12 @@ from setuptools import setup
 setup(
 	name='dandotco',
 	packages=['dandotco'],
+	version='1.0',
+    author='Dan Wright',
+    author_email='dan@danwright.co',
+    description='A blogging software.',
+    url='https://github.com/dwright213/dandotco',
+    license='GPL-3.0-or-later',
 	include_package_data=True,
 	install_requires=[
 		'flask>=0.12.3'
