@@ -28,23 +28,28 @@ def login_required(f):
 def upload(bolg_id=0):
 
 	if request.method == 'POST' and 'photo' in request.files:
-		bolg_folder = 'original/' + str(bolg_id)
-		prospective_filename = (  app.config['UPLOADED_PHOTOS_DEST']  
-								+ bolg_folder 
-								+ '/' 
-								+ request.files['photo'].filename)
-		
-		overwrite = False
-		if os.path.isfile(prospective_filename):
-			print('photo exists. Deleting existing copy.')
-			os.remove(prospective_filename)
-			overwrite = True
 
-		filename = photos.save(request.files['photo'], folder=bolg_folder)
-		processed_images = image.process(filename, overwrite=overwrite)
+		pics = dict(request.files)['photo']
+
+		for pic in pics:
+			bolg_folder = 'original/' + str(bolg_id)
+			prospective_filename = (  app.config['UPLOADED_PHOTOS_DEST']  
+									+ bolg_folder 
+									+ '/' 
+									+ pic.filename)
+			
+			overwrite = False
+			if os.path.isfile(prospective_filename):
+				print('photo exists. Deleting existing copy.')
+				os.remove(prospective_filename)
+				overwrite = True
+
+			filename = photos.save(pic, folder=bolg_folder)
+			processed_images = image.process(filename, overwrite=overwrite)
+
 		bolg_imgs = {'images': image.get_images(bolg_id)}
 		resp = jsonify(bolg_imgs)
-		resp.headers.add('Access-Control-Allow-Origin', '*')
+		resp.headers.add('Access-Control-Allow-Origin', '*')		
 		return resp
 
 	

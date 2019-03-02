@@ -20,7 +20,7 @@
 			enctype=multipart/form-data 
 			@submit=checkForm>
 
-		<input class="compose-form__input" type=file name=photo>
+		<input class="compose-form__input" type=file name=photo multiple="multiple">
 		<input class="compose-form__button" type="submit">
 	</form>
 </template>
