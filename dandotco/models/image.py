@@ -8,28 +8,6 @@ from IPython import embed
 from dandotco import app
 from dandotco.models.bolg import Bolg
 
-"""
-to start with, we will make 3 versions of each uploaded image:
-
-full width on mobile:
-	480px - 30px of padding = 450px
-
-approx 1/2 desktop width:
-	~600px probably a good start.
-
-full size but quality decreased a bit.
-	maybe up to a maximum of 3840px width?
-"""
-
-"""
-Functions needed for this are gonna include:
-	process_image: to process the images as I upload them, for bolgs.
-
-	process_all: for future cases where I have
-	a new visual theme that requires new versions of existing images, or 
-	say, I move to a new server and have to process all my images again.
-
-"""
 
 """
 bolgs are going to need references to images, because so many things are gonna be way easier.
@@ -51,7 +29,7 @@ def process(image, **kwargs):
 	try:
 		os.mkdir(save_dir)
 	except: 
-		print('directory exists, i guess...')
+		print('originals directory exists.')
 
 	sizes = app.config.get('IMG_SIZES')
 
@@ -109,16 +87,16 @@ def delete(bolg_id, orig_name):
 	bolg = Bolg.get(Bolg.id == bolg_id)
 	images = bolg.images
 	axe_list = []
+
 	for i, img in enumerate(images):
+
 		if img['orig_name'] == orig_name:
 			axe_list.append(i)
 
 	delete_files(bolg_id, orig_name)
-	
-	map(lambda x: images.pop(x), axe_list)
+	images.pop(axe_list[0])
 	updated_bolg = Bolg.update(images = images).where(Bolg.id == bolg_id)
 	updated_bolg.execute()
-
 
 
 
@@ -159,5 +137,8 @@ def namer(orig_name):
 	return orig_name.replace('.', '_') + '_'
 
 def get_images(bolg_id):
+
 	bolg = Bolg.get(Bolg.id == bolg_id)
-	return bolg.images
+	bolg_imgs = {'images': bolg.images}
+
+	return bolg_imgs

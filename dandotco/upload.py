@@ -47,9 +47,9 @@ def upload(bolg_id=0):
 			filename = photos.save(pic, folder=bolg_folder)
 			processed_images = image.process(filename, overwrite=overwrite)
 
-		bolg_imgs = {'images': image.get_images(bolg_id)}
+		bolg_imgs = image.get_images(bolg_id)
 		resp = jsonify(bolg_imgs)
-		resp.headers.add('Access-Control-Allow-Origin', '*')		
+		resp.headers.add('Access-Control-Allow-Origin', '*')
 		return resp
 
 	
@@ -58,7 +58,8 @@ def upload(bolg_id=0):
 def delete_image(img_name, bolg_id):
 	if request.method == 'POST':
 		image.delete(bolg_id, img_name)
-		bolg_imgs = {'images': image.get_images(bolg_id)}
+
+		bolg_imgs = image.get_images(bolg_id)
 		resp = jsonify(bolg_imgs)
 		resp.headers.add('Access-Control-Allow-Origin', '*')
 		return resp
