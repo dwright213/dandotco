@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function() {
 			location.href = '/'
 		}, false);
 
-
 	// override my nav-item-list height, for mobile nav
 	let navLinks = document.getElementsByClassName('nav-link'),
 		linkHeight = navLinks[1].clientHeight;
