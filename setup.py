@@ -11,7 +11,7 @@ setup(
     license='GPL-3.0-or-later',
 	include_package_data=True,
 	install_requires=[
-		'flask>=0.12.3'
+		'flask>=1.0.2'
 		'click==6.6',
 		'Flask==0.11.1',
 		'httplib2==0.9.2',
