@@ -23,7 +23,7 @@ iniherit==0.3.9
 ipython==5.6.0
 ipython-genutils==0.2.0
 itsdangerous==0.24
-Jinja2==2.10
+Jinja2==2.10.1
 jmespath==0.9.3
 lorem==0.1.1
 magickwand==0.2
