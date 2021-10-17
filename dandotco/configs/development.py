@@ -1,4 +1,4 @@
-ENV='development'
+FLASK_ENV='development'
 
 # for use in flask/python/models/etc
 UPLOADED_PHOTOS_DEST='dandotco/static/img/'
