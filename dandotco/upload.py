@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify, session
 from flask_uploads import UploadSet, configure_uploads, IMAGES
-from IPython import embed
 from dandotco import app
 from dandotco.models import image 
 from functools import wraps
@@ -9,6 +8,7 @@ import os
 
 from wand.image import Image
 from wand.display import display
+
 
 photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)

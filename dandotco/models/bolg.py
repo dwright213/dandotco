@@ -1,7 +1,9 @@
+import sys
 import json
 from peewee import *
+import playhouse
 from playhouse.shortcuts import model_to_dict, dict_to_model
-from playhouse.postgres_ext import *
+from playhouse.postgres_ext import JSONField
 
 from flask import abort
 from IPython import embed
@@ -11,7 +13,6 @@ from dandotco import app
 import re, datetime, os, shutil
 
 import markdown
-
 
 # import logging
 # logger = logging.getLogger('peewee')

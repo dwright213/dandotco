@@ -7,6 +7,8 @@ app.config.from_pyfile('settings.cfg', silent=False)
 app.config.from_envvar('ENV')
 app.config['IMG_SIZES'] = [100, 400, 800, 1200]
 
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 
 app.config.from_mapping(
@@ -14,7 +16,6 @@ app.config.from_mapping(
 )
 
 # embed()
-# print('good')
 import dandotco.api
 import dandotco.auth
 import dandotco.upload
