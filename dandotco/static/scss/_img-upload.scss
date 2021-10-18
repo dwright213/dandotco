@@ -1,12 +1,15 @@
 #thumb-holder {
 	display: flex;
-	flex-flow: row wrap;
+	flex-flow: column nowrap;
 	align-content: space-around;
+    justify-content: center;
+    align-items: stretch;
+	max-width: 1200px;
+	margin: auto;
 }
 
 .img-thumb__container {
-	border: 1px solid #000;
-	width: 100%;
+	border: 1px dotted #000;
 	margin: 5px;
 
 	display: flex;
@@ -19,25 +22,40 @@
 	// backdrop-filter: blur(7px);
 }
 .img-thumb {
-	width:20%;
-	max-height: 200px;
+	object-fit: cover;
 }
 .img-thumb__delete-btn {
-	// background: hsla(0, 0%, 100%, .1);
 	@include main-transition;
 }
 .img-thumb__delete-btn:hover {
-	cursor: pointer;
 	background: $danger-color;
 }
 .img-thumb__controls {
-	margin: 5px 0;
+	margin: 0;
 	overflow: auto;
 	opacity: 1;
-	// border: 1px solid #000;
-	// background: hsla(0, 0%, 100%, 0.1);
-	// @include main-transition;
+	width: 100%;
+}
+.img-thumb__control__desc {
+	flex-grow: 1;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
 }
 .img-thumb__control { 
-	padding: 7px 10px;
+	display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+.img-thumb__control button { 
+	cursor: pointer;
+}
+.img-thumb__control:nth-child(odd) {
+	background-color: #00000021;
+}
+.img-thumb__control:last-child {
+	justify-content: end;
+}
+.img-thumb__controls__copy {
 }

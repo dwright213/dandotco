@@ -53,8 +53,6 @@ var
 		},
 
 
-
-
 		mounted() {
 			this.bolgId = this.$el.dataset.bolg
 			this.imgDir = this.$el.dataset.imgLoc
