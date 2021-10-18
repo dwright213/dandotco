@@ -1,13 +1,13 @@
 ## dandotco
 
-#### how to run this:
+#### how to run this (with flask dev server):
 ```
 $ virtualenv venv
 $ pip install -r requirements.txt
 $ pip install -e .
 $ export FLASK_DEBUG=true
 $ export FLASK_APP=dandotco
-$ flask run
+$ fish run-flask.sh
 ```
 
 #### stack
@@ -22,7 +22,7 @@ postgres
 vuejs and sass, compiled by a gulp/webpack toolchain.
 
 ##### authentication:
-amazon cognito (i'm not an infosec expert).
+amazon cognito
 
 #### Things we'll need in prod:
 user related stuff:
@@ -34,7 +34,7 @@ ubuntu packages:
 - fish
 - python-pip
 - virtualenv
-- node @10.0.0
+- node @10.x
 - postgresql postgresql-contrib
 - libmagickwand-dev
 
