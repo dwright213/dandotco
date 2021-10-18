@@ -4,9 +4,10 @@
 		props: ['format', 'id', 'name', 'orig_name'],
 
 		computed: {
-			thumbBg: function() {
-				return { backgroundImage: `url('${this.imgLoc()}')` }
+			imgDir: function() {
+				return `${this.$parent.imgDir}${this.$parent.bolgId}`;
 			}
+			// /static/img/processed/<bolg id>/filename.jpg
 
 		},
 
@@ -26,13 +27,15 @@
 </script>
 
 <template>
-	<div class="img-thumb" v-bind:style="thumbBg">
-		<div class="img-thumb__delete-btn" v-on:click="removeImg()">delete?</div>
-		<div class="img-thumb__info-text">{{ name }}100.{{ format }}</div>
-		<div class="img-thumb__info-text">{{ name }}400.{{ format }}</div>
-		<div class="img-thumb__info-text">{{ name }}800.{{ format }}</div>
-		<div class="img-thumb__info-text">{{ name }}1200.{{ format }}</div>
-		<!-- <img v-bind:src=imgLoc() /> -->
+	<div class="img-thumb__container">
+		<img class="img-thumb" v-bind:src=imgLoc() />
+		<div class="img-thumb__controls img-thumb__controls">
+			<div class="img-thumb__control">{{ imgDir }}/{{ name }}100.{{ format }}</div>
+			<div class="img-thumb__control">{{ imgDir }}/{{ name }}400.{{ format }}</div>
+			<div class="img-thumb__control">{{ imgDir }}/{{ name }}800.{{ format }}</div>
+			<div class="img-thumb__control">{{ imgDir }}/{{ name }}1200.{{ format }}</div>
+			<div class="img-thumb__control img-thumb__delete-btn" v-on:click="removeImg()">delete?</div>
+		</div>
 
 	</div>
 </template>
