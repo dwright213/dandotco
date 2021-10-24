@@ -104,7 +104,7 @@ def add_2_bolg(bolg_id, img_name, img_format, orig_name):
 	updated_bolg.execute()
 	bolg = Bolg.get(Bolg.id == bolg_id)
 
-# remove image from Bolg
+# delete image from HD, delete reference to image from bolg.
 def delete(bolg_id, orig_name):
 	bolg = Bolg.get(Bolg.id == bolg_id)
 	images = bolg.images
@@ -113,13 +113,14 @@ def delete(bolg_id, orig_name):
 		if img['orig_name'] == orig_name:
 			axe_list.append(i)
 
-	delete_files(bolg_id, orig_name)
 	
-	map(lambda x: images.pop(x), axe_list)
+	delete_files(bolg_id, orig_name)
+
+	for delete_index in axe_list:
+		images.pop(delete_index)
+
 	updated_bolg = Bolg.update(images = images).where(Bolg.id == bolg_id)
 	updated_bolg.execute()
-
-
 
 
 # delete raw and processed version of a particular image.
