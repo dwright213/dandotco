@@ -9,12 +9,12 @@
 }
 
 .img-thumb__container {
-	border: 1px dotted #000;
-	margin: 5px;
+	margin: .5rem;
 
 	display: flex;
 	flex-flow: row;
 	font-size: .8rem;
+	line-height: 1rem;
 
 }
 .img-thumb__container:hover * {
@@ -35,6 +35,7 @@
 	overflow: auto;
 	opacity: 1;
 	width: 100%;
+	background-color: $bgcolor-lightened;
 }
 .img-thumb__control__desc {
 	flex-grow: 1;
@@ -47,12 +48,13 @@
     flex-direction: row;
     flex-wrap: nowrap;
     width: 100%;
+	// border-bottom: 1px dashed #000;
 }
 .img-thumb__control button { 
 	cursor: pointer;
 }
 .img-thumb__control:nth-child(odd) {
-	background-color: #00000021;
+	background-color: $darken-10;
 }
 .img-thumb__control:last-child {
 	justify-content: end;

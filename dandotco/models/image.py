@@ -43,10 +43,9 @@ def process(image, **kwargs):
 	get_dir = app.config.get('UPLOADED_PHOTOS_DEST') + image
 	save_dir = app.config.get('UPLOADED_PHOTOS_DEST') + 'processed/' + save_vars[1] +'/'
 	frontend_dir = app.config.get('PROCESSED_PHOTOS_DEST') + save_vars[1] + '/'
+	processed_sizes = []
 
 	image_name = save_vars[2].replace('.', '_') + '_'
-	if not kwargs['overwrite']:
-		add_2_bolg(save_vars[1], image_name, 'jpg', save_vars[2])
 
 	try:
 		os.mkdir(save_dir)
@@ -84,10 +83,13 @@ def process(image, **kwargs):
 					i.compression_quality = 92
 					i.save(filename=(save_dir + file_name))
 					images.append(frontend_dir + file_name)
+					processed_sizes.append(size)
 
+	if not kwargs['overwrite']:
+		add_2_bolg(save_vars[1], image_name, 'jpg', save_vars[2], processed_sizes)
 	return images
 
-def add_2_bolg(bolg_id, img_name, img_format, orig_name):
+def add_2_bolg(bolg_id, img_name, img_format, orig_name, processed_sizes):
 	
 	bolg = Bolg.get(Bolg.id == bolg_id)
 	image_list = bolg.images
@@ -96,7 +98,8 @@ def add_2_bolg(bolg_id, img_name, img_format, orig_name):
 		'id': img_id,
 		'name': img_name,
 		'format': img_format,
-		'orig_name': orig_name
+		'orig_name': orig_name,
+		'processed_sizes': processed_sizes
 		}
 	image_list.append(img)
 

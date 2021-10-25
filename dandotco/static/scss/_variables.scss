@@ -10,6 +10,9 @@ $text-less-muted: lighten($text-color, 9%);
 
 
 $bgcolor: #b7b7b7;
+$bgcolor-lightened: lighten($bgcolor, 20%);
+
+$darken-10: rgba(0, 0, 0, 0.1);
 
 $danger-color: red;
 
