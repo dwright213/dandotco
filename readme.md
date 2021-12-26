@@ -51,3 +51,22 @@ css: /var/media/dist/main.css
 js: /var/media/dist/main.js
 
 create psql user 'dandotco'
+
+
+to run as service, you'll want a file called `/etc/systemd/system/dandotco.service` with something like this in it (depending on your setup).
+```
+[Unit]
+Description=uWSGI instance to serve dandotco
+After=network.target
+
+[Service]
+User=dwright
+Group=www-data
+WorkingDirectory=/var/www/dandotco
+Environment="PATH=/var/www/dandotco/venv/bin"
+ExecStart=/var/www/dandotco/venv/bin/uwsgi --ini uwsgi.ini
+
+[Install]
+WantedBy=multi-user.target
+
+```

@@ -8,7 +8,8 @@ app.config.from_envvar('ENV')
 app.config['IMG_SIZES'] = [100, 400, 800, 1200]
 
 import logging
-logging.basicConfig(level=logging.DEBUG)
+# logging.basicConfig(level=logging.DEBUG)
+# having this on production means peewee will generate ~70mb log files after a day or two.
 
 
 app.config.from_mapping(
