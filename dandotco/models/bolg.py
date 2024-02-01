@@ -71,8 +71,10 @@ class Bolg(BaseModel):
 						.join(Tagging, on=Tagging.tag)
 						.where(Tagging.bolg == self)
 						.order_by(Tagging.id))
+		# map(lambda x: tag_list.append(x.name), tag_objects)
+		for tag_object in tag_objects:
+			tag_list.append(tag_object.name)
 
-		map(lambda x: tag_list.append(x.name), tag_objects)
 		tag_list = list(set(tag_list))
 		return(tag_list)
 
