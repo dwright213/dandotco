@@ -40,12 +40,18 @@ class BaseModel(Model):
 class Tag(BaseModel):
 	name = CharField()
 
+	"""returns a list of relevant bolg ids"""
 	def bolgs(self):
-		return (Bolg
+		ids = []
+		bolgs = (Bolg
 			.select()
 			.join(Tagging, on=Tagging.bolg)
 			.where(Tagging.tag == self)
 			.order_by(Bolg.created))
+		
+		for bolg in bolgs:
+			ids.append(bolg.id)
+		return ids
 
 
 class Bolg(BaseModel):
@@ -164,14 +170,20 @@ def get_page(perma):
 	return page
 
 def tag_name_search(search_term):
+	print(search_term)
+	print("in tag_name_search")
+
 	tags = Tag.select().where(
 		Tag.name.contains(search_term))
-	
-	bolg_id_set = set()
+
+	bolg_id_list = []
 	if len(tags) > 0:
 		for tag in tags:
-			map(lambda x: bolg_id_set.add(x.id), tag.bolgs())
+			print(tag.bolgs())
+			bolg_id_list = bolg_id_list + tag.bolgs()
 
+	print('bolg id list',bolg_id_list)
+	bolg_id_set = set(bolg_id_list)
 	bolg_list = []
 	for bolg_id in bolg_id_set:
 		bolg_list.append( Bolg.get_by_id(bolg_id).serialize('search_result', search_term=search_term))
