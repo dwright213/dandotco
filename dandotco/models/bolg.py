@@ -71,8 +71,10 @@ class Bolg(BaseModel):
 						.join(Tagging, on=Tagging.tag)
 						.where(Tagging.bolg == self)
 						.order_by(Tagging.id))
-		# map(lambda x: tag_list.append(x.name), tag_objects)
+
 		for tag_object in tag_objects:
+			if (not len(tag_object.name)):
+				continue
 			tag_list.append(tag_object.name)
 
 		tag_list = list(set(tag_list))
@@ -172,8 +174,6 @@ def get_page(perma):
 	return page
 
 def tag_name_search(search_term):
-	print(search_term)
-	print("in tag_name_search")
 
 	tags = Tag.select().where(
 		Tag.name.contains(search_term))
@@ -343,12 +343,10 @@ def tags_create(tags):
 	tag_list = []
 	for tag in tags:
 		cleaned_tagname = tag.strip()
-		print('tag name:',cleaned_tagname)
-		current_tag = Tag.select().where(Tag.name == cleaned_tagname)
 		if (not len(cleaned_tagname)):
-			print('blank tag, cant use that')
 			continue
-
+		
+		current_tag = Tag.select().where(Tag.name == cleaned_tagname)
 		# if this tag already exists, use that existent one.
 		if (current_tag.first()):
 			current_tag = current_tag.first()
@@ -369,8 +367,6 @@ def tag_create(name):
 		return new_tag
 	except:
 		return 'problems happened whilst creating a tag.'
-
-
 
 # TAGGING STUFF
 def tagging_create(bolg_id, tag_id):
