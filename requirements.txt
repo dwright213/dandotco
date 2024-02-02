@@ -1,5 +1,4 @@
 appnope==0.1.2
-asttokens==2.4.1
 backcall==0.2.0
 blinker==1.7.0
 boto3==1.18.63
@@ -7,19 +6,21 @@ botocore==1.21.63
 certifi==2024.2.2
 charset-normalizer==2.0.7
 click==8.1.7
+<<<<<<< HEAD
 -e git+ssh://git@github.com/dwright213/dandotco.git@8952410a2061f1fbcc9bad963c056f23e872b64d#egg=dandotco
+=======
+-e git+ssh://git@github.com/dwright213/dandotco.git@1f70b6dbccaad8b814f2c9bbba987ebb7c7654b2#egg=dandotco
+>>>>>>> parent of 846bfeb (update ipython)
 decorator==5.1.0
 ecdsa==0.17.0
 envs==1.3
-exceptiongroup==1.2.0
-executing==2.0.1
 Flask==3.0.1
 Flask-Reuploaded==1.1.0
 httplib2==0.20.1
 httpretty==0.8.14
 idna==3.3
 importlib-metadata==7.0.1
-ipython==8.18.1
+ipython==7.28.0
 itsdangerous==2.1.2
 jedi==0.18.0
 Jinja2==3.1.3
@@ -32,10 +33,9 @@ parso==0.8.2
 peewee==3.14.4
 pexpect==4.8.0
 pickleshare==0.7.5
-prompt-toolkit==3.0.43
+prompt-toolkit==3.0.20
 psycopg2-binary==2.9.1
 ptyprocess==0.7.0
-pure-eval==0.2.2
 pyasn1==0.4.8
 Pygments==2.17.2
 pyparsing==2.4.7
@@ -45,9 +45,7 @@ requests==2.26.0
 rsa==4.7.2
 s3transfer==0.5.0
 six==1.16.0
-stack-data==0.6.3
 traitlets==5.1.0
-typing_extensions==4.9.0
 urllib3==1.26.7
 uWSGI==2.0.23
 Wand==0.6.7
