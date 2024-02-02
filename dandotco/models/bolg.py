@@ -343,7 +343,11 @@ def tags_create(tags):
 	tag_list = []
 	for tag in tags:
 		cleaned_tagname = tag.strip()
+		print('tag name:',cleaned_tagname)
 		current_tag = Tag.select().where(Tag.name == cleaned_tagname)
+		if (not len(cleaned_tagname)):
+			print('blank tag, cant use that')
+			continue
 
 		# if this tag already exists, use that existent one.
 		if (current_tag.first()):
