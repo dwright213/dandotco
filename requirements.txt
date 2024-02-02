@@ -7,7 +7,7 @@ botocore==1.21.63
 certifi==2024.2.2
 charset-normalizer==2.0.7
 click==8.1.7
--e git+ssh://git@github.com/dwright213/dandotco.git@846bfeb5fab1afab35fb9f042e64f79eab76be28#egg=dandotco
+-e git+ssh://git@github.com/dwright213/dandotco.git@8952410a2061f1fbcc9bad963c056f23e872b64d#egg=dandotco
 decorator==5.1.0
 ecdsa==0.17.0
 envs==1.3
