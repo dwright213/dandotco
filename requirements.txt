@@ -2,10 +2,10 @@ appnope==0.1.2
 backcall==0.2.0
 boto3==1.18.63
 botocore==1.21.63
-certifi==2021.10.8
+certifi==2024.2.2
 charset-normalizer==2.0.7
 click==8.0.3
--e git+ssh://git@github.com/dwright213/dandotco.git@71cc82495b0e19042dcc2862ebff66acf4e32388#egg=dandotco
+-e git+ssh://git@github.com/dwright213/dandotco.git@152836e7d3dd27f999eed728358bb081cab130c2#egg=dandotco
 decorator==5.1.0
 ecdsa==0.17.0
 envs==1.3
