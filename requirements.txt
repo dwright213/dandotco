@@ -6,11 +6,7 @@ botocore==1.21.63
 certifi==2024.2.2
 charset-normalizer==2.0.7
 click==8.1.7
-<<<<<<< HEAD
 -e git+ssh://git@github.com/dwright213/dandotco.git@8952410a2061f1fbcc9bad963c056f23e872b64d#egg=dandotco
-=======
--e git+ssh://git@github.com/dwright213/dandotco.git@1f70b6dbccaad8b814f2c9bbba987ebb7c7654b2#egg=dandotco
->>>>>>> parent of 846bfeb (update ipython)
 decorator==5.1.0
 ecdsa==0.17.0
 envs==1.3
