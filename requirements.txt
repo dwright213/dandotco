@@ -7,7 +7,7 @@ botocore==1.21.63
 certifi==2024.2.2
 charset-normalizer==2.0.7
 click==8.1.7
--e git+ssh://git@github.com/dwright213/dandotco.git@eb1b3efeed9a51ea2d50bd9144fef2a94a322b71#egg=dandotco
+-e git+ssh://git@github.com/dwright213/dandotco.git@846bfeb5fab1afab35fb9f042e64f79eab76be28#egg=dandotco
 decorator==5.1.0
 ecdsa==0.17.0
 envs==1.3
@@ -37,7 +37,7 @@ psycopg2-binary==2.9.1
 ptyprocess==0.7.0
 pure-eval==0.2.2
 pyasn1==0.4.8
-Pygments==2.10.0
+Pygments==2.17.2
 pyparsing==2.4.7
 python-dateutil==2.8.2
 python-jose==3.3.0
