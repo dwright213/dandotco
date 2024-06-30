@@ -73,6 +73,10 @@ def compose_bolg():
 		kind = request.form['kind']
 		tags = request.form['tags']
 		new_bolg = bolg.create(title, body, kind, tags, excerpt=excerpt)
+		print(new_bolg)
+		print(new_bolg)
+		print(new_bolg)
+
 		new_bolg['perma']
 		return redirect(str('/bolg/'+ new_bolg['perma']))
 
@@ -97,4 +101,13 @@ def edit_bolg(id):
 		return redirect('/edit/'+ str(id))
 
 	return render_template('edit.html', bolg=chosen_bolg, route_name='edit')
+
+
+@bp.route('/delete/<int:bolg_id>', methods=['POST'])
+@login_required
+def delete(bolg_id):
+		
+	delete_status = bolg.nope(bolg_id)
+	flash(delete_status)
+	return redirect('/')
 

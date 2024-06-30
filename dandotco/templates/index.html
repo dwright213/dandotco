@@ -1,23 +1,29 @@
-{% extends "layout.html" %}
+{% extends "layout/layout.html" %}
 {% block content %}
-
+	
 	{% for bolg in bolgs %}
-		<div class="bolg" v-bind:class="{ invisible: searching }">
+		<div class="bolg bolg-listing" v-bind:class="{ invisible: searching }">
 
-				<h3>
-					<a href="/bolg/{{ bolg.perma }}">
-						{{ bolg.title }}
-					</a>
-				</h3>
+				<p>
+					<strong>
+						<span class="bolg-listing__time-stamp"> {{ bolg.created }}</span>
+						<a href="/bolg/{{ bolg.perma }}">
+							{{ bolg.title }}
+						</a>
+					</strong>
+				</p>
 				<p>{{ bolg.excerpt|safe }}</p>
-				<br>
-
-				{% for tag in bolg.tags %} 
-					<a href="/tagged/{{tag.name}}">#{{ tag.html|safe }}</a>
-				{% endfor %}
+				{% if bolg.tags -%}
+					<br>
+					{% for tag in bolg.tags %} 
+						<a href="/tagged/{{tag.name}}">#{{ tag.html|safe }}</a>
+					{% endfor %}
+				{%- endif %}
 
 		</div>
-		<hr>	
+		{% if loop.index < loop.length -%}
+			<hr v-bind:class="{ invisible: searching }">
+		{% endif %}
 	{% endfor %}
 
 {% endblock %}

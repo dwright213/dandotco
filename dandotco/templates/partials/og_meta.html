@@ -1,0 +1,25 @@
+<meta property="og:url" 		 	content="{{ request.url }}" />
+
+{% if bolg %}
+	
+	<meta property="og:title"		content="{{ bolg.title }}" />
+	<meta property="og:description" content="{{ bolg.excerpt }}" />
+
+{% else %}
+
+	<meta property="og:title"		 content="{{ request.host }}" />
+	<meta property="og:description" content="Official website of some guy in Portland that writes code to stay out of trouble and sometimes makes beats to get back into trouble." />
+{% endif %}
+
+{% if bolg and bolg.images %}
+{# use the first of this bolg's images.. #}
+	{% set img = bolg.images[0] %}
+	<meta property="og:image" content="https://{{ request.host }}
+		{{- config['PROCESSED_PHOTOS_DEST'] }}
+		{{- bolg.id }}/
+		{{- img.property }}400.jpg"/>
+{% else %}
+{# no bolg or no bolg images? Let's use a picture of some cats. #}
+	<meta property="og:image" content="https://{{ request.host -}}
+	/img/processed/13/IMG_20181024_093150851_HDR_1_jpg_1200.jpg" />
+{% endif %}

@@ -1,4 +1,4 @@
-{% extends "layout.html" 
+{% extends "layout/layout.html" 
 	%}
 {% block content %}
 	<div id="form-holder">
@@ -23,8 +23,7 @@
 				name="title" 
 				id="input-title" 
 				class="compose-form__input compose-form__input--half-width" 
-				placeholder="title"
-				value="{{ lipsum(n=1, html=False, min=1, max=10) }}">
+				placeholder="title">
 
 			<input type="text" 
 				name="perma" 
@@ -42,9 +41,7 @@
 				name="body" 
 				id="input-body" 
 				class="compose-form__input compose-form__input--body" 
-				placeholder="body"
-				> {{ lipsum(n=5, html=False, min=20, max=100) }}
-			</textarea>
+				placeholder="body"></textarea>
 
 			<select 
 				name="kind"

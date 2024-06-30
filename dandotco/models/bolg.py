@@ -1,16 +1,18 @@
+import sys
 import json
 from peewee import *
+import playhouse
 from playhouse.shortcuts import model_to_dict, dict_to_model
-from playhouse.postgres_ext import *
+from playhouse.postgres_ext import JSONField
 
 from flask import abort
 from IPython import embed
 
 from dandotco import app
-import re, datetime
+
+import re, datetime, os, shutil
 
 import markdown
-
 
 # import logging
 # logger = logging.getLogger('peewee')
@@ -38,12 +40,18 @@ class BaseModel(Model):
 class Tag(BaseModel):
 	name = CharField()
 
+	"""returns a list of relevant bolg ids"""
 	def bolgs(self):
-		return (Bolg
+		ids = []
+		bolgs = (Bolg
 			.select()
 			.join(Tagging, on=Tagging.bolg)
 			.where(Tagging.tag == self)
 			.order_by(Bolg.created))
+		
+		for bolg in bolgs:
+			ids.append(bolg.id)
+		return ids
 
 
 class Bolg(BaseModel):
@@ -64,15 +72,19 @@ class Bolg(BaseModel):
 						.where(Tagging.bolg == self)
 						.order_by(Tagging.id))
 
-		map(lambda x: tag_list.append(x.name), tag_objects)
+		for tag_object in tag_objects:
+			if (not len(tag_object.name)):
+				continue
+			tag_list.append(tag_object.name)
+
 		tag_list = list(set(tag_list))
 		return(tag_list)
 
 	def serialize(self, format, **kwargs):
 		formatted_bolg = {}
 		if (format == 'search_result'):
-			tags_highlighted = []
 			
+			tags_highlighted = []
 			for tag in self.tags():
 				if 'search_term' in kwargs:
 					term = kwargs['search_term']
@@ -87,14 +99,27 @@ class Bolg(BaseModel):
 			formatted_bolg['title'] = self.title
 			formatted_bolg['perma'] = self.perma
 			formatted_bolg['excerpt'] = self.excerpt
-			formatted_bolg['created'] = self.created
+			formatted_bolg['created'] = date_formatter(self.created)
 			formatted_bolg['tags'] = tags_highlighted
+
+		elif (format == 'post'):
+			formatted_bolg['title'] = self.title
+			formatted_bolg['perma'] = self.perma
+			formatted_bolg['body'] = self.body
+			formatted_bolg['tags'] = self.tags()
+			formatted_bolg['created'] = date_formatter(self.created)
+			formatted_bolg['id'] = self.id
+			formatted_bolg['images'] = self.images
+			formatted_bolg['excerpt'] = self.excerpt
 
 		elif (format == 'page'):
 			formatted_bolg['title'] = self.title
 			formatted_bolg['perma'] = self.perma
 			formatted_bolg['body'] = self.body
 			formatted_bolg['created'] = self.created
+			formatted_bolg['id'] = self.id
+			formatted_bolg['images'] = self.images
+			formatted_bolg['excerpt'] = self.excerpt
 
 		else:
 			print('unrecognized format, throwing the whole thing in there.')
@@ -112,6 +137,13 @@ class Tagging(BaseModel):
 
 
 # BOLG STUFF
+
+def date_formatter(date):
+	pretty_date = date.strftime('%-m/%-d/%Y')
+
+	return pretty_date
+
+
 def get_a_bolg(bolg_id):
 	chosen_bolg = Bolg.select().where(Bolg.id == bolg_id).first()
 	dict_bolg = []
@@ -124,16 +156,17 @@ def get_a_bolg(bolg_id):
 
 def get_some_bolgs(num):
 	dict_bolgs = []
-	bolgs = Bolg.select().where(Bolg.kind != 'page').order_by(Bolg.id.desc())[:num]
+	bolgs = Bolg.select().where(Bolg.kind != 'page').order_by(Bolg.created.desc())[:num]
 	for bolg in bolgs:
 		dict_bolg = bolg.serialize('search_result') 
 		dict_bolgs.append(dict_bolg)
 
 	return dict_bolgs
 
-def get_latest():
-	latest = Bolg.select().order_by(Bolg.id.desc()).first().id
-	return latest
+def get_bolg(perma):
+	lookup = Bolg.select().where((Bolg.kind == 'post') and (Bolg.perma == perma)).first()
+	bolg = lookup.serialize('post')
+	return bolg
 
 def get_page(perma):
 	lookup = Bolg.select().where((Bolg.kind != 'post') and (Bolg.perma == perma)).first()
@@ -141,15 +174,18 @@ def get_page(perma):
 	return page
 
 def tag_name_search(search_term):
-	
+
 	tags = Tag.select().where(
 		Tag.name.contains(search_term))
-	
-	bolg_id_set = set()
+
+	bolg_id_list = []
 	if len(tags) > 0:
 		for tag in tags:
-			map(lambda x: bolg_id_set.add(x.id), tag.bolgs())
+			print(tag.bolgs())
+			bolg_id_list = bolg_id_list + tag.bolgs()
 
+	print('bolg id list',bolg_id_list)
+	bolg_id_set = set(bolg_id_list)
 	bolg_list = []
 	for bolg_id in bolg_id_set:
 		bolg_list.append( Bolg.get_by_id(bolg_id).serialize('search_result', search_term=search_term))
@@ -162,10 +198,37 @@ def get_by_perma(perma):
 	dict_permad['tags'] = permad.tags()
 	return dict_permad
 
+# delete a bolg and it's images
+def nope(bolg_id):
+	deletion_candidate = Bolg.select().where(Bolg.id == bolg_id).first()	
+	bolg_name = deletion_candidate.title
+
+	if len(deletion_candidate.images):
+		orig_dir = app.config.get('UPLOADED_PHOTOS_DEST') + 'original/' + str(bolg_id)
+		proc_dir = app.config.get('UPLOADED_PHOTOS_DEST') + 'processed/' + str(bolg_id) 
+		
+		if os.path.isdir(orig_dir):
+
+			try:
+				shutil.rmtree(orig_dir)
+				shutil.rmtree(proc_dir)
+
+			except shutil.Error as err:
+				print(err)
+	
+	# using our existing tags_edit function to handle tag/tagging removal.
+	# we are replacing the bolg's current list of tags with '[]'
+	tags_edit(bolg_id, [], deletion_candidate.tags())
+
+	deletion_candidate.delete_instance()
+
+	return ('"%s" is gone forever now.' % (bolg_name))
+
 def create(title, body, kind, tags, **kwargs):
 	tags_found = []
 	if (tags):
-		tags_found = tags_create(tags)
+		tag_list = tags.split(',')
+		tags_found = tags_create(tag_list)
 
 	clean_title = title.strip()
 	clean_title = re.sub(r'\s{2,}', ' ', clean_title)
@@ -211,7 +274,8 @@ def create(title, body, kind, tags, **kwargs):
 			tagging_create(new_bolg.id, tag_found.id)
 
 		return get_a_bolg(new_bolg.id)
-	except:
+	except Exception as err:
+		print(err)
 		return 'problems happened whist creating a bolg.'
 
 def edit(bolg_id, **kwargs):
@@ -250,32 +314,39 @@ def tags_edit(bolg_id, new_list, old_list):
 	add_list = set(new_list) - set(old_list)
 	remove_list = set(old_list) - set(new_list)
 
-	created_list = []
-	for tag in add_list:
-		created_list.append(tag_create(tag))
+	created_list = tags_create(add_list)
+	print(created_list)
 
 	for tag in created_list:
 		tagging_create(bolg_id, tag.id)
 
 	for tag in remove_list:
 		tag_id = Tag.select().where(Tag.name == tag).first().id
-		Tagging.delete().where((Tagging.bolg == bolg_id) and (Tagging.tag == tag_id)).execute()
-
-	for tag in remove_list:
-		current_tag = Tag.get(Tag.name==tag)
-		used = Tagging.select().where(Tagging.tag == current_tag.id)
-		if not used.count():
-			print('tag %s removed' %(current_tag.name))
-			current_tag.delete_instance()
+		taggings_list = Tagging.select().where((Tagging.bolg == bolg_id) and (Tagging.tag == tag_id))
+		print('taggings this would delete:')
+		for tagging in taggings_list:
+			if tagging.bolg_id == bolg_id:
+				Tagging.delete().where((Tagging.id == tagging.id)).execute()
 
 
-# make and return a list of tags from a string provided by user
-def tags_create(tag_string):
+# lets hold off on deleting unused tags, for the moment. 
+	# for tag in remove_list:
+	# 	current_tag = Tag.get(Tag.name==tag)
+	# 	used = Tagging.select().where(Tagging.tag == current_tag.id)
+	# 	if not used.count():
+	# 		print('tag %s removed' %(current_tag.name))
+	# 		current_tag.delete_instance()
+
+
+# make and return a list of tags from a list of strings provided by user
+def tags_create(tags):
 	tag_list = []
-	for tag in tag_string.split(','):
+	for tag in tags:
 		cleaned_tagname = tag.strip()
+		if (not len(cleaned_tagname)):
+			continue
+		
 		current_tag = Tag.select().where(Tag.name == cleaned_tagname)
-
 		# if this tag already exists, use that existent one.
 		if (current_tag.first()):
 			current_tag = current_tag.first()
@@ -297,8 +368,6 @@ def tag_create(name):
 	except:
 		return 'problems happened whilst creating a tag.'
 
-
-
 # TAGGING STUFF
 def tagging_create(bolg_id, tag_id):
 	try:
@@ -307,4 +376,5 @@ def tagging_create(bolg_id, tag_id):
 	except:
 		return 'problems happened whilst creating a tagging.'
 
-# def tagging_remove()
+# def tagging_remove(bolg_id):
+	# remove all taggings between a b

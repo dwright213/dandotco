@@ -48,6 +48,9 @@ def api_tagged(tag_name):
 	results = bolg.tag_name_search(tag_name)
 	tagged_bolgs = {'results': results, 
 					'count': len(results) }
+	
+	if tagged_bolgs['count'] == 0:
+		tagged_bolgs['explanation'] = 'Sorry, our legal department asked us not to comment about "%s".' % tag_name
 	resp = jsonify(tagged_bolgs)
 	resp.headers.add('Access-Control-Allow-Origin', '*')
 	return resp

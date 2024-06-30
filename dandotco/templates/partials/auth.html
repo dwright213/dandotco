@@ -1,0 +1,6 @@
+{% if g.logged == True %}
+	<form method="POST" action="/delete/{{bolg.id}}" class="inline">
+		<input type="hidden" name="referrer" value="{{ request.path }}">
+		(<a href="/edit/{{bolg.id}}">edit</a>/<button type="submit" name="submit_param" value="submit_value" class="link-button">delete</button>)
+	</form>
+{% endif %}

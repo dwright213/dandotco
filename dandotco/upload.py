@@ -1,17 +1,26 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session
 from flask_uploads import UploadSet, configure_uploads, IMAGES
-from IPython import embed
 from dandotco import app
 from dandotco.models import image 
-from auth import login_required 
+from functools import wraps
 
 import os
 
 from wand.image import Image
 from wand.display import display
 
+
 photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
+
+def login_required(f):
+	@wraps(f)
+	def decorated_function(*args, **kwargs):
+		if (not session):
+			abort(403)
+			# return redirect(url_for('auth.login'))
+		return f(*args, **kwargs)
+	return decorated_function
 
 
 @app.route('/upload/<int:bolg_id>', methods=['POST'])

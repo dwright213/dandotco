@@ -17,7 +17,7 @@
 		
 	}
 	figure {
-		max-width: 100%;
+		max-width: 800px;
 		margin: 5px 0 5px 0;
 		background-color: lighten($bgcolor, 10%);
 		display: inline-block;
@@ -73,18 +73,29 @@
 
 	}
 
-	@media screen and (min-width: 480px) {
-		// figure {
-			.float-left {
-				float: left;
-				margin: 10px;
-			}
-			.float-right {
-				float: right;
-				margin: 10px;
-			}
+	pre {
+		// background-color: #c3c3c3;
+		background: linear-gradient(to right, lighten($bgcolor, 10%) 0%,$bgcolor 100%);
+		padding: 5px;
+		border-radius: 5px;
+	}
+	p>code {
+		background-color: lighten($bgcolor, 10%);
+		border-radius: 5px;
+		padding: 0 5px;
+	}
 
-		// }
+	@media screen and (min-width: 480px) {
+
+		.float-left {
+			float: left;
+			margin: 10px;
+		}
+		.float-right {
+			float: right;
+			margin: 10px;
+		}
+
 	}
 
 }

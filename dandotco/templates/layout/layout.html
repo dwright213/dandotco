@@ -3,20 +3,36 @@
 <html lang="en">
 
 	<head>
-		<link rel="stylesheet" href="{{ config['DEV_STATIC'] }}/css/main.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		{% include 'partials/og_meta.html' %}
+		{% include 'partials/twitter_meta.html' %}
+		{% include 'partials/favicon_meta.html' %}
+
+		<link rel="stylesheet" href="{{ config['DEV_STATIC'] }}/css/main.css">
+		<style type="text/css"></style>
 	</head>
-	<title>dandotco</title>
+
+	<title>
+		{{ request.host.split('.')[0] + ' ' -}}
+		{%- if g.cat -%}
+		 :: {{ bolg.title }}
+		{%- endif %}
+
+		{%- if tag_name -%}
+		 :: tagged: {{ tag_name }}
+		{%- endif %}
+	</title>
 
 	<body>
 		<div id="main-container">
 
 			<div id="header">
-				{% include 'header.html' %}
+				{% include 'layout/header.html' %}
 			</div>
 
 			<div id="nav">
-				{% include 'nav.html' %}
+				{% include 'layout/nav.html' %}
 			</div>
 				
 			<div id="flash-messages">
@@ -36,7 +52,7 @@
 			<div id="content">
 				<div id="bolg-holder">
 				
-					{% include 'tag_search.html' %}
+					{% include 'partials/tag_search.html' %}
  					
  					{% block content %}
 					{% endblock %}
@@ -47,7 +63,7 @@
 			
 			<div id="footer">
 
-				{% include 'footer.html' %}
+				{% include 'layout/footer.html' %}
 
 			</div>
 		</div>

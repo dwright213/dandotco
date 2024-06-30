@@ -1,0 +1,9 @@
+<p class="path">
+	<span class="path__category">{{g.cat}} / </span>
+	<strong>
+		{{bolg.title}}
+		{% if g.cat == 'posts' -%}
+			<span class="path__time-stamp">{{ bolg.created }}</span>
+		{%- endif -%}
+	</strong> 
+</p>

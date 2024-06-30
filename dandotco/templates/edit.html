@@ -1,9 +1,9 @@
-{% extends "layout.html" %}
+{% extends "layout/layout.html" %}
 {% block content %}
 	<div id="form-holder">
 		<h3>
 			<i>
-				"compost a nice bolgs"
+				"EDIT a nice bolgs"
 			</i>
 		</h3>
 
@@ -21,7 +21,8 @@
 					:key="img.id"
 					:format="img.format"
 					:name="img.name"
-					:orig_name="img.orig_name">
+					:orig_name="img.orig_name" 
+					:processed_sizes="img.processed_sizes">
 				</image-thumb>					
 			</div>
 		</div>
@@ -55,15 +56,22 @@
 				id="input-body" 
 				class="compose-form__input compose-form__input--body" 
 				placeholder="body"
-				>{{ bolg.body_src }}
-			</textarea>
+				>{{ bolg.body_src }}</textarea>
 
 			<select 
 				name="kind"
 				id="input-kind"
 				class="compose-form__input compose-form__input--half-width">
-				<option value="post">standard bolg post</option>
-				<option value="page">conent for a 'page'</option>
+				<option 
+					value="post" 
+					{% if bolg.kind == 'post' %}
+						selected="selected"
+					{% endif %}>standard bolg post</option>
+				<option 
+					value="page"
+					{% if bolg.kind == 'page' %}
+						selected="selected"
+					{% endif %}>conent for a 'page'</option>
 			</select>
 
 			<input 
@@ -71,7 +79,7 @@
 			name="tags" 
 			id="input-tags" 
 			class="compose-form__input" 
-			value=" {{bolg.tags|join(', ')}}">
+			value="{{bolg.tags|join(', ')}}">
 
 			<button 
 				type="submit" 

@@ -10,6 +10,7 @@ var
 	jsGlob = './js/**/*.js',
 	scssGlob = './scss/**/*.scss',
 	imgGlob = './img/ui/*',
+	faviconGlob = './img/ui/favicons/*',
 
 	// input paths
 	jsInput = './js/main.js',
@@ -56,20 +57,20 @@ var
 		]
 	},
 
-	vueAlias = { vue: 'vue/dist/vue.js' };
+	devAlias = { vue: 'vue/dist/vue.js' },
+	prodAlias = { vue: 'vue/dist/vue.min.js' };
 
 
 
 gulp.task('default', function(done) {
 	dist = '/var/media/'
-	// webpackConf.mode = 'development'
-	webpackConf.resolve['alias'] = vueAlias
-	gulp.series('images', 'styles', 'scripts')();
+	webpackConf.resolve['alias'] = prodAlias
+	gulp.series('images', 'styles', 'scripts', 'favicons')();
 	done();
 })
 
 gulp.task('develop', function() {
-	webpackConf.resolve['alias'] = vueAlias
+	webpackConf.resolve['alias'] = devAlias
 	webpackConf.mode = 'development'
 	gulp.watch([jsGlob, vueGlob], gulp.parallel('scripts'))
 	gulp.watch(scssGlob, gulp.parallel('styles'))
@@ -80,6 +81,11 @@ gulp.task('develop', function() {
 gulp.task('images', function() {
 	return gulp.src(imgInput)
 		.pipe(gulp.dest(`${dist}img/ui`));
+});
+
+gulp.task('favicons', function() {
+	return gulp.src(faviconGlob)
+		.pipe(gulp.dest(`${dist}img/ui/favicons`));
 });
 
 gulp.task('styles', function() {
@@ -93,4 +99,5 @@ gulp.task('scripts', function() {
 		.pipe(webpack(webpackConf))
 		.pipe(gulp.dest(`${dist}js/`));
 });
+
 

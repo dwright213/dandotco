@@ -29,16 +29,32 @@ def home():
 @app.route('/bolg/<perma>')
 def view_bolg(perma):
 	g.cat = 'posts'
-	chosen_bolg = bolg.get_by_perma(perma)
-	return render_template('single.html', bolg=chosen_bolg, route_name='bolg')
+	chosen_bolg = bolg.get_bolg(perma)
+	return render_template('bolg.html', bolg=chosen_bolg, route_name='bolg')
 
 @app.route('/tagged/<tag_name>')
 def tagged(tag_name):
-	g.cat = 'tagged'
 	tagged_bolgs = bolg.tag_name_search(tag_name)
-	# bolgs = tagged_bolgs['results']
 	return render_template('index.html', route_name='home', bolgs=tagged_bolgs, tag_name=tag_name)
 
+# pages
+@app.route('/about')
+def about():
+	g.cat = 'pages'
+	page = bolg.get_page('about')
+	return render_template('bolg.html', bolg=page, route_name='bolg')
+
+@app.route('/research')
+def research():
+	g.cat = 'pages'
+	page = bolg.get_page('research')
+	return render_template('bolg.html', bolg=page, route_name='bolg')
+
+@app.route('/resume')
+def resume():
+	g.cat = 'pages'
+	page = bolg.get_page('resume')
+	return render_template('bolg.html', bolg=page, route_name='bolg')
 
 @app.route('/about')
 def about():
