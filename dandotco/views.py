@@ -56,18 +56,6 @@ def resume():
 	page = bolg.get_page('resume')
 	return render_template('bolg.html', bolg=page, route_name='bolg')
 
-@app.route('/about')
-def about():
-	g.cat = 'pages'
-	page = bolg.get_page('about')
-	return render_template('single.html', bolg=page, route_name='bolg')
-
-@app.route('/research')
-def research():
-	g.cat = 'pages'
-	page = bolg.get_page('research')
-	return render_template('single.html', bolg=page, route_name='bolg')
-
 @app.route('/labs')
 def labs():
 

@@ -2,7 +2,8 @@ var
 	// plugins
 	gulp = require('gulp'),
 	webpack = require('webpack-stream'),
-	sass = require('gulp-sass'),
+	// sass = require('gulp-sass'),
+	sass = require('gulp-sass')(require('sass')),
 	vueLoader = require('vue-loader/lib/plugin'),
 
 	// watch this glob
